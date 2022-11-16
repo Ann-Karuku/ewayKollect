@@ -12,5 +12,6 @@
     <color name="main_green">#2D862D</color>
     <color name="main_grey">#cccccc</color>
     <color name="signup_grey">#d9d9d9</color>
+    <color name="footer_grey">#e6e6e6</color>
     <color name="other_green">#3eb73e</color>
 </resources>

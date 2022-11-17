@@ -17,11 +17,10 @@
 
     <style name="Theme.splashscreen" parent="Theme.SplashScreen">
 
-        <item name="windowSplashScreenBackground">@color/main_grey</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ftlogo</item>
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo3</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
         <item name="postSplashScreenTheme">@style/Theme.EwayKollect</item>
-
-
 
     </style>
 </resources>

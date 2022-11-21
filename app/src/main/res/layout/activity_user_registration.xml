@@ -15,7 +15,7 @@
         android:text="Create an account"
         android:textColor="@color/white"
         android:gravity="center"
-        android:layout_margin="50dp"
+        android:layout_margin="30dp"
         android:textSize="35sp"
         android:textStyle="bold"
             />
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtUname"
             android:layout_below="@id/signUp"
-            android:background="#38ffffff"
+            android:background="#30ffffff"
             android:hint="UserName"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtPhone"
             android:layout_below="@id/edtUname"
-            android:background="#38ffffff"
+            android:background="#30ffffff"
+            android:inputType="phone"
             android:hint="PhoneNo"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
@@ -51,8 +52,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtPassword"
             android:layout_below="@id/edtPhone"
-            android:background="#38ffffff"
+            android:background="#30ffffff"
             android:hint="Password"
+            android:inputType="textPassword"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
@@ -64,8 +66,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtRepeatPass"
             android:layout_below="@id/edtPassword"
-            android:background="#38ffffff"
+            android:background="#30ffffff"
             android:hint="Password Repeat"
+            android:inputType="textPassword"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
@@ -79,10 +82,31 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:text="Register"
+            android:backgroundTint="@color/main_green"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_below="@id/edtRepeatPass"
             android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/txt_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have an account?"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/signUpBtn"/>
+
+        <TextView
+            android:id="@+id/loginLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="@color/main_grey"
+            android:textStyle="italic"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/signUpBtn"
+            android:layout_toRightOf="@id/txt_login"/>
 
 
         <TextView

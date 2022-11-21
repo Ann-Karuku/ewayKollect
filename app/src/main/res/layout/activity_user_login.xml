@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserRegistration"
+    android:background="@drawable/ic_loginbg2">
+
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create an account"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_margin="50dp"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtUname"
+        android:layout_below="@id/signUp"
+        android:background="#38ffffff"
+        android:hint="UserName"
+        android:textColorHint="@color/white"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="20dp"
+        android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+        android:drawablePadding="20dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtPassword"
+        android:layout_below="@id/edtUname"
+        android:background="#38ffffff"
+        android:hint="Password"
+        android:textColorHint="@color/white"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="20dp"
+        android:drawableLeft="@drawable/ic_baseline_info_24"
+        android:drawablePadding="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Login"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@id/edtPassword"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/forgotpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="forgot password?"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/signUpBtn"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="or sign-in with"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/socials"/>
+
+    <LinearLayout
+        android:id="@+id/socials"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/google"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/facebook"/>
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/twitter"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

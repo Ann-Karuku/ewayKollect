@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "487355332925",
+    "project_id": "ewaykollect",
+    "storage_bucket": "ewaykollect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487355332925:android:341389ce00ae2d2eb82d54",
+        "android_client_info": {
+          "package_name": "com.example.ewaykollect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487355332925-vtttqjuggaefgfanv4r5ecl9kqgh3p2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt-sgBpiAKSEiVMvzBt_FAwd7SJiRHKcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487355332925-vtttqjuggaefgfanv4r5ecl9kqgh3p2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

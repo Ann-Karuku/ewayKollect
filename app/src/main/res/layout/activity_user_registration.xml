@@ -15,7 +15,7 @@
         android:text="Create an account"
         android:textColor="@color/white"
         android:gravity="center"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:textSize="35sp"
         android:textStyle="bold"
             />
@@ -26,11 +26,12 @@
             android:id="@+id/edtUname"
             android:layout_below="@id/signUp"
             android:background="#30ffffff"
-            android:hint="UserName"
+            android:hint="username"
             android:textColorHint="@color/white"
+            android:textSize="15sp"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:padding="20dp"
+            android:padding="10dp"
             android:drawableLeft="@drawable/ic_baseline_person_outline_24"
             android:drawablePadding="20dp"/>
         <EditText
@@ -40,11 +41,12 @@
             android:layout_below="@id/edtUname"
             android:background="#30ffffff"
             android:inputType="phone"
-            android:hint="PhoneNo"
+            android:hint="phone"
+            android:textSize="15sp"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:padding="20dp"
+            android:padding="10dp"
             android:drawableLeft="@drawable/ic_baseline_phone_24"
             android:drawablePadding="20dp"/>
         <EditText
@@ -53,12 +55,13 @@
             android:id="@+id/edtPassword"
             android:layout_below="@id/edtPhone"
             android:background="#30ffffff"
-            android:hint="Password"
+            android:hint="password"
             android:inputType="textPassword"
+            android:textSize="15sp"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:padding="20dp"
+            android:padding="10dp"
             android:drawableLeft="@drawable/ic_baseline_info_24"
             android:drawablePadding="20dp"/>
         <EditText
@@ -67,12 +70,13 @@
             android:id="@+id/edtRepeatPass"
             android:layout_below="@id/edtPassword"
             android:background="#30ffffff"
-            android:hint="Password Repeat"
+            android:hint="repeat password"
             android:inputType="textPassword"
+            android:textSize="15sp"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
-            android:padding="20dp"
+            android:padding="10dp"
             android:drawableLeft="@drawable/ic_baseline_info_24"
             android:drawablePadding="20dp"/>
 
@@ -102,8 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textColor="@color/main_grey"
-            android:textStyle="italic"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/signUpBtn"
             android:layout_toRightOf="@id/txt_login"/>

@@ -32,5 +32,10 @@ class UserRegistration : AppCompatActivity() {
             val intent= Intent(this,UserLogin::class.java)
             startActivity(intent)
         }
+
+        signInBtn.setOnClickListener{
+            val intent=Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

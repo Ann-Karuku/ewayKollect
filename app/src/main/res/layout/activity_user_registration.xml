@@ -139,11 +139,6 @@
                     android:layout_height="40dp"
                     android:layout_margin="20dp"
                     android:src="@drawable/facebook"/>
-                <ImageView
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_margin="20dp"
-                    android:src="@drawable/twitter"/>
         </LinearLayout>
 
 

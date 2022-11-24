@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 
 class UserRegistration : AppCompatActivity() {
 
@@ -15,6 +16,8 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var passwordRpt: EditText
     private lateinit var signInBtn: Button
     private lateinit var loginLink: TextView
+
+    private lateinit var mAuth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +37,16 @@ class UserRegistration : AppCompatActivity() {
         }
 
         signInBtn.setOnClickListener{
+//            perfomAuth()
             val intent=Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
     }
+
+//    private fun perfomAuth{
+//        var uName: String=uname.text.toString()
+////        var phone :Int= phone.
+//        var password:String=password.text.toString()
+//        var passwordRpt:String=passwordRpt.text.toString()
+//    }
 }

@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.auth.FirebaseAuth
 
 class UserLogin : AppCompatActivity() {
 
@@ -14,6 +15,8 @@ class UserLogin : AppCompatActivity() {
     private lateinit var password: EditText
     private lateinit var signUpBtn: Button
     private lateinit var registerLink: TextView
+
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +41,16 @@ class UserLogin : AppCompatActivity() {
         }
 
         signUpBtn.setOnClickListener{
+            perfomAuth()
             val intent=Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+
+
+    }
+
+    private fun perfomAuth() {
+
     }
 }

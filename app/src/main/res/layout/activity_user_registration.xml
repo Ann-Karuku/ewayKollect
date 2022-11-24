@@ -23,10 +23,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edtUname"
+            android:id="@+id/edtEmail"
             android:layout_below="@id/signUp"
             android:background="#30ffffff"
-            android:hint="username"
+            android:hint="email"
             android:textColorHint="@color/white"
             android:textSize="15sp"
             android:layout_margin="10dp"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtPhone"
-            android:layout_below="@id/edtUname"
+            android:layout_below="@id/edtEmail"
             android:background="#30ffffff"
             android:inputType="phone"
             android:hint="phone"
@@ -126,8 +126,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
                 <ImageView
                     android:layout_width="48dp"
@@ -140,8 +139,5 @@
                     android:layout_margin="20dp"
                     android:src="@drawable/facebook"/>
         </LinearLayout>
-
-
-
 
 </RelativeLayout>

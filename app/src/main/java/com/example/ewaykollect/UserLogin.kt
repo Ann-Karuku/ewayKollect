@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class UserLogin : AppCompatActivity() {
 
-    private lateinit var uname : EditText
+    private lateinit var email : EditText
     private lateinit var password: EditText
     private lateinit var signUpBtn: Button
     private lateinit var registerLink: TextView
@@ -29,7 +29,7 @@ class UserLogin : AppCompatActivity() {
         setContentView(R.layout.activity_user_login)
 
 
-        uname= findViewById(R.id.edtUname)
+        email= findViewById(R.id.edtEmail)
         password=findViewById(R.id.edtPassword)
         signUpBtn=findViewById(R.id.signUpBtn)
         registerLink=findViewById(R.id.regLink)

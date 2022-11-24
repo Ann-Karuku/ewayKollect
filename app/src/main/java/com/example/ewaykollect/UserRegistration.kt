@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class UserRegistration : AppCompatActivity() {
 
-    private lateinit var uname : EditText
+    private lateinit var email : EditText
     private lateinit var phone : EditText
     private lateinit var password: EditText
     private lateinit var passwordRpt: EditText
@@ -24,7 +24,7 @@ class UserRegistration : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_registration)
 
-        uname= findViewById(R.id.edtUname)
+        email= findViewById(R.id.edtEmail)
         phone=findViewById(R.id.edtPhone)
         password=findViewById(R.id.edtPassword)
         passwordRpt=findViewById(R.id.edtRepeatPass)
@@ -44,8 +44,8 @@ class UserRegistration : AppCompatActivity() {
     }
 
 //    private fun perfomAuth{
-//        var uName: String=uname.text.toString()
-////        var phone :Int= phone.
+//        var email: String=email.text.toString()
+////      var phone :Int= phone.
 //        var password:String=password.text.toString()
 //        var passwordRpt:String=passwordRpt.text.toString()
 //    }

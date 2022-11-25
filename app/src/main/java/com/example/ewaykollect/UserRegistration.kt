@@ -58,21 +58,28 @@ class UserRegistration : AppCompatActivity() {
         var password: String = password.text.toString()
         var passwordRpt: String = passwordRpt.text.toString()
 
-        if (password===passwordRpt) {
+        if (email.isEmpty()||password.isEmpty()||passwordRpt.isEmpty()) {
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(this,"Registration success..",Toast.LENGTH_LONG,)
+            Toast.makeText(this,"Please fill in all fields!",Toast.LENGTH_SHORT).show()
 
-                    } else {
-                        // If sign up fails, display a message to the user.
-                        Toast.makeText(this,"Authentication failed.",Toast.LENGTH_LONG,)
+        }else{
+            if (password === passwordRpt) {
 
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(this, "Registration success..", Toast.LENGTH_LONG,).show()
+
+                        } else {
+                            // If sign up fails, display a message to the user.
+                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_LONG,).show()
+
+                        }
                     }
-                }
+             }
+          }
         }
-    }
+
 
 }

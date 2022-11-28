@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "487355332925-94ndoaaf0lqgoeun9efmpu97og9kdaua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ewaykollect",
+            "certificate_hash": "054eafca0a2a56b12bb153fce57ef1c16b3e6a3f"
+          }
+        },
+        {
           "client_id": "487355332925-vtttqjuggaefgfanv4r5ecl9kqgh3p2r.apps.googleusercontent.com",
           "client_type": 3
         }

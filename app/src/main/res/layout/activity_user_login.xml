@@ -130,7 +130,7 @@
         <ImageView
             android:id="@+id/facebook"
             android:layout_width="40dp"
-            android:layout_height="36dp"
+            android:layout_height="35dp"
             android:layout_margin="20dp"
             android:src="@drawable/facebook"/>
 

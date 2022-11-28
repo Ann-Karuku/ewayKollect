@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -26,6 +23,7 @@ class UserLogin : AppCompatActivity() {
     private lateinit var password: EditText
     private lateinit var signUpBtn: Button
     private lateinit var registerLink: TextView
+    private lateinit var googleBtn: ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -45,6 +43,7 @@ class UserLogin : AppCompatActivity() {
         password = findViewById(R.id.edtPassword)
         signUpBtn = findViewById(R.id.signUpBtn)
         registerLink = findViewById(R.id.regLink)
+        googleBtn=findViewById(R.id.google)
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -68,7 +67,7 @@ class UserLogin : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this , gso)
 
-        findViewById<Button>(R.id.google).setOnClickListener {
+        googleBtn.setOnClickListener {
             signInGoogle()
         }
 
@@ -136,7 +135,7 @@ class UserLogin : AppCompatActivity() {
 
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(this, "Login failed..", Toast.LENGTH_LONG,).show()
+                        Toast.makeText(this, "Incorrect email/password", Toast.LENGTH_LONG,).show()
                     }
                 }
         }

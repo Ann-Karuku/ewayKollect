@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.startActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -28,6 +25,7 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var passwordRpt: EditText
     private lateinit var signInBtn: Button
     private lateinit var loginLink: TextView
+    private lateinit var googleBtn:ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -42,6 +40,7 @@ class UserRegistration : AppCompatActivity() {
         passwordRpt=findViewById(R.id.edtRepeatPass)
         signInBtn=findViewById(R.id.signUpBtn)
         loginLink=findViewById(R.id.loginLink)
+        googleBtn=findViewById(R.id.google)
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -64,7 +63,7 @@ class UserRegistration : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this , gso)
 
-        findViewById<Button>(R.id.google).setOnClickListener {
+        googleBtn.setOnClickListener {
             signInGoogle()
         }
 

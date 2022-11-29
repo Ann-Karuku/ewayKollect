@@ -13,6 +13,7 @@
         android:src="@drawable/ic_profile"
         />
     <TextView
+        android:id="@+id/nav_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ann Karuku"
@@ -20,6 +21,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         />
     <TextView
+        android:id="@+id/nav_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="annkaruku@gmail.com"

@@ -50,8 +50,12 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //google firebase auth details fetch
         auth = FirebaseAuth.getInstance()
 
-        val email = intent.getStringExtra("email")
+        //get name and email from previous intent as supplied by google auth.
         val displayName = intent.getStringExtra("name")
+        val email = intent.getStringExtra("email")
+        print(displayName)
+        print(email)
+
 
         findViewById<TextView>(R.id.nav_name).text = displayName
         findViewById<TextView>(R.id.nav_email).text = email
@@ -73,13 +77,13 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         when (item.itemId){
 //            R.id.nav_chat->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
 //                ,chatFragment()).commit()
-//            R.id.nav_profile->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-//                ,profileFragment()).commit()
+            R.id.nav_profile->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+                ,profileFragment()).commit()
 //            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-//                ,profileFragment()).commit()
+//                ,settingsFragment()).commit()
               R.id.nav_logOut->{
             auth.signOut()
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, UserLogin::class.java))
 
         }
        }

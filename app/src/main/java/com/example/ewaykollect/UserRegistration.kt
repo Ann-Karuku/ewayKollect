@@ -133,8 +133,8 @@ class UserRegistration : AppCompatActivity() {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(this, "Registration success..", Toast.LENGTH_LONG,).show()
 
-                            val intent=Intent(this,MainActivity::class.java)
-                            startActivity(intent)
+                            val intent2=Intent(this,MainActivity::class.java)
+                            startActivity(intent2)
 
                         } else {
                             // If sign up fails, display a message to the user.

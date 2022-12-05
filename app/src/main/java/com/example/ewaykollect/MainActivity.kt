@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -53,12 +54,11 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //get name and email from previous intent as supplied by google auth.
         val displayName = intent.getStringExtra("name")
         val email = intent.getStringExtra("email")
-        print(displayName)
-        print(email)
 
-
+        //display the name on the nav_header.
         findViewById<TextView>(R.id.nav_name).text = displayName
         findViewById<TextView>(R.id.nav_email).text = email
+//        findViewById<ImageView>(R.id.nav_image).
 
 
     }
@@ -81,10 +81,9 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 ,profileFragment()).commit()
 //            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
 //                ,settingsFragment()).commit()
-              R.id.nav_logOut->{
+            R.id.nav_logOut->{
             auth.signOut()
             startActivity(Intent(this, UserLogin::class.java))
-
         }
        }
 

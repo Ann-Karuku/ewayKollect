@@ -107,6 +107,7 @@ class UserLogin : AppCompatActivity() {
                 val intent : Intent = Intent(this , MainActivity::class.java)
                 intent.putExtra("email" , account.email)
                 intent.putExtra("name" , account.displayName)
+                intent.putExtra("image",account.photoUrl)
                 startActivity(intent)
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()
@@ -129,13 +130,12 @@ class UserLogin : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(this, "Login success..", Toast.LENGTH_LONG,).show()
+                        Toast.makeText(this, "Login success..", Toast.LENGTH_LONG).show()
                         val intent2 = Intent(this, MainActivity::class.java)
                         startActivity(intent2)
-
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(this, "Incorrect email/password", Toast.LENGTH_LONG,).show()
+                        Toast.makeText(this, "Incorrect email/password", Toast.LENGTH_LONG).show()
                     }
                 }
         }

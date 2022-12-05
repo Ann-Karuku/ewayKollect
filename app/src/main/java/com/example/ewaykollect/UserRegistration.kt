@@ -35,7 +35,7 @@ class UserRegistration : AppCompatActivity() {
         setContentView(R.layout.activity_user_registration)
 
         email= findViewById(R.id.edtEmail)
-        phone=findViewById(R.id.edtPhone)
+//        phone=findViewById(R.id.edtPhone)
         password=findViewById(R.id.edtPassword)
         passwordRpt=findViewById(R.id.edtRepeatPass)
         signInBtn=findViewById(R.id.signUpBtn)
@@ -125,24 +125,27 @@ class UserRegistration : AppCompatActivity() {
             Toast.makeText(this,"Please fill in all fields!",Toast.LENGTH_SHORT).show()
 
         }else{
-            if (password === passwordRpt) {
+            if (password == passwordRpt) {
 
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(this, "Registration success..", Toast.LENGTH_LONG,).show()
+                            // Sign up success, update UI with the signed-in user's information
+                            Toast.makeText(this, "Registration success..", Toast.LENGTH_LONG).show()
 
                             val intent2=Intent(this,MainActivity::class.java)
                             startActivity(intent2)
 
                         } else {
                             // If sign up fails, display a message to the user.
-                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_LONG,).show()
+                            Toast.makeText(this, "Registration failed.", Toast.LENGTH_LONG).show()
 
                         }
                     }
-             }
+             } else{
+                // If password does not match
+                Toast.makeText(this, "password mismatch", Toast.LENGTH_LONG).show()
+            }
           }
         }
 

@@ -13,6 +13,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
 
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
 //                ,settingsFragment()).commit()
             R.id.nav_logOut->{
-            auth.signOut()
+            Firebase.auth.signOut()
             startActivity(Intent(this, UserLogin::class.java))
         }
        }

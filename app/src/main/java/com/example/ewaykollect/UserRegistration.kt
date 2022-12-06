@@ -115,23 +115,24 @@ class UserRegistration : AppCompatActivity() {
 
 
     private fun perfomAuth() {
-        var email: String = email.text.toString()
+        val mail: String = email.text.toString()
 //      var phone :Int= phone.
-        var password: String = password.text.toString()
-        var passwordRpt: String = passwordRpt.text.toString()
+        val pass: String = password.text.toString()
+        val passRpt: String = passwordRpt.text.toString()
 
-        if (email.isEmpty()||password.isEmpty()||passwordRpt.isEmpty()) {
+        if (mail.isEmpty()||pass.isEmpty()||passRpt.isEmpty()) {
 
             Toast.makeText(this,"Please fill in all fields!",Toast.LENGTH_SHORT).show()
+            return
 
         }else{
-            if (password == passwordRpt) {
+            if (pass == passRpt) {
 
-                auth.createUserWithEmailAndPassword(email, password)
+                auth.createUserWithEmailAndPassword(mail, pass)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign up success, update UI with the signed-in user's information
-                            Toast.makeText(this, "Registration success..", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Registration success.", Toast.LENGTH_LONG).show()
 
                             val intent2=Intent(this,MainActivity::class.java)
                             startActivity(intent2)

@@ -4,9 +4,12 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_chat"
-            android:icon="@drawable/ic_chat"
-            android:title="Chat"/>
+        <item android:id="@+id/nav_account"
+            android:icon="@drawable/ic_profile"
+            android:title="Account"/>
+        <item android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_baseline_notifications_24"
+            android:title="Notifications"/>
         <item android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="Profile"/>
@@ -17,7 +20,11 @@
             <item android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_settings"
                 android:title="Settings"/>
+            <item android:id="@+id/nav_FAQs"
+                android:icon="@drawable/ic_faqs"
+                android:title="FAQs"/>
             <item android:id="@+id/nav_logOut"
+                android:icon="@drawable/ic_baseline_exit_to_app_24"
                 android:title="Logout"/>
         </menu>
     </item>

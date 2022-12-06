@@ -130,7 +130,6 @@ class UserLogin : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(this, "Login success..", Toast.LENGTH_LONG).show()
                         val intent2 = Intent(this, MainActivity::class.java)
                         startActivity(intent2)
                     } else {

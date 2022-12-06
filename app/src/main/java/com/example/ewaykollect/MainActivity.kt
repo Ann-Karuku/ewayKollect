@@ -56,10 +56,9 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //get name and email from previous intent as supplied by google auth.
         val displayName = intent.getStringExtra("name")
         val email = intent.getStringExtra("email")
-
-        //display the name on the nav_header.
-        findViewById<TextView>(R.id.nav_name).text = displayName
-        findViewById<TextView>(R.id.nav_email).text = email
+    //display the name on the nav_header.
+//        findViewById<TextView>(R.id.nav_name).text = displayName
+//        findViewById<TextView>(R.id.nav_email).text = email
 //        findViewById<ImageView>(R.id.nav_image).
 
 
@@ -77,8 +76,8 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId){
-//            R.id.nav_chat->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-//                ,chatFragment()).commit()
+//            R.id.nav_notification->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+//                ,notificationFragment()).commit()
             R.id.nav_profile->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
                 ,profileFragment()).commit()
 //            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container

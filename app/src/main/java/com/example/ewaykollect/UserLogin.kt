@@ -107,7 +107,7 @@ class UserLogin : AppCompatActivity() {
                 val intent : Intent = Intent(this , MainActivity::class.java)
                 intent.putExtra("email" , account.email)
                 intent.putExtra("name" , account.displayName)
-                intent.putExtra("image",account.photoUrl)
+                intent.putExtra("image" ,account.photoUrl)
                 startActivity(intent)
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()

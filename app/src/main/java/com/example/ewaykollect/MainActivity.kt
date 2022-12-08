@@ -76,12 +76,16 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId){
+            R.id.nav_account->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+                ,AccountFragment()).commit()
 //            R.id.nav_notification->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
 //                ,notificationFragment()).commit()
             R.id.nav_profile->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-                ,profileFragment()).commit()
+                ,ProfileFragment()).commit()
 //            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
 //                ,settingsFragment()).commit()
+//            R.id.nav_FAQs->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+//                ,FAQFragment()).commit()
             R.id.nav_logOut->{
             Firebase.auth.signOut()
             startActivity(Intent(this, UserLogin::class.java))

@@ -26,6 +26,7 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var signInBtn: Button
     private lateinit var loginLink: TextView
     private lateinit var googleBtn:ImageView
+    private lateinit var facebookBtn:ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -41,6 +42,7 @@ class UserRegistration : AppCompatActivity() {
         signInBtn=findViewById(R.id.signUpBtn)
         loginLink=findViewById(R.id.loginLink)
         googleBtn=findViewById(R.id.google)
+        facebookBtn=findViewById(R.id.facebook)
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -113,7 +115,17 @@ class UserRegistration : AppCompatActivity() {
 
 
 
+//    //SIGNIN WITH FACEBOOK
+//    facebookBtn.setOnClickListener {
+//        signInFacebook()
+//    }
 
+    private fun signInFacebook() {
+        TODO("Not yet implemented")
+    }
+
+
+    //SIGNIN WITH EMAIL AND PASSWORD
     private fun perfomAuth() {
         val mail: String = email.text.toString()
 //      var phone :Int= phone.
@@ -149,6 +161,7 @@ class UserRegistration : AppCompatActivity() {
             }
           }
         }
+
 
 
 }

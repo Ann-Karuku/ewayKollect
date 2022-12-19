@@ -12,8 +12,10 @@ import android.util.Log
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.facebook.*
-import com.facebook.appevents.AppEventsLogger
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -123,8 +125,9 @@ class UserLogin : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
 //                    Toast.makeText(this,"")
-                    val intent : Intent = Intent(this , MainActivity::class.java)
-                    startActivity(intent)
+//                    val intent : Intent = Intent(this , MainActivity::class.java)
+//                    startActivity(intent)
+                    Log.d(TAG,"WORKED")
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Authentication failed.",

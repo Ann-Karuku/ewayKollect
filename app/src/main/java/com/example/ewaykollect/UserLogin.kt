@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.wifi.WifiManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
@@ -38,10 +40,8 @@ class UserLogin : AppCompatActivity() {
     private lateinit var registerLink: TextView
     private lateinit var googleBtn: ImageView
     private lateinit var fbBtn: LoginButton
-
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-
     private lateinit var callbackManager: CallbackManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +53,12 @@ class UserLogin : AppCompatActivity() {
         installSplashScreen()
 
         setContentView(R.layout.activity_user_login)
+
+        val receiver = connectivityReceiver()
+        val networkStatus: String? = receiver.status
+        val filter = IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)
+        this.registerReceiver(connectivityReceiver(), filter)
+        Toast.makeText(applicationContext, networkStatus, Toast.LENGTH_LONG).show()
 
         printHashKey(applicationContext)
 
@@ -124,10 +130,8 @@ class UserLogin : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-//                    Toast.makeText(this,"")
-//                    val intent : Intent = Intent(this , MainActivity::class.java)
-//                    startActivity(intent)
-                    Log.d(TAG,"WORKED")
+                   val intent : Intent = Intent(this , MainActivity::class.java)
+                   startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Authentication failed.",
@@ -228,4 +232,17 @@ class UserLogin : AppCompatActivity() {
         }
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)
+        this.registerReceiver(connectivityReceiver(), filter)
+    }
+
+    override fun onPause() {
+        unregisterReceiver(connectivityReceiver())
+        super.onPause()
+    }
+
+
 }

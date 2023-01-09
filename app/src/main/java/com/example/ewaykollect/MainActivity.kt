@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setTheme(R.style.CustomTheme)
 
         //find the toolbar
         var toolbar: Toolbar = findViewById(R.id.toolBar)
@@ -78,14 +77,14 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         when (item.itemId){
             R.id.nav_account->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
                 ,AccountFragment()).commit()
-//            R.id.nav_notification->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-//                ,notificationFragment()).commit()
+            R.id.nav_notifications->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+                ,NotificationsFragment()).commit()
             R.id.nav_profile->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
                 ,ProfileFragment()).commit()
-//            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-//                ,settingsFragment()).commit()
-//            R.id.nav_FAQs->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-//                ,FAQFragment()).commit()
+            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+                ,SettingsFragment()).commit()
+           R.id.nav_FAQs->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+               ,FAQsFragment()).commit()
             R.id.nav_logOut->{
             Firebase.auth.signOut()
             startActivity(Intent(this, UserLogin::class.java))

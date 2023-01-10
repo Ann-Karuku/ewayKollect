@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        
 
         //find the toolbar
         var toolbar: Toolbar = findViewById(R.id.toolBar)

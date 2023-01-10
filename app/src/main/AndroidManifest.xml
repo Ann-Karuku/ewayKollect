@@ -29,8 +29,6 @@
             android:exported="true"
             android:theme="@style/Theme.splashscreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER"/>
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -40,8 +38,11 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <receiver

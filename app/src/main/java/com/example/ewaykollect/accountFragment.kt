@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.Navigation
 
 class AccountFragment : Fragment() {
     private lateinit var profile_image :ImageView
@@ -21,7 +22,7 @@ class AccountFragment : Fragment() {
 
       profile_image=  root.findViewById<ImageView>(R.id.profile_image)
         profile_image.setOnClickListener{
-
+            Navigation.findNavController(root).navigate(R.id.action_accountFragment_to_profileFragment)
         }
         return root
 

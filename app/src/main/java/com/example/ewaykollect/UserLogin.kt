@@ -239,10 +239,7 @@ class UserLogin : AppCompatActivity() {
         this.registerReceiver(connectivityReceiver(), filter)
     }
 
-    override fun onPause() {
-        unregisterReceiver(connectivityReceiver())
-        super.onPause()
-    }
+
 
 
 }

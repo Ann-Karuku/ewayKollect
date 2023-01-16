@@ -56,9 +56,10 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //get name and email from previous intent as supplied by google auth.
         val displayName = intent.getStringExtra("name")
         val email = intent.getStringExtra("email")
-    //display the name on the nav_header.
-//        findViewById<TextView>(R.id.nav_name).text = displayName
-//        findViewById<TextView>(R.id.nav_email).text = email
+
+    //  display the name on the nav_header.
+        findViewById<TextView>(R.id.nav_name).text = displayName
+        findViewById<TextView>(R.id.nav_email).text = email
 //        findViewById<ImageView>(R.id.nav_image).
 
 

@@ -25,7 +25,6 @@
     //new added theme
     <style name="CustomTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/transparent</item>
-        <item name="android:actionBarTheme">@color/other_green</item>
+        <item name="android:statusBarColor">@color/other_green</item>
     </style>
 </resources>

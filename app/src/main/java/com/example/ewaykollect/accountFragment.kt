@@ -20,7 +20,7 @@ class AccountFragment : Fragment() {
 
         var root:View=inflater.inflate(R.layout.fragment_account, container, false)
 
-      profile_image=  root.findViewById<ImageView>(R.id.profile_image)
+        profile_image=  root.findViewById<ImageView>(R.id.profile_image)
         profile_image.setOnClickListener{
             Navigation.findNavController(root).navigate(R.id.action_accountFragment_to_profileFragment)
         }

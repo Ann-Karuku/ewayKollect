@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     //for firebase authentication
     private lateinit var auth : FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +59,19 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //get name and email from previous intent as supplied by google auth.
         val displayName = intent.getStringExtra("name")
         val email = intent.getStringExtra("email")
+        val displayImage=intent.getStringExtra("image")
 
     //  display the name on the nav_header.
-        findViewById<TextView>(R.id.nav_name).text = displayName
-        findViewById<TextView>(R.id.nav_email).text = email
-//        findViewById<ImageView>(R.id.nav_image).
+      var navView:NavigationView=findViewById(R.id.nav_view)
+        var headerview: View =navView.getHeaderView(0)
+        var dispName=headerview.findViewById<TextView>(R.id.nav_name)
+        dispName.setText(displayName)
+        var mail=headerview.findViewById<TextView>(R.id.nav_email)
+        mail.setText(email)
+        var dispImage=headerview.findViewById<ImageView>(R.id.nav_image)
+        if (displayImage != null) {
+            dispImage.setImageURI(displayImage.toUri())
+        }
 
 
     }

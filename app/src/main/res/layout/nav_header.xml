@@ -12,7 +12,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:contentDescription="Navigation header"
-        android:srcCompact="@drawable/ic_profile"
+        android:src="@drawable/ic_profile"
         />
     <TextView
         android:id="@+id/nav_name"

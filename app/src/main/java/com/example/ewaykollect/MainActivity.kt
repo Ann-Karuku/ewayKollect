@@ -13,6 +13,7 @@ import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -69,9 +70,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         var mail=headerview.findViewById<TextView>(R.id.nav_email)
         mail.setText(email)
         var dispImage=headerview.findViewById<ImageView>(R.id.nav_image)
-        if (displayImage != null) {
-            dispImage.setImageURI(displayImage.toUri())
-        }
+        Glide.with(this).load(displayImage).into(dispImage)
 
 
     }

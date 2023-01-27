@@ -180,7 +180,7 @@ class UserLogin : AppCompatActivity() {
                 val intent= Intent(this , MainActivity::class.java)
                 intent.putExtra("email" , account.email)
                 intent.putExtra("name" , account.displayName)
-                intent.putExtra("image" ,account.photoUrl)
+                intent.putExtra("image" ,account.photoUrl.toString())
                 startActivity(intent)
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()
@@ -203,6 +203,7 @@ class UserLogin : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
+                        intent.putExtra("email" , email)
                         val intent2 = Intent(this, MainActivity::class.java)
                         startActivity(intent2)
                     } else {

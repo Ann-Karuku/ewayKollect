@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16" />
+        <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/drawable/btn_bg.xml" value="0.1355" />
+        <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/drawable/gradient_bg.xml" value="0.1355" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/drawable/ic_accountsbg.xml" value="0.1355" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/drawable/ic_launcher_logo_background.xml" value="0.16" />
@@ -16,7 +18,10 @@
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/activity_user_login.xml" value="0.21" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/activity_user_registration.xml" value="0.22" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/fragment_account.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/fragment_faqs.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/fragment_notifications.xml" value="0.10190217391304347" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/fragment_settings.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/menu/drawer_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/karugo/AndroidStudioProjects/ewayKollect/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.16" />

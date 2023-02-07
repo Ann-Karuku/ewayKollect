@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AccountFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
@@ -16,31 +19,48 @@
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200sp"
-        app:cardCornerRadius="20dp"
-        android:layout_margin="7dp"
+        android:layout_height="165sp"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="5dp"
         app:cardMaxElevation="20dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="265dp"
-            android:src="@drawable/ic_accountsbg" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:background="@drawable/gradient_bg">
 
-        <ImageView
+      </LinearLayout>
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_image"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginRight="300dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_profile" />
-
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/icon"
+            />
+        <TextView
+            android:id="@+id/acc_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ann Karuku"
+            android:textColor="@color/dark_grey"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="140dp"/> <TextView
+        android:id="@+id/acc_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="annkaruku@gmail.com"
+        android:textColor="@color/dark_grey"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="140dp"/>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        app:cardCornerRadius="20dp"
+        android:layout_height="140sp"
+        app:cardCornerRadius="10dp"
         android:layout_margin="7dp"
         app:cardMaxElevation="20dp">
         <TextView
@@ -73,8 +93,8 @@
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        app:cardCornerRadius="20dp"
+        android:layout_height="140sp"
+        app:cardCornerRadius="10dp"
         android:layout_margin="7dp"
         app:cardMaxElevation="20dp">
 
@@ -107,8 +127,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        app:cardCornerRadius="20dp"
+        android:layout_height="140sp"
+        app:cardCornerRadius="10dp"
         android:layout_margin="7dp"
         app:cardMaxElevation="20dp">
 
@@ -141,8 +161,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        app:cardCornerRadius="20dp"
+        android:layout_height="140sp"
+        app:cardCornerRadius="10dp"
         android:layout_margin="7dp"
         app:cardMaxElevation="20dp">
 
@@ -176,5 +196,5 @@
 </LinearLayout>
 
     </ScrollView>
-
 </RelativeLayout>
+</FrameLayout>

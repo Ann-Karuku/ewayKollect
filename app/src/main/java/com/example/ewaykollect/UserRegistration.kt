@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.startActivity
@@ -15,10 +17,14 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class UserRegistration : AppCompatActivity() {
 
+    private lateinit var name : EditText
     private lateinit var email : EditText
     private lateinit var phone : EditText
     private lateinit var password: EditText
@@ -28,15 +34,20 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var googleBtn:ImageView
     private lateinit var facebookBtn:ImageView
 
+    private lateinit var progressBar:ProgressBar
+
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private var db=Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_registration)
+        supportActionBar?.hide()
 
+        name=findViewById(R.id.edtName)
         email= findViewById(R.id.edtEmail)
-//        phone=findViewById(R.id.edtPhone)
+        phone=findViewById(R.id.edtPhone)
         password=findViewById(R.id.edtPassword)
         passwordRpt=findViewById(R.id.edtRepeatPass)
         signInBtn=findViewById(R.id.signUpBtn)
@@ -127,24 +138,62 @@ class UserRegistration : AppCompatActivity() {
 
     //SIGNIN WITH EMAIL AND PASSWORD
     private fun perfomAuth() {
-        val mail: String = email.text.toString()
-//      var phone :Int= phone.
-        val pass: String = password.text.toString()
-        val passRpt: String = passwordRpt.text.toString()
+
+        val person_name: String = name.text.toString().trim()
+        val mail: String = email.text.toString().trim()
+        val phoneNo: String = phone.text.toString().trim()
+        val pass: String = password.text.toString().trim()
+        val passRpt: String = passwordRpt.text.toString().trim()
 
         if (mail.isEmpty()||pass.isEmpty()||passRpt.isEmpty()) {
 
             Toast.makeText(this,"Please fill in all fields!",Toast.LENGTH_SHORT).show()
+
+            if(TextUtils.isEmpty(mail)){
+                email.setError("Email is required")
+            }
+            if(TextUtils.isEmpty(pass)){
+                password.setError("Password is required")
+            }
+            if(pass.length <6){
+                password.setError("Password must be more than 6 characters.")
+            }
+
             return
 
         }else{
             if (pass == passRpt) {
+
+                progressBar.visibility= View.VISIBLE
 
                 auth.createUserWithEmailAndPassword(mail, pass)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign up success, update UI with the signed-in user's information
                             Toast.makeText(this, "Registration success.", Toast.LENGTH_LONG).show()
+
+                           val userID= FirebaseAuth.getInstance().currentUser!!.uid
+
+                            val userMap= hashMapOf(
+                                "name" to person_name,
+                                "email" to mail,
+                                "phone" to phoneNo,
+                                "password" to pass
+
+                            )
+                            db.collection("user").document(userID).set(userMap)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this,"Registered",Toast.LENGTH_SHORT).show()
+                                    name.text.clear()
+                                    email.text.clear()
+                                    phone.text.clear()
+                                    password.text.clear()
+                                    passwordRpt.text.clear()
+                                }
+                                .addOnFailureListener{
+                                    Toast.makeText(this,"Failed to register",Toast.LENGTH_SHORT).show()
+                                }
+
 
                             val intent2=Intent(this,MainActivity::class.java)
                             startActivity(intent2)

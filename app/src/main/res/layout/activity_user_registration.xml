@@ -19,12 +19,26 @@
         android:textSize="35sp"
         android:textStyle="bold"
             />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtName"
+            android:layout_below="@id/signUp"
+            android:background="#30ffffff"
+            android:hint="name"
+            android:textColorHint="@color/white"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+            android:drawablePadding="20dp"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtEmail"
-            android:layout_below="@id/signUp"
+            android:layout_below="@id/edtName"
             android:background="#30ffffff"
             android:hint="email"
             android:textColorHint="@color/white"
@@ -32,7 +46,7 @@
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
             android:drawablePadding="20dp"/>
         <EditText
             android:layout_width="match_parent"

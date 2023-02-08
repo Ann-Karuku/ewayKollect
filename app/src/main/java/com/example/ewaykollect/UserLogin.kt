@@ -44,6 +44,7 @@ class UserLogin : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var callbackManager: CallbackManager
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +54,7 @@ class UserLogin : AppCompatActivity() {
         installSplashScreen()
 
         setContentView(R.layout.activity_user_login)
+        supportActionBar?.hide()
 
         val receiver = connectivityReceiver()
         val networkStatus: String? = receiver.status

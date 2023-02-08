@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     //for firebase authentication
     private lateinit var auth : FirebaseAuth
+
+    private var db=Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +75,12 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         var dispImage=headerview.findViewById<ImageView>(R.id.nav_image)
         Glide.with(this).load(displayImage).into(dispImage)
 
+
+        val userID= FirebaseAuth.getInstance().currentUser!!.uid
+        val ref=db.collection("user").document(userID)
+//        ref.get().onSuccessListener{
+//
+//        }
 
     }
 

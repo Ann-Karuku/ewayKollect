@@ -34,8 +34,6 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var googleBtn:ImageView
     private lateinit var facebookBtn:ImageView
 
-    private lateinit var progressBar:ProgressBar
-
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private var db=Firebase.firestore
@@ -164,13 +162,11 @@ class UserRegistration : AppCompatActivity() {
         }else{
             if (pass == passRpt) {
 
-                progressBar.visibility= View.VISIBLE
 
                 auth.createUserWithEmailAndPassword(mail, pass)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign up success, update UI with the signed-in user's information
-                            Toast.makeText(this, "Registration success.", Toast.LENGTH_LONG).show()
 
                            val userID= FirebaseAuth.getInstance().currentUser!!.uid
 
@@ -183,7 +179,7 @@ class UserRegistration : AppCompatActivity() {
                             )
                             db.collection("user").document(userID).set(userMap)
                                 .addOnSuccessListener {
-                                    Toast.makeText(this,"Registered",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"Registration success",Toast.LENGTH_SHORT).show()
                                     name.text.clear()
                                     email.text.clear()
                                     phone.text.clear()

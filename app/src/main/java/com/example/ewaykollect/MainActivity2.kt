@@ -21,7 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
+class MainActivity2 : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var drawer : DrawerLayout
 
@@ -33,15 +33,15 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
+        setContentView(R.layout.activity_main2)
+
 
         //find the toolbar
-        var toolbar: Toolbar = findViewById(R.id.toolBar)
+        var toolbar: Toolbar = findViewById(R.id.toolBar2)
         setSupportActionBar(toolbar)
 
         //find the drawer layout
-        drawer = findViewById(R.id.drawerLyt)
+        drawer = findViewById(R.id.drawerLyt2)
 
         //toogle the navDrawer using a hamburger icon.
         var toogle: ActionBarDrawerToggle = ActionBarDrawerToggle(
@@ -58,30 +58,26 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         nav_view.setNavigationItemSelectedListener(this)
 
 
+        //google firebase auth details fetch
+        auth = FirebaseAuth.getInstance()
 
-        val userID= FirebaseAuth.getInstance().currentUser!!.uid
-        val ref=db.collection("user").document(userID)
-        ref.get().addOnSuccessListener {
-            if(it!=null){
-                val name= it.data?.get("name").toString()
-                val email= it.data?.get("email").toString()
-                val phone= it.data?.get("phone").toString()
-                val password= it.data?.get("password").toString()
+        //get name and email from previous intent as supplied by google auth.
+        val displayName = intent.getStringExtra("name")
+        val email = intent.getStringExtra("email")
+        val displayImage=intent.getStringExtra("image")
+
+        //  display the name on the nav_header.
+        var navView:NavigationView=findViewById(R.id.nav_view)
+        var headerview: View =navView.getHeaderView(0)
+        var dispName=headerview.findViewById<TextView>(R.id.nav_name)
+        dispName.setText(displayName)
+        var mail=headerview.findViewById<TextView>(R.id.nav_email)
+        mail.setText(email)
+        var dispImage=headerview.findViewById<ImageView>(R.id.nav_image)
+        Glide.with(this).load(displayImage).into(dispImage)
 
 
-                var nav_view:NavigationView=findViewById(R.id.nav_view)
-                var header_view: View =nav_view.getHeaderView(0)
-                var dpName=header_view.findViewById<TextView>(R.id.nav_name)
-                dpName.setText(name)
-                var dpmail=header_view.findViewById<TextView>(R.id.nav_email)
-                dpmail.setText(email)
-                var dpImage=header_view.findViewById<ImageView>(R.id.nav_image)
-                Glide.with(this).load("https://media.geeksforgeeks.org/wp-content/uploads/20190506164011/logo3.png").into(dpImage)
-            }
-        }
-            .addOnFailureListener{
-                Toast.makeText(this, "Failed to load data", Toast.LENGTH_LONG).show()
-            }
+
     }
 
     override fun onBackPressed() {
@@ -104,13 +100,13 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 ,ProfileFragment()).commit()
             R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
                 ,SettingsFragment()).commit()
-           R.id.nav_FAQs->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-               ,FAQsFragment()).commit()
+            R.id.nav_FAQs->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+                ,FAQsFragment()).commit()
             R.id.nav_logOut->{
-            Firebase.auth.signOut()
-            startActivity(Intent(this, UserLogin::class.java))
+                Firebase.auth.signOut()
+                startActivity(Intent(this, UserLogin::class.java))
+            }
         }
-       }
 
         drawer.closeDrawer(GravityCompat.START)
         return true

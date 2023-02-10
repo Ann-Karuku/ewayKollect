@@ -49,7 +49,7 @@ class UserLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //splash screen delay for 3 seconds
-        Thread.sleep(1000)
+        Thread.sleep(700)
         //install the splash screen to the main activity on launch
         installSplashScreen()
 
@@ -179,7 +179,7 @@ class UserLogin : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken , null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
-                val intent= Intent(this , MainActivity::class.java)
+                val intent= Intent(this , MainActivity2::class.java)
                 intent.putExtra("email" , account.email)
                 intent.putExtra("name" , account.displayName)
                 intent.putExtra("image" ,account.photoUrl.toString())
@@ -205,7 +205,6 @@ class UserLogin : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        intent.putExtra("email" , email)
                         val intent2 = Intent(this, MainActivity::class.java)
                         startActivity(intent2)
                     } else {

@@ -29,6 +29,7 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.security.MessageDigest
 
@@ -43,6 +44,8 @@ class UserLogin : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var callbackManager: CallbackManager
+
+    private var db=Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -179,10 +182,20 @@ class UserLogin : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken , null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
-                val intent= Intent(this , MainActivity2::class.java)
-                intent.putExtra("email" , account.email)
-                intent.putExtra("name" , account.displayName)
-                intent.putExtra("image" ,account.photoUrl.toString())
+                val intent= Intent(this , MainActivity::class.java)
+//                intent.putExtra("email" , account.email)
+//                intent.putExtra("name" , account.displayName)
+//                intent.putExtra("image" ,account.photoUrl.toString())
+
+                val userID= FirebaseAuth.getInstance().currentUser!!.uid
+
+                val userMap= hashMapOf(
+                    "name" to account.displayName,
+                    "email" to account.email
+
+                )
+                db.collection("user").document(userID).set(userMap)
+
                 startActivity(intent)
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()

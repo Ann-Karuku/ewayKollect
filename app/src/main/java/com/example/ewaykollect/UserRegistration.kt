@@ -114,6 +114,7 @@ class UserRegistration : AppCompatActivity() {
                 val intent : Intent = Intent(this , MainActivity::class.java)
                 intent.putExtra("email" , account.email)
                 intent.putExtra("name" , account.displayName)
+                intent.putExtra("image" ,account.photoUrl.toString())
                 startActivity(intent)
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()

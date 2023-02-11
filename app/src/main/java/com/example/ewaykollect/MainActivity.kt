@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
+        //google firebase auth details fetch
+
+
+
         val userID= FirebaseAuth.getInstance().currentUser!!.uid
         val ref=db.collection("user").document(userID)
         ref.get().addOnSuccessListener {
@@ -76,7 +80,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 var dpmail=header_view.findViewById<TextView>(R.id.nav_email)
                 dpmail.setText(email)
                 var dpImage=header_view.findViewById<ImageView>(R.id.nav_image)
-                Glide.with(this).load("https://media.geeksforgeeks.org/wp-content/uploads/20190506164011/logo3.png").into(dpImage)
+                Glide.with(this).load("@drawable/icon.jpg").into(dpImage)
             }
         }
             .addOnFailureListener{

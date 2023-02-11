@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 val email= it.data?.get("email").toString()
                 val phone= it.data?.get("phone").toString()
                 val password= it.data?.get("password").toString()
+                val image=it.data?.get("image").toString()
 
 
                 var nav_view:NavigationView=findViewById(R.id.nav_view)
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 var dpmail=header_view.findViewById<TextView>(R.id.nav_email)
                 dpmail.setText(email)
                 var dpImage=header_view.findViewById<ImageView>(R.id.nav_image)
-                Glide.with(this).load("@drawable/icon.jpg").into(dpImage)
+                Glide.with(this).load(image).into(dpImage)
             }
         }
             .addOnFailureListener{

@@ -183,16 +183,13 @@ class UserLogin : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
                 val intent= Intent(this , MainActivity::class.java)
-//                intent.putExtra("email" , account.email)
-//                intent.putExtra("name" , account.displayName)
-//                intent.putExtra("image" ,account.photoUrl.toString())
 
                 val userID= FirebaseAuth.getInstance().currentUser!!.uid
 
                 val userMap= hashMapOf(
                     "name" to account.displayName,
-                    "email" to account.email
-
+                    "email" to account.email,
+                    "image" to account.photoUrl
                 )
                 db.collection("user").document(userID).set(userMap)
 

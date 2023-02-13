@@ -58,12 +58,12 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         nav_view.setNavigationItemSelectedListener(this)
 
 
+        // Initialize Firebase Auth
+        auth = Firebase.auth
 
         //google firebase auth details fetch
-
-
-
         val userID= FirebaseAuth.getInstance().currentUser!!.uid
+
         val ref=db.collection("user").document(userID)
         ref.get().addOnSuccessListener {
             if(it!=null){

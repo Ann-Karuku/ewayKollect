@@ -33,6 +33,7 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var loginLink: TextView
     private lateinit var googleBtn:ImageView
     private lateinit var facebookBtn:ImageView
+    private lateinit var image:ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -112,9 +113,16 @@ class UserRegistration : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
                 val intent : Intent = Intent(this , MainActivity::class.java)
-                intent.putExtra("email" , account.email)
-                intent.putExtra("name" , account.displayName)
-                intent.putExtra("image" ,account.photoUrl.toString())
+
+                val userID= FirebaseAuth.getInstance().currentUser!!.uid
+
+                val userMap= hashMapOf(
+                    "name" to account.displayName,
+                    "email" to account.email,
+                    "image" to account.photoUrl
+                )
+                db.collection("user").document(userID).set(userMap)
+
                 startActivity(intent)
             }else{
                 Toast.makeText(this, it.exception.toString() , Toast.LENGTH_SHORT).show()

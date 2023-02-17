@@ -101,6 +101,8 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId){
+            R.id.nav_home->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
+                ,HomeFragment()).commit()
             R.id.nav_account->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
                 ,AccountFragment()).commit()
             R.id.nav_notifications->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container

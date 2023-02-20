@@ -19,13 +19,11 @@
         android:theme="@style/Theme.EwayKollect"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity2"
-            android:exported="true"
-            android:theme="@style/CustomTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+            android:name=".CompanyRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterChoice"
+            android:exported="false" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

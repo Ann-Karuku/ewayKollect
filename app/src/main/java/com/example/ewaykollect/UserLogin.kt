@@ -89,7 +89,7 @@ class UserLogin : AppCompatActivity() {
 
 
         registerLink.setOnClickListener {
-                val intent = Intent(this, UserRegistration::class.java)
+                val intent = Intent(this, RegisterChoice::class.java)
                 startActivity(intent)
             }
 

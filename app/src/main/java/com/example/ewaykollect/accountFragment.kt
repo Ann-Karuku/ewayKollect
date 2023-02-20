@@ -18,8 +18,6 @@ import com.google.firebase.ktx.Firebase
 
 class AccountFragment : Fragment() {
     private lateinit var acc_image :ImageView
-    private lateinit var acc_name : TextView
-    private lateinit var acc_email :TextView
 
     private var db= Firebase.firestore
 

@@ -18,7 +18,7 @@
         android:id="@+id/nav_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ann Karuku"
+        android:text="John Doe"
         android:paddingTop="10dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         />
@@ -26,7 +26,7 @@
         android:id="@+id/nav_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="annkaruku@gmail.com"
+        android:text="johndoe@gmail.com"
         />
 
 </LinearLayout>

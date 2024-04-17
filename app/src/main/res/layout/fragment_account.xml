@@ -194,14 +194,15 @@
                     android:layout_margin="10dp"
                     android:textSize="15sp"
                     android:textColor="@color/black"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="See All>>"
                     android:layout_margin="10dp"
-                    android:textSize="15sp"
+                    android:layout_marginLeft="100dp"
+                    android:text="See All>>"
                     android:textColor="@color/blue"
-                    android:layout_marginLeft="100dp"/>
+                    android:textSize="15sp" />
             </LinearLayout>
 
 

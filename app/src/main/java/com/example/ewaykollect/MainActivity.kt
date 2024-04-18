@@ -14,6 +14,8 @@ import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -44,10 +46,8 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         drawer = findViewById(R.id.drawerLyt)
 
         //toogle the navDrawer using a hamburger icon.
-        var toogle: ActionBarDrawerToggle = ActionBarDrawerToggle(
-            this, drawer, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
+        var toogle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawer, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close)
 
         //add a toogle listener
         drawer.addDrawerListener(toogle)
@@ -56,6 +56,12 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //navigation view
         var nav_view: NavigationView = findViewById(R.id.nav_view)
         nav_view.setNavigationItemSelectedListener(this)
+
+        //set default fragment as home
+        if (savedInstanceState==null){
+            replaceFragment(HomeFragment())
+            nav_view.setCheckedItem(R.id.nav_home)
+        }
 
 
         // Initialize Firebase Auth
@@ -89,33 +95,34 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
     }
 
+    private fun replaceFragment(fragment:Fragment) {
+        val transaction :FragmentTransaction =supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container,fragment)
+        transaction.commit()
+    }
+
     override fun onBackPressed() {
 
         if (drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START)
         }else{
-            super.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId){
-            R.id.nav_home->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-                ,HomeFragment()).commit()
-            R.id.nav_account->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-                ,AccountFragment()).commit()
-            R.id.nav_notifications->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-                ,NotificationsFragment()).commit()
-            R.id.nav_profile->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-                ,ProfileFragment()).commit()
-            R.id.nav_settings->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-                ,SettingsFragment()).commit()
-           R.id.nav_FAQs->getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container
-               ,FAQsFragment()).commit()
+            R.id.nav_home->replaceFragment(HomeFragment())
+            R.id.nav_account->replaceFragment(AccountFragment())
+            R.id.nav_notifications->replaceFragment(NotificationsFragment())
+            R.id.nav_profile->replaceFragment(ProfileFragment())
+            R.id.nav_settings->replaceFragment(SettingsFragment())
+            R.id.nav_FAQs->replaceFragment(FAQsFragment())
             R.id.nav_logOut->{
             Firebase.auth.signOut()
             startActivity(Intent(this, UserLogin::class.java))
+                Toast.makeText(this, "logout!", Toast.LENGTH_SHORT).show()
         }
        }
 

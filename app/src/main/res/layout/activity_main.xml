@@ -42,7 +42,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"/>
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/other_green"/>
 
 
 

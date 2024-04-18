@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
         }
             .addOnFailureListener{
-                Toast.makeText(this, "Failed to load data", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Failed to load data", Toast.LENGTH_SHORT).show()
             }
     }
 

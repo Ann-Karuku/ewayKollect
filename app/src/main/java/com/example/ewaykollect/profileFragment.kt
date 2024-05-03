@@ -18,10 +18,6 @@ import com.google.firebase.ktx.Firebase
 class ProfileFragment : Fragment() {
 
     private lateinit var prof_Logout :TextView
-    private lateinit var prof_image :TextView
-    private lateinit var prof_name :TextView
-    private lateinit var prof_email :TextView
-    private lateinit var prof_phone :TextView
 
     private var db= Firebase.firestore
 
@@ -61,7 +57,7 @@ class ProfileFragment : Fragment() {
             }
         }
             .addOnFailureListener{
-                Toast.makeText(this.context, "Failed to load data", Toast.LENGTH_LONG).show()
+                Toast.makeText(this.context, "Failed to load data", Toast.LENGTH_SHORT).show()
             }
 
 

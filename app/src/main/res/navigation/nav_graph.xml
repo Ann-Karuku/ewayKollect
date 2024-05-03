@@ -3,23 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/accountFragment">
-
+    app:startDestination="@id/accountFragment2">
     <fragment
-        android:id="@+id/accountFragment"
+        android:id="@+id/accountFragment2"
         android:name="com.example.ewaykollect.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
-            android:id="@+id/action_accountFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_accountFragment2_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.ewaykollect.ProfileFragment"
-        android:label="ProfileFragment" >
-        <action
-            android:id="@+id/action_profileFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
-    </fragment>
+        android:id="@+id/homeFragment2"
+        android:name="com.example.ewaykollect.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>

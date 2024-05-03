@@ -16,6 +16,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +30,7 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var drawer : DrawerLayout
+    private lateinit var navController: NavController
 
     //for firebase authentication
     private lateinit var auth : FirebaseAuth
@@ -56,6 +61,12 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         //navigation view
         var nav_view: NavigationView = findViewById(R.id.nav_view)
         nav_view.setNavigationItemSelectedListener(this)
+
+        // Find the NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+
 
         //set default fragment as home
         if (savedInstanceState==null){
@@ -129,4 +140,7 @@ class MainActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+
+
 }

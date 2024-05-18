@@ -2,24 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
     app:startDestination="@id/accountFragment">
 
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.ewaykollect.AccountFragment"
-        android:label="fragment_account"
+        android:label="AccountFragment"
         tools:layout="@layout/fragment_account" >
-        <action
-            android:id="@+id/action_accountFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+    <action
+        android:id="@+id/action_accountFragment_to_homeFragment"
+        app:destination="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.ewaykollect.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:id="@+id/homeFragment"
+        android:name="com.example.ewaykollect.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_profileFragment_to_accountFragment"
+            android:id="@+id/action_homeFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
     </fragment>
 </navigation>

@@ -1,40 +1,29 @@
 package com.example.ewaykollect
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class AccountFragment : Fragment() {
-    private lateinit var acc_image :ImageView
-
-    private var db= Firebase.firestore
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+        val root: View = inflater.inflate(R.layout.fragment_account, container, false)
 
-        var root:View=inflater.inflate(R.layout.fragment_account, container, false)
-
-
-
-
+        val myEwasteItems = root.findViewById<CardView>(R.id.cdvw_my_ewaste)
+        myEwasteItems.setOnClickListener {
+            // Check if the current destination is AccountFragment
+            if (findNavController().currentDestination?.id == R.id.accountFragment) {
+                // Navigate to HomeFragment using the generated action
+                findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
+            }
+        }
         return root
-
     }
-
 }

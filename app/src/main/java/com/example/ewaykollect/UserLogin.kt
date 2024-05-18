@@ -63,7 +63,7 @@ class UserLogin : AppCompatActivity() {
         val networkStatus: String? = receiver.status
         val filter = IntentFilter(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)
         this.registerReceiver(connectivityReceiver(), filter)
-        Toast.makeText(applicationContext, networkStatus, Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, networkStatus, Toast.LENGTH_SHORT).show()
 
         printHashKey(applicationContext)
 
@@ -219,7 +219,7 @@ class UserLogin : AppCompatActivity() {
                         startActivity(intent2)
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(this, "Incorrect email/password", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Incorrect email/password", Toast.LENGTH_SHORT).show()
                     }
                 }
         }

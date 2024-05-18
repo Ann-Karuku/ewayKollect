@@ -32,7 +32,7 @@ class Networkstatus {
         } else if (connStatus == TYPE_MOBILE) {
             status = "Mobile data enabled"
         } else if (connStatus == TYPE_NOT_CONNECTED) {
-            status = "Not connected to Internet.Enable WiFi or data."
+            status = "Not connected to Internet.Enable WiFi or data"
         }
         return status
     }

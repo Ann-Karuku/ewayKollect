@@ -6,10 +6,10 @@ import android.content.Intent
 import android.widget.Toast
 
 class connectivityReceiver : BroadcastReceiver() {
-    var status: String?=""
 
+    var status: String? = ""
     override fun onReceive(context: Context?, intent: Intent?) {
-        status = Networkstatus().getConnectivityStatusString(context)
+         status = Networkstatus().getConnectivityStatusString(context)
 
         Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
 

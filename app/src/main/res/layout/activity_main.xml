@@ -23,11 +23,10 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentContainerView"
+                android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -45,7 +44,5 @@
         app:menu="@menu/drawer_menu"
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/other_green"/>
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

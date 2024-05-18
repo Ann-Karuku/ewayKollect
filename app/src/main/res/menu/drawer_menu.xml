@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view"
-    >
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="@string/NavDrawer_home" />
         <item android:id="@+id/nav_account"
             android:icon="@drawable/ic_account"
-            android:title="Account"/>
+            android:title="@string/NavDrawer_account"/>
         <item android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_baseline_notifications_24"
-            android:title="Notifications"/>
+            android:title="@string/NavDrawer_notifications"/>
         <item android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
-            android:title="Profile"/>
+            android:title="@string/NavDrawer_profile"/>
         <item android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
-            android:title="Settings"/>
+            android:title="@string/NavDrawer_settings"/>
     </group>
 
-    <item android:title="Other">
+    <item android:title="@string/NavDrawer_other">
         <menu>
             <group>
                 <item android:id="@+id/nav_FAQs"
                     android:icon="@drawable/ic_faqs"
-                    android:title="FAQs"/>
+                    android:title="@string/NavDrawer_faqs"/>
                 <item android:id="@+id/nav_logOut"
                     android:icon="@drawable/ic_baseline_exit_to_app_24"
-                    android:title="Logout"/>
+                    android:title="@string/NavDrawer_logout"/>
             </group>
-
         </menu>
     </item>
 </menu>

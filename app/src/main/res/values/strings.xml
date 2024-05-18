@@ -9,6 +9,25 @@
     <string name="facebook_app_id">1801695900214650</string>
     <string name="fb_login_protocol_scheme">fb1801695900214650</string>
     <string name="facebook_client_token">021f3973bdd8b9e373bf1917cc67eb6d</string>
-
+    //navigation Drawer strings
+    <string name="NavDrawer_home">Home</string>
+    <string name="NavDrawer_account">Account</string>
+    <string name="NavDrawer_notifications">Notifications</string>
+    <string name="NavDrawer_profile">Profile</string>
+    <string name="NavDrawer_settings">Settings</string>
+    <string name="NavDrawer_other">Other</string>
+    <string name="NavDrawer_faqs">FAQs</string>
+    <string name="NavDrawer_logout">Logout</string>
+    //navigation Header
+    <string name="navigation_header">Navigation header</string>
+    <string name="mail">johndoe@gmail.com</string>
+    <string name="user">John Doe</string>
+    //Other Strings
+    <string name="imageView">imageView</string>
+    <string name="accounts_dashboard">Accounts Dashboard</string>
+    <string name="resources">Resources</string>
+    <string name="recyclers">Recyclers</string>
+    <string name="my_e_waste">My E-Waste</string>
+    <string name="my_items">My Items</string>
 
 </resources>

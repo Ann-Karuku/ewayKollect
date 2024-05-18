@@ -11,22 +11,19 @@
     android:id="@+id/nav_image"
     android:layout_width="64dp"
     android:layout_height="64dp"
-    android:contentDescription="Navigation header"
-    android:src="@drawable/icon"
-    />
+    android:contentDescription="@string/navigation_header"
+    android:src="@drawable/icon"/>
     <TextView
         android:id="@+id/nav_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="John Doe"
+        android:text="@string/user"
         android:paddingTop="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
     <TextView
         android:id="@+id/nav_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="johndoe@gmail.com"
-        />
+        android:text="@string/mail"/>
 
 </LinearLayout>

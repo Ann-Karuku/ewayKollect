@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/accountFragment"
+    android:id="@+id/accountFragmentDash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
         <View
             android:id="@+id/top_view"
             android:layout_width="match_parent"
@@ -42,19 +43,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/imageView"
                         android:src="@drawable/ic_bin" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="My E-Waste"
+                        android:text="@string/my_e_waste"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -75,17 +78,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:contentDescription="@string/imageView"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_dark_phone" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Recyclers"
+                        android:text="@string/recyclers"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -106,17 +111,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/imageView"
                         android:src="@drawable/ic_dark_phone" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="My Items"
+                        android:text="@string/my_items"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -137,17 +144,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:contentDescription="@string/imageView"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_dark_phone" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="My Items"
+                        android:text="@string/my_items"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -168,17 +177,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:contentDescription="@string/imageView"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_dark_phone" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="My Items"
+                        android:text="@string/my_items"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -200,17 +211,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/imageView"
                         android:src="@drawable/ic_dark_phone" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Resources"
+                        android:text="@string/resources"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -218,16 +231,11 @@
             </androidx.cardview.widget.CardView>
         </GridLayout>
 
-    <ScrollView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-    </ScrollView>
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Accounts Dashboard"
+            android:text="@string/accounts_dashboard"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"

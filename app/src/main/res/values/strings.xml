@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">New blank fragment</string>
 
     //facebook login strings
     <string name="facebook_app_id">1801695900214650</string>
@@ -25,9 +25,9 @@
     //Other Strings
     <string name="imageView">imageView</string>
     <string name="accounts_dashboard">Accounts Dashboard</string>
-    <string name="resources">Resources</string>
+    <string name="info_center">Info Center</string>
     <string name="recyclers">Recyclers</string>
     <string name="my_e_waste">My E-Waste</string>
-    <string name="my_items">My Items</string>
-
+    <string name="reports">My Reports</string>
+    <string name="feedback_support">Support</string>
 </resources>

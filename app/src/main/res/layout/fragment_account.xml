@@ -85,7 +85,7 @@
                         android:layout_height="60dp"
                         android:contentDescription="@string/imageView"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_dark_phone" />
+                        android:src="@drawable/icons8_recycle" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -118,12 +118,12 @@
                         android:layout_height="60dp"
                         android:layout_gravity="center_horizontal"
                         android:contentDescription="@string/imageView"
-                        android:src="@drawable/ic_dark_phone" />
+                        android:src="@drawable/ic_baseline_notifications_24" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/my_items"
+                        android:text="@string/NavDrawer_notifications"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -151,18 +151,17 @@
                         android:layout_height="60dp"
                         android:contentDescription="@string/imageView"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_dark_phone" />
+                        android:src="@drawable/icon_reports" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/my_items"
+                        android:text="@string/reports"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,29 +172,29 @@
                 android:layout_margin="12dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="12dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:contentDescription="@string/imageView"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_dark_phone" />
+                        android:contentDescription="@string/imageView"
+                        android:src="@drawable/icons8_info" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/my_items"
+                        android:text="@string/info_center"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,24 +205,23 @@
                 android:layout_margin="12dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="12dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="vertical"
+                    android:gravity="center"
                     tools:ignore="UseCompoundDrawables">
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_gravity="center_horizontal"
                         android:contentDescription="@string/imageView"
-                        android:src="@drawable/ic_dark_phone" />
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icons8_feedback_hub" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/resources"
+                        android:text="@string/feedback_support"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />

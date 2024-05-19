@@ -12,6 +12,9 @@
     <action
         android:id="@+id/action_accountFragment_to_homeFragment"
         app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_myEwaste"
+            app:destination="@id/myEwaste" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -20,6 +23,15 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myEwaste"
+        android:name="com.example.ewaykollect.myEwaste"
+        android:label="fragment_my_ewaste"
+        tools:layout="@layout/fragment_my_ewaste" >
+        <action
+            android:id="@+id/action_myEwaste_to_accountFragment"
             app:destination="@id/accountFragment" />
     </fragment>
 </navigation>

@@ -21,7 +21,7 @@ class AccountFragment : Fragment() {
             // Check if the current destination is AccountFragment
             if (findNavController().currentDestination?.id == R.id.accountFragment) {
                 // Navigate to HomeFragment using the generated action
-                findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_accountFragment_to_myEwaste)
             }
         }
         return root

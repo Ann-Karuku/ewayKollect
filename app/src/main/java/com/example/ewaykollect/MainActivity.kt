@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Set up ActionBar with Navigation Controller
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_account, R.id.nav_notifications, R.id.nav_profile, R.id.nav_settings
+            R.id.nav_home, R.id.nav_account, R.id.nav_profile, R.id.nav_settings
         ), drawer)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -96,8 +96,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_home -> navController.navigate(R.id.homeFragment)
-            R.id.nav_account -> navController.navigate(R.id.accountFragment)
+            R.id.nav_home -> {
+                navController.navigate(R.id.homeFragment)
+            }
+            R.id.nav_account -> {
+                navController.navigate(R.id.accountFragment)
+            }
+            R.id.nav_profile -> {
+                navController.navigate(R.id.myEwaste)
+            }
             // Other layouts here
             R.id.nav_logOut -> {
                 auth.signOut()

@@ -1,0 +1,99 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddEwasteDialogFragment">
+
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_a_new_item"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:textSize="35sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtName"
+        android:layout_below="@id/signUp"
+        android:background="#30ffffff"
+        android:hint="@string/item_name"
+        android:textColorHint="@color/black"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:padding="16dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_below="@id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#30ffffff"
+        android:textColorHint="@color/black"
+        android:textSize="15sp"
+        android:padding="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtNo"
+        android:layout_below="@id/spinnerType"
+        android:background="#30ffffff"
+        android:inputType="phone"
+        android:hint="@string/number_of_items"
+        android:textSize="15sp"
+        android:textColorHint="@color/black"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:padding="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtState"
+        android:layout_below="@id/edtNo"
+        android:background="#30ffffff"
+        android:hint="@string/describe_state_of_electronic"
+        android:inputType="text"
+        android:textSize="15sp"
+        android:textColorHint="@color/black"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/buttonUploadPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtState"
+        android:text="@string/upload_a_photo"
+        android:background="#30ffffff"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:padding="16dp"
+        android:minHeight="48dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/uploadbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonUploadPhoto"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/main_green"
+        android:text="@string/upload"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:minHeight="48dp"/>
+</RelativeLayout>

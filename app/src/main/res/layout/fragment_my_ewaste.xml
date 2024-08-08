@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/myEwasteFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".myEwaste">
+    tools:context=".MyEwasteFragment">
 
+    <!-- Title TextView -->
     <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_e_waste_items"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"/>
+
+    <!-- RecyclerView for e-waste items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEwasteItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="my ewaste fragment"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textSize="30sp"
-        />
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:scrollbars="vertical"/>
+
+    <!-- FloatingActionButton for adding new items -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/add"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/other_green"/>
 
 </FrameLayout>

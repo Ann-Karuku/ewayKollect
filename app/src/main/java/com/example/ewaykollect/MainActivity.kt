@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var auth: FirebaseAuth
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawer: DrawerLayout
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var googleSignInClient: GoogleSignInClient // Declare the GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navView.setNavigationItemSelectedListener(this)
 
+        // Initialize Google Sign-In client
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         // Fetch Firebase auth details
         val userID = auth.currentUser?.uid
         userID?.let {
@@ -103,19 +113,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navController.navigate(R.id.accountFragment)
             }
             R.id.nav_profile -> {
-                navController.navigate(R.id.myEwaste)
+                navController.navigate(R.id.profileFragment)
+            }
+            R.id.nav_FAQs -> {
+                navController.navigate(R.id.FAQsFragment)
             }
             // Other layouts here
             R.id.nav_logOut -> {
-                auth.signOut()
-                startActivity(Intent(this, UserLogin::class.java))
-                Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show()
-                finish()
+                signOut()
             }
         }
 
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun signOut() {
+        // Sign out from Firebase
+        auth.signOut()
+
+        // Sign out from Google
+        googleSignInClient.signOut().addOnCompleteListener(this) {
+            if (it.isSuccessful) {
+                // Redirect to login screen
+                startActivity(Intent(this, UserLogin::class.java))
+                Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                Toast.makeText(this, "Failed to log out from Google", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

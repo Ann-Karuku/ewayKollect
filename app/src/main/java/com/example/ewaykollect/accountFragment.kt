@@ -1,5 +1,6 @@
 package com.example.ewaykollect
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 
 class AccountFragment : Fragment() {
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,8 +22,16 @@ class AccountFragment : Fragment() {
         myEwasteItems.setOnClickListener {
             // Check if the current destination is AccountFragment
             if (findNavController().currentDestination?.id == R.id.accountFragment) {
-                // Navigate to HomeFragment using the generated action
+                // Navigate to other EWaste Fragment using the generated action
                 findNavController().navigate(R.id.action_accountFragment_to_myEwaste)
+            }
+        }
+        val myNotifications = root.findViewById<CardView>(R.id.cdvw_my_notifications)
+        myNotifications.setOnClickListener {
+            // Check if the current destination is AccountFragment
+            if (findNavController().currentDestination?.id == R.id.accountFragment) {
+                // Navigate to other EWaste Fragment using the generated action
+                findNavController().navigate(R.id.action_accountFragment_to_notificationsFragment)
             }
         }
         return root

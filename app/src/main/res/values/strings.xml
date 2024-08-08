@@ -30,4 +30,12 @@
     <string name="my_e_waste">My E-Waste</string>
     <string name="reports">My Reports</string>
     <string name="feedback_support">Support</string>
+    <string name="my_e_waste_items">My E-Waste Items</string>
+    <string name="choose_type">Choose Type</string>
+    <string name="number_of_items">Number of Items</string>
+    <string name="describe_state_of_electronic">Describe state of electronic</string>
+    <string name="upload_a_photo">upload a photo</string>
+    <string name="upload">Upload</string>
+    <string name="upload_a_new_item">Upload a new Item</string>
+    <string name="item_name">Item Name</string>
 </resources>

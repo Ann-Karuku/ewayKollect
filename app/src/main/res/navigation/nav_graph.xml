@@ -39,12 +39,15 @@
     </fragment>
     <fragment
         android:id="@+id/myEwaste"
-        android:name="com.example.ewaykollect.myEwaste"
+        android:name="com.example.ewaykollect.MyEwasteFragment"
         android:label="fragment_my_ewaste"
         tools:layout="@layout/fragment_my_ewaste" >
         <action
             android:id="@+id/action_myEwaste_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_myEwaste_to_addEwasteDialogFragment"
+            app:destination="@id/addEwasteDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -82,4 +85,13 @@
             android:id="@+id/action_FAQsFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/addEwasteDialogFragment"
+        android:name="com.example.ewaykollect.AddEwasteDialogFragment"
+        android:label="fragment_add_ewaste"
+        tools:layout="@layout/fragment_add_ewaste" >
+        <action
+            android:id="@+id/action_addEwasteDialogFragment_to_myEwaste"
+            app:destination="@id/myEwaste" />
+    </dialog>
 </navigation>

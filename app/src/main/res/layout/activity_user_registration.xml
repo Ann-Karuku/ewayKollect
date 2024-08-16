@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +11,7 @@
         android:id="@+id/signUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create an account"
+        android:text="@string/create_an_account"
         android:textColor="@color/white"
         android:gravity="center"
         android:layout_margin="20dp"
@@ -25,13 +24,13 @@
             android:id="@+id/edtName"
             android:layout_below="@id/signUp"
             android:background="#30ffffff"
-            android:hint="name"
+            android:hint="@string/name"
             android:textColorHint="@color/white"
             android:textSize="15sp"
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+            android:drawableStart="@drawable/ic_baseline_person_outline_24"
             android:drawablePadding="20dp"/>
 
         <EditText
@@ -40,13 +39,13 @@
             android:id="@+id/edtEmail"
             android:layout_below="@id/edtName"
             android:background="#30ffffff"
-            android:hint="email"
+            android:hint="@string/email"
             android:textColorHint="@color/white"
             android:textSize="15sp"
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:drawableStart="@drawable/ic_baseline_email_24"
             android:drawablePadding="20dp"/>
         <EditText
             android:layout_width="match_parent"
@@ -55,13 +54,13 @@
             android:layout_below="@id/edtEmail"
             android:background="#30ffffff"
             android:inputType="phone"
-            android:hint="phone"
+            android:hint="@string/phone"
             android:textSize="15sp"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:drawableLeft="@drawable/ic_baseline_phone_24"
+            android:drawableStart="@drawable/ic_baseline_phone_24"
             android:drawablePadding="20dp"/>
         <EditText
             android:layout_width="match_parent"
@@ -69,14 +68,14 @@
             android:id="@+id/edtPassword"
             android:layout_below="@id/edtPhone"
             android:background="#30ffffff"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textSize="15sp"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:drawableLeft="@drawable/ic_baseline_info_24"
+            android:drawableStart="@drawable/ic_baseline_info_24"
             android:drawablePadding="20dp"/>
         <EditText
             android:layout_width="match_parent"
@@ -84,14 +83,14 @@
             android:id="@+id/edtRepeatPass"
             android:layout_below="@id/edtPassword"
             android:background="#30ffffff"
-            android:hint="repeat password"
+            android:hint="@string/repeat_password"
             android:inputType="textPassword"
             android:textSize="15sp"
             android:textColorHint="@color/white"
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
-            android:drawableLeft="@drawable/ic_baseline_info_24"
+            android:drawableStart="@drawable/ic_baseline_info_24"
             android:drawablePadding="20dp"/>
 
         <com.google.android.material.button.MaterialButton
@@ -105,7 +104,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/main_green"
-            android:text="Register"
+            android:text="@string/register"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -113,7 +112,7 @@
             android:id="@+id/txt_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Have an account?"
+            android:text="@string/have_an_account"
             android:textColor="@color/white"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/signUpBtn"/>
@@ -122,17 +121,17 @@
             android:id="@+id/loginLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/login"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/signUpBtn"
-            android:layout_toRightOf="@id/txt_login"/>
+            android:layout_toEndOf="@id/txt_login"/>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="or sign-in with"
+            android:text="@string/or_sign_in_with"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
             android:layout_above="@id/socials"/>
@@ -154,7 +153,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="or"
+                    android:text="@string/or"
                     android:layout_margin="20dp"
                     />
                 <ImageView

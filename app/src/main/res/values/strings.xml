@@ -38,4 +38,16 @@
     <string name="upload">Upload</string>
     <string name="upload_a_new_item">Upload a new Item</string>
     <string name="item_name">Item Name</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+    <string name="password">password</string>
+    <string name="repeat_password">repeat password</string>
+    <string name="register">Register</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="login">Login</string>
+    <string name="or_sign_in_with">or sign-in with</string>
+    <string name="or">or</string>
+    <string name="floating_btn">floating_btn</string>
 </resources>

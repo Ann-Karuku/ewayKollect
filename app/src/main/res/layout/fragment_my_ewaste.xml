@@ -35,6 +35,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/add"
         app:tint="@android:color/white"
-        app:backgroundTint="@color/other_green"/>
+        app:backgroundTint="@color/other_green"
+        android:contentDescription="@string/floating_btn" />
 
 </FrameLayout>

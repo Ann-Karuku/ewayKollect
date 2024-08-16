@@ -37,16 +37,17 @@
          android:layout_gravity="center"
          android:src="@drawable/icon"
          />
+
         <ImageView
             android:id="@+id/edt_camera"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_camera"
-            android:layout_marginTop="53dp"
-            android:layout_marginRight="110dp"
             android:layout_gravity="right|center"
+            android:layout_marginTop="53dp"
+            android:layout_marginEnd="110dp"
+            android:src="@drawable/ic_camera"
 
-            />
+            tools:ignore="RtlHardcoded" />
     </FrameLayout>
 
      <TextView

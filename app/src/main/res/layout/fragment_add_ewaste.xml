@@ -19,9 +19,9 @@
         android:textStyle="bold"/>
 
     <EditText
+        android:id="@+id/edtEName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtName"
         android:layout_below="@id/signUp"
         android:background="@color/signup_grey"
         android:hint="@string/item_name"
@@ -29,26 +29,24 @@
         android:textSize="15sp"
         android:layout_margin="10dp"
         android:textColor="@color/black"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:textCursorDrawable="@drawable/custom_cursor"/>
 
     <Spinner
         android:id="@+id/spinnerType"
-        android:layout_below="@id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/edtEName"
         android:layout_margin="10dp"
         android:background="@color/signup_grey"
-        android:textColorHint="@color/black"
-        android:textSize="15sp"
-        android:padding="16dp"
-        android:spinnerMode="dropdown"
-        />
+        android:spinnerMode="dropdown" />
+
 
 
     <EditText
+        android:id="@+id/edtENo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtNo"
         android:layout_below="@id/spinnerType"
         android:background="@color/signup_grey"
         android:inputType="phone"
@@ -57,13 +55,14 @@
         android:textColorHint="@color/black"
         android:layout_margin="10dp"
         android:textColor="@color/black"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:textCursorDrawable="@drawable/custom_cursor"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edtState"
-        android:layout_below="@id/edtNo"
+        android:layout_below="@id/edtENo"
         android:background="@color/signup_grey"
         android:hint="@string/describe_state_of_electronic"
         android:inputType="text"
@@ -73,8 +72,9 @@
         android:textColor="@color/black"
         android:padding="16dp"/>
 
+
     <Button
-        android:id="@+id/buttonUploadPhoto"
+        android:id="@+id/btnUploadPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/edtState"
@@ -85,18 +85,27 @@
         android:textColor="@color/black"
         android:textSize="13sp"
         android:padding="16dp"
-        android:minHeight="48dp"/>
+        android:minHeight="48dp"
+        android:textCursorDrawable="@drawable/custom_cursor"/>
 
+    <ImageView
+        android:id="@+id/imageEView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/btnUploadPhoto"
+        android:layout_margin="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_camera" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/uploadbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonUploadPhoto"
+        android:layout_below="@id/imageEView"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:backgroundTint="@color/main_green"
-        android:text="@string/upload"
+        android:text="@string/submit"
         android:textSize="16sp"
         android:textStyle="bold"
         android:padding="16dp"

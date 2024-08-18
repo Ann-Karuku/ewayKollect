@@ -1,23 +1,44 @@
 package com.example.ewaykollect
+
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class AddEwasteDialogFragment : DialogFragment() {
+
+    // DB initialization
+    private val db = Firebase.firestore
+    private lateinit var storageReference: StorageReference
+    private var selectedImageUri: Uri? = null
+
+    // Permission request code
+    private val PERMISSION_REQUEST_CODE = 100
+    private val IMAGE_PICK_CODE = 1000
+
     // Categorized list of e-waste items
     private val items = arrayOf(
-        "Mobile Phones", "Tablets", "Laptops",
+        "Select EWaste type", "Mobile Phones", "Tablets", "Laptops",
         "Desktop Computers", "Monitors", "Printers",
         "Televisions", "Remote Controls", "DVD Players",
         "Washing Machines", "Refrigerators", "Microwaves",
@@ -31,19 +52,119 @@ class AddEwasteDialogFragment : DialogFragment() {
         // Inflate your custom layout for the dialog
         val root: View = inflater.inflate(R.layout.fragment_add_ewaste, container, false)
 
-        // Find the Spinner in the inflated layout
+        // Initialize Firebase and Storage Reference
+        storageReference = FirebaseStorage.getInstance().reference
+
+        // Find views
+        val edtEName = root.findViewById<EditText>(R.id.edtEName)
+        val edtNo = root.findViewById<EditText>(R.id.edtENo)
+        val edtState = root.findViewById<EditText>(R.id.edtState)
+        val buttonUploadPhoto = root.findViewById<Button>(R.id.btnUploadPhoto)
+        val uploadBtn = root.findViewById<com.google.android.material.button.MaterialButton>(R.id.uploadbtn)
         val spinner = root.findViewById<Spinner>(R.id.spinnerType)
 
-        // Creating an ArrayAdapter using the EwasteItems array and a custom layout
-        val arrayAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item,
-            items
-        )
-
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Creating an ArrayAdapter using the EwasteItems array
+        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
         spinner.adapter = arrayAdapter
 
+        // Check and request permissions
+        checkAndRequestPermissions()
+
+        // Handle photo upload button click
+        buttonUploadPhoto.setOnClickListener {
+            // Using a hardcoded image from drawable resources
+            selectedImageUri = Uri.parse("android.resource://${requireContext().packageName}/drawable/sample_image")
+            Log.d("UploadDebug", "Hardcoded image URI: $selectedImageUri")
+            val imageEView = view?.findViewById<ImageView>(R.id.imageEView)
+            imageEView?.setImageURI(selectedImageUri)
+        }
+
+        // Handle form submission
+        uploadBtn.setOnClickListener {
+            val itemName = edtEName.text.toString().trim()
+            val itemType = spinner.selectedItem.toString()
+            val itemNo = edtNo.text.toString().trim()
+            val itemState = edtState.text.toString().trim()
+
+            if (itemName.isNotEmpty() && itemType != "Select EWaste type" && itemNo.isNotEmpty() && itemState.isNotEmpty()) {
+                if (selectedImageUri != null) {
+                    uploadImageAndSaveData(itemName, itemType, itemNo, itemState)
+                } else {
+                    Toast.makeText(requireContext(), "Please upload an image", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return root
+    }
+
+    private fun checkAndRequestPermissions() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("PermissionDebug", "Read External Storage permission granted")
+            } else {
+                Toast.makeText(requireContext(), "Permission denied. Cannot access external storage.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun uploadImageAndSaveData(itemName: String, itemType: String, itemNo: String, itemState: String) {
+        val imageRef = storageReference.child("ewaste_images/${System.currentTimeMillis()}.jpg")
+
+        Log.d("UploadDebug", "Starting upload for: $selectedImageUri")
+
+        selectedImageUri?.let {
+            imageRef.putFile(it)
+                .addOnSuccessListener {
+                    Log.d("UploadDebug", "Upload successful")
+                    imageRef.downloadUrl.addOnSuccessListener { uri ->
+                        Log.d("UploadDebug", "Download URL: $uri")
+                        val imageUrl = uri.toString()
+                        saveDataToFirestore(itemName, itemType, itemNo, itemState, imageUrl)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("UploadDebug", "Failed to upload image: ${exception.message}")
+                    Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+                }
+        } ?: run {
+            Log.e("UploadDebug", "No image URI available for upload")
+        }
+    }
+
+    private fun saveDataToFirestore(itemName: String, itemType: String, itemNo: String, itemState: String, imageUrl: String) {
+        val ewasteItem = mapOf(
+            "name" to itemName,
+            "type" to itemType,
+            "number" to itemNo,
+            "state" to itemState,
+            "imageUrl" to imageUrl
+        )
+
+        db.collection("EwasteItems")
+            .add(ewasteItem)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Item uploaded successfully", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to upload item", Toast.LENGTH_SHORT).show()
+            }
     }
 }

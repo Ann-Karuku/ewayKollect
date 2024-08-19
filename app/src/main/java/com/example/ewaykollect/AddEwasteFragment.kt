@@ -28,7 +28,7 @@ import com.google.firebase.storage.StorageReference
 class AddEwasteDialogFragment : DialogFragment() {
 
     // DB initialization
-    private val db = Firebase.firestore
+    private var db = Firebase.firestore
     private lateinit var storageReference: StorageReference
     private var selectedImageUri: Uri? = null
 
@@ -64,7 +64,7 @@ class AddEwasteDialogFragment : DialogFragment() {
         val spinner = root.findViewById<Spinner>(R.id.spinnerType)
 
         // Creating an ArrayAdapter using the EwasteItems array
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
+        val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
         spinner.adapter = arrayAdapter
 
         // Check and request permissions
@@ -72,11 +72,7 @@ class AddEwasteDialogFragment : DialogFragment() {
 
         // Handle photo upload button click
         buttonUploadPhoto.setOnClickListener {
-            // Using a hardcoded image from drawable resources
-            selectedImageUri = Uri.parse("android.resource://${requireContext().packageName}/drawable/sample_image")
-            Log.d("UploadDebug", "Hardcoded image URI: $selectedImageUri")
-            val imageEView = view?.findViewById<ImageView>(R.id.imageEView)
-            imageEView?.setImageURI(selectedImageUri)
+            openImagePicker()
         }
 
         // Handle form submission
@@ -104,11 +100,9 @@ class AddEwasteDialogFragment : DialogFragment() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
             != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(
-                requireActivity(),
+            ActivityCompat.requestPermissions(requireActivity(),
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_CODE
-            )
+                PERMISSION_REQUEST_CODE)
         }
     }
 
@@ -124,10 +118,31 @@ class AddEwasteDialogFragment : DialogFragment() {
         }
     }
 
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            selectedImageUri = data.data
+            Log.d("UploadDebug", "Image URI received: $selectedImageUri")
+            val imageEView = view?.findViewById<ImageView>(R.id.imageEView)
+            imageEView?.setImageURI(selectedImageUri)
+        } else {
+            Log.d("UploadDebug", "No image selected or operation cancelled")
+        }
+    }
+
     private fun uploadImageAndSaveData(itemName: String, itemType: String, itemNo: String, itemState: String) {
-        val imageRef = storageReference.child("ewaste_images/${System.currentTimeMillis()}.jpg")
+        val imageRef = storageReference.child("eway_images/${System.currentTimeMillis().toString()}.jpg")
 
         Log.d("UploadDebug", "Starting upload for: $selectedImageUri")
+        Log.d("UploadDebug", "Selected Image URI: $selectedImageUri")
+        Log.d("UploadDebug", "Storage Reference Path: ${imageRef.path}")
+
 
         selectedImageUri?.let {
             imageRef.putFile(it)

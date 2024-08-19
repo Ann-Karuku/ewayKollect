@@ -5,6 +5,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">New blank fragment</string>
 
+    //google auth
+    <string name="default_web_client_id">487355332925-gngaumpnnfh6oflht67b3f0388ggh53k.apps.googleusercontent.com</string>
+
     //facebook login strings
     <string name="facebook_app_id">1801695900214650</string>
     <string name="fb_login_protocol_scheme">fb1801695900214650</string>

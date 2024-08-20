@@ -39,7 +39,8 @@
         android:layout_below="@id/edtEName"
         android:layout_margin="10dp"
         android:background="@color/signup_grey"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:padding="16dp"/>
 
 
 
@@ -70,7 +71,8 @@
         android:textColorHint="@color/black"
         android:layout_margin="10dp"
         android:textColor="@color/black"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:textCursorDrawable="@drawable/custom_cursor"/>
 
 
     <Button

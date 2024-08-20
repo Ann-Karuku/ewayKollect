@@ -24,6 +24,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.io.File
 
 class AddEwasteDialogFragment : DialogFragment() {
 
@@ -137,29 +138,32 @@ class AddEwasteDialogFragment : DialogFragment() {
     }
 
     private fun uploadImageAndSaveData(itemName: String, itemType: String, itemNo: String, itemState: String) {
-        val imageRef = storageReference.child("eway_images/${System.currentTimeMillis().toString()}.jpg")
+        val imageRef = storageReference.child("eway_images/${System.currentTimeMillis()}.jpg")
 
-        Log.d("UploadDebug", "Starting upload for: $selectedImageUri")
-        Log.d("UploadDebug", "Selected Image URI: $selectedImageUri")
-        Log.d("UploadDebug", "Storage Reference Path: ${imageRef.path}")
+        selectedImageUri?.let { uri ->
+            try {
+                // Open the input stream from the URI using the content resolver
+                val stream = requireContext().contentResolver.openInputStream(uri)
 
-
-        selectedImageUri?.let {
-            imageRef.putFile(it)
-                .addOnSuccessListener {
-                    Log.d("UploadDebug", "Upload successful")
-                    imageRef.downloadUrl.addOnSuccessListener { uri ->
-                        Log.d("UploadDebug", "Download URL: $uri")
-                        val imageUrl = uri.toString()
-                        saveDataToFirestore(itemName, itemType, itemNo, itemState, imageUrl)
+                if (stream != null) {
+                    // Upload the stream to Firebase Storage
+                    val uploadTask = imageRef.putStream(stream)
+                    uploadTask.addOnSuccessListener {
+                        imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                            val imageUrl = downloadUri.toString()
+                            saveDataToFirestore(itemName, itemType, itemNo, itemState, imageUrl)
+                        }
+                    }.addOnFailureListener { exception ->
+                        Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(requireContext(), "Failed to open image file", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener { exception ->
-                    Log.e("UploadDebug", "Failed to upload image: ${exception.message}")
-                    Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
-                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Error uploading image", Toast.LENGTH_SHORT).show()
+            }
         } ?: run {
-            Log.e("UploadDebug", "No image URI available for upload")
+            Toast.makeText(requireContext(), "No image URI available for upload", Toast.LENGTH_SHORT).show()
         }
     }
 

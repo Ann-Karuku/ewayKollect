@@ -54,4 +54,8 @@
     <string name="or">or</string>
     <string name="floating_btn">floating_btn</string>
     <string name="submit">submit</string>
+    <string name="ewaste_image">ewaste image</string>
+    <string name="number">Number:</string>
+    <string name="datch">-</string>
+    <string name="state">State:</string>
 </resources>

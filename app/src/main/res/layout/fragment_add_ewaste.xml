@@ -40,9 +40,7 @@
         android:layout_margin="10dp"
         android:background="@color/signup_grey"
         android:spinnerMode="dropdown"
-        android:padding="16dp"/>
-
-
+        android:minHeight="48dp"/>
 
     <EditText
         android:id="@+id/edtENo"
@@ -60,9 +58,9 @@
         android:textCursorDrawable="@drawable/custom_cursor"/>
 
     <EditText
+        android:id="@+id/edtState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtState"
         android:layout_below="@id/edtENo"
         android:background="@color/signup_grey"
         android:hint="@string/describe_state_of_electronic"
@@ -73,7 +71,6 @@
         android:textColor="@color/black"
         android:padding="16dp"
         android:textCursorDrawable="@drawable/custom_cursor"/>
-
 
     <Button
         android:id="@+id/btnUploadPhoto"
@@ -112,4 +109,14 @@
         android:textStyle="bold"
         android:padding="16dp"
         android:minHeight="48dp"/>
+
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:indeterminate="true"/>
+
 </RelativeLayout>

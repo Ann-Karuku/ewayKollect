@@ -1,4 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/myEwasteFragment"
@@ -6,22 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".MyEwasteFragment">
 
-    <!-- Title TextView -->
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+    <!-- HorizontalScrollView for categories -->
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/my_e_waste_items"
-        android:textSize="14sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp" />
+        android:layout_gravity="top"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:scrollbars="none">
+
+        <!-- LinearLayout to contain category buttons -->
+        <LinearLayout
+            android:id="@+id/linearLytCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </HorizontalScrollView>
+    <!-- Spinner for additional categories -->
+    <Spinner
+        android:id="@+id/spnnrCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="top"
+        android:visibility="gone"
+        android:minHeight="48dp"/>
+
 
     <!-- RecyclerView for e-waste items -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEwasteItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="60dp"
         android:scrollbars="vertical" />
 
     <!-- FloatingActionButton for adding new items -->

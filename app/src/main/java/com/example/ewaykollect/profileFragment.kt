@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -28,6 +29,10 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
 
         var root:View=inflater.inflate(R.layout.fragment_profile, container, false)
+
+        // Set the title
+        (activity as AppCompatActivity).supportActionBar?.title = "My Profile"
+
         prof_Logout=root.findViewById(R.id.prof_logout)
         prof_Logout.setOnClickListener {
             Firebase.auth.signOut()

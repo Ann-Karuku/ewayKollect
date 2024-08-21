@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.Toast
 import com.google.firebase.firestore.ktx.firestore
@@ -46,6 +47,8 @@ class AddEwasteDialogFragment : DialogFragment() {
         "Air Conditioners", "Electric Fans", "Heaters"
     )
 
+    private lateinit var progressBar: ProgressBar
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,6 +66,7 @@ class AddEwasteDialogFragment : DialogFragment() {
         val buttonUploadPhoto = root.findViewById<Button>(R.id.btnUploadPhoto)
         val uploadBtn = root.findViewById<com.google.android.material.button.MaterialButton>(R.id.uploadbtn)
         val spinner = root.findViewById<Spinner>(R.id.spinnerType)
+        progressBar = root.findViewById(R.id.progressBar)
 
         // Creating an ArrayAdapter using the EwasteItems array
         val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
@@ -138,6 +142,9 @@ class AddEwasteDialogFragment : DialogFragment() {
     }
 
     private fun uploadImageAndSaveData(itemName: String, itemType: String, itemNo: String, itemState: String) {
+        // Show ProgressBar
+        progressBar.visibility = View.VISIBLE
+
         val imageRef = storageReference.child("eway_images/${System.currentTimeMillis()}.jpg")
 
         selectedImageUri?.let { uri ->
@@ -155,15 +162,24 @@ class AddEwasteDialogFragment : DialogFragment() {
                         }
                     }.addOnFailureListener { exception ->
                         Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+                    }.addOnCompleteListener {
+                        // Hide ProgressBar
+                        progressBar.visibility = View.GONE
                     }
                 } else {
                     Toast.makeText(requireContext(), "Failed to open image file", Toast.LENGTH_SHORT).show()
+                    // Hide ProgressBar in case of failure
+                    progressBar.visibility = View.GONE
                 }
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Error uploading image", Toast.LENGTH_SHORT).show()
+                // Hide ProgressBar in case of exception
+                progressBar.visibility = View.GONE
             }
         } ?: run {
             Toast.makeText(requireContext(), "No image URI available for upload", Toast.LENGTH_SHORT).show()
+            // Hide ProgressBar if no image URI
+            progressBar.visibility = View.GONE
         }
     }
 

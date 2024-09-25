@@ -31,6 +31,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.security.MessageDigest
 
 class UserLogin : AppCompatActivity() {
@@ -51,10 +54,10 @@ class UserLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //splash screen delay for 3 seconds
-        Thread.sleep(700)
-        //install the splash screen to the main activity on launch
-        installSplashScreen()
+        // Install the splash screen
+         installSplashScreen()
+        // Splash screen delay for 3 seconds
+        Thread.sleep(3000)
 
         setContentView(R.layout.activity_user_login)
         supportActionBar?.hide()

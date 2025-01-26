@@ -25,6 +25,9 @@ class HomeFragment : Fragment() {
         // Set the title
         (activity as AppCompatActivity).supportActionBar?.title = "Home"
 
+        // Enable the drawer toggle icon
+        (activity as MainActivity).toggleDrawerIndicator(true)
+
         return root
     }
 

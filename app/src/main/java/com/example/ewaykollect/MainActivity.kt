@@ -34,7 +34,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawer: DrawerLayout
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var googleSignInClient: GoogleSignInClient // Declare the GoogleSignInClient
+    private lateinit var googleSignInClient: GoogleSignInClient
+    // Initialize toolbar
+    val toolbar: Toolbar = findViewById(R.id.toolBar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +45,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Initialize Firebase Auth
         auth = Firebase.auth
 
-        // Initialize toolbar
-        val toolbar: Toolbar = findViewById(R.id.toolBar)
+
         setSupportActionBar(toolbar)
 
         // Initialize drawer layout
@@ -64,10 +65,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setupWithNavController(navController)
 
-        // Add a toggle listener
+        // Drawer toggle setup
         val toggle = ActionBarDrawerToggle(
             this, drawer, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close )
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -157,4 +159,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
+
+    fun toggleDrawerIndicator(showDrawer: Boolean) {
+        val toggle = ActionBarDrawerToggle(
+            this, drawer, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
+        if (showDrawer) {
+            toggle.isDrawerIndicatorEnabled = true
+            toggle.syncState()
+        } else {
+            toggle.isDrawerIndicatorEnabled = false
+        }
+    }
+
 }

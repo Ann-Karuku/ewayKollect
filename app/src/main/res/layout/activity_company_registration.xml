@@ -1,9 +1,145 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CompanyRegistration">
+    android:layout_height="700dp"
+    tools:context=".CompanyRegistration"
+    android:background="@drawable/ic_registerbg">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_an_account"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
+
+
+    <EditText
+        android:id="@+id/edtCName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signUp"
+        android:background="#30ffffff"
+        android:hint="@string/name"
+        android:textColorHint="@color/white"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_baseline_person_outline_24"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:id="@+id/edtCEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtCName"
+        android:background="#30ffffff"
+        android:hint="@string/email"
+        android:textColorHint="@color/white"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_baseline_email_24"
+        android:drawablePadding="20dp"/>
+
+    <!-- Company Type Spinner -->
+    <Spinner
+        android:id="@+id/spinnerCompanyType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtCEmail"
+        android:background="#30ffffff"
+        android:layout_margin="10dp"
+        android:padding="10dp"/>
+
+    <!-- Registration Number -->
+    <EditText
+        android:id="@+id/edtRegNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerCompanyType"
+        android:background="#30ffffff"
+        android:hint="Registration Number"
+        android:textColorHint="@color/white"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_baseline_info_24"
+        android:drawablePadding="20dp"/>
+
+    <!-- County Spinner -->
+    <Spinner
+        android:id="@+id/spinnerCounty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtRegNo"
+        android:background="#30ffffff"
+        android:layout_margin="10dp"
+        android:padding="10dp"/>
+
+    <!-- Town Spinner -->
+    <Spinner
+        android:id="@+id/spinnerTown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerCounty"
+        android:background="#30ffffff"
+        android:layout_margin="10dp"
+        android:padding="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerWasteCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerTown"
+        android:layout_margin="10dp"
+        android:background="@color/transparent"/>
+
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerWasteCategories"
+        android:background="#30ffffff"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textSize="15sp"
+        android:textColorHint="@color/white"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="10dp"/>
+
+    <EditText
+        android:id="@+id/edtRepeatPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtPassword"
+        android:background="#30ffffff"
+        android:hint="@string/repeat_password"
+        android:inputType="textPassword"
+        android:textSize="15sp"
+        android:textColorHint="@color/white"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:padding="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtRepeatPass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/main_green"
+        android:text="@string/register"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

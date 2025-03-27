@@ -1,0 +1,343 @@
+<resources>
+    <!-- List of Counties in Kenya -->
+    <string-array name="kenya_counties">
+        <item>Baringo</item>
+        <item>Bomet</item>
+        <item>Bungoma</item>
+        <item>Busia</item>
+        <item>Elgeyo Marakwet</item>
+        <item>Embu</item>
+        <item>Garissa</item>
+        <item>Homa Bay</item>
+        <item>Isiolo</item>
+        <item>Kajiado</item>
+        <item>Kakamega</item>
+        <item>Kericho</item>
+        <item>Kiambu</item>
+        <item>Kilifi</item>
+        <item>Kirinyaga</item>
+        <item>Kisii</item>
+        <item>Kisumu</item>
+        <item>Kitui</item>
+        <item>Kwale</item>
+        <item>Laikipia</item>
+        <item>Lamu</item>
+        <item>Machakos</item>
+        <item>Makueni</item>
+        <item>Mandera</item>
+        <item>Marsabit</item>
+        <item>Meru</item>
+        <item>Migori</item>
+        <item>Mombasa</item>
+        <item>Murang'a</item>
+        <item>Nairobi</item>
+        <item>Nakuru</item>
+        <item>Nandi</item>
+        <item>Narok</item>
+        <item>Nyamira</item>
+        <item>Nyandarua</item>
+        <item>Nyeri</item>
+        <item>Samburu</item>
+        <item>Siaya</item>
+        <item>Taita Taveta</item>
+        <item>Tana River</item>
+        <item>Tharaka Nithi</item>
+        <item>Trans Nzoia</item>
+        <item>Turkana</item>
+        <item>Uasin Gishu</item>
+        <item>Vihiga</item>
+        <item>Wajir</item>
+        <item>West Pokot</item>
+    </string-array>
+
+    <!-- Towns for each County -->
+    <string-array name="towns_baringo">
+        <item>Kabarnet</item>
+        <item>Eldama Ravine</item>
+        <item>Mogotio</item>
+    </string-array>
+
+    <string-array name="towns_bomet">
+        <item>Bomet Town</item>
+        <item>Sotik</item>
+        <item>Mulot</item>
+    </string-array>
+
+    <string-array name="towns_bungoma">
+        <item>Bungoma Town</item>
+        <item>Webuye</item>
+        <item>Kanduyi</item>
+    </string-array>
+
+    <string-array name="towns_busia">
+        <item>Busia Town</item>
+        <item>Malaba</item>
+        <item>Nambale</item>
+    </string-array>
+
+    <string-array name="towns_elgeyo_marakwet">
+        <item>Iten</item>
+        <item>Chepkorio</item>
+    </string-array>
+
+    <string-array name="towns_embu">
+        <item>Embu Town</item>
+        <item>Runyenjes</item>
+    </string-array>
+
+    <string-array name="towns_garissa">
+        <item>Garissa Town</item>
+        <item>Dadaab</item>
+        <item>Masalani</item>
+    </string-array>
+
+    <string-array name="towns_homa_bay">
+        <item>Homa Bay Town</item>
+        <item>Kendu Bay</item>
+        <item>Mbita</item>
+        <item>Oyugis</item>
+    </string-array>
+
+    <string-array name="towns_isiolo">
+        <item>Isiolo Town</item>
+        <item>Merti</item>
+    </string-array>
+
+    <string-array name="towns_kajiado">
+        <item>Kajiado Town</item>
+        <item>Kitengela</item>
+        <item>Ngong</item>
+    </string-array>
+
+    <string-array name="towns_kakamega">
+        <item>Kakamega Town</item>
+        <item>Mumias</item>
+        <item>Malava</item>
+    </string-array>
+
+    <string-array name="towns_kericho">
+        <item>Kericho Town</item>
+        <item>Londiani</item>
+    </string-array>
+
+    <string-array name="towns_kiambu">
+        <item>Thika</item>
+        <item>Ruiru</item>
+        <item>Juja</item>
+    </string-array>
+
+    <string-array name="towns_kilifi">
+        <item>Malindi</item>
+        <item>Watamu</item>
+        <item>Rabai</item>
+    </string-array>
+
+    <string-array name="towns_kirinyaga">
+        <item>Kerugoya</item>
+        <item>Kutus</item>
+    </string-array>
+
+    <string-array name="towns_kisii">
+        <item>Kisii Town</item>
+        <item>Ogembo</item>
+    </string-array>
+
+    <string-array name="towns_kitui">
+        <item>Kitui Town</item>
+        <item>Mwingi</item>
+    </string-array>
+
+    <string-array name="towns_kwale">
+        <item>Kwale Town</item>
+        <item>Diani</item>
+    </string-array>
+
+    <string-array name="towns_laikipia">
+        <item>Nanyuki</item>
+        <item>Rumuruti</item>
+    </string-array>
+
+    <string-array name="towns_lamu">
+        <item>Lamu Town</item>
+        <item>Mokowe</item>
+    </string-array>
+
+    <string-array name="towns_machakos">
+        <item>Machakos Town</item>
+        <item>Athi River</item>
+        <item>Kangundo</item>
+    </string-array>
+
+    <string-array name="towns_makueni">
+        <item>Wote</item>
+        <item>Makindu</item>
+    </string-array>
+
+    <string-array name="towns_nairobi">
+        <item>Westlands</item>
+        <item>Karen</item>
+        <item>Langata</item>
+        <item>Kibera</item>
+        <item>Embakasi</item>
+    </string-array>
+
+    <string-array name="towns_nakuru">
+        <item>Lanet</item>
+        <item>Mwariki</item>
+        <item>Free Area</item>
+    </string-array>
+
+    <string-array name="towns_eldoret">
+        <item>Kimumu</item>
+        <item>Kapsoya</item>
+        <item>Langas</item>
+    </string-array>
+
+    <string-array name="towns_turkana">
+        <item>Lodwar</item>
+        <item>Kakuma</item>
+    </string-array>
+
+    <string-array name="towns_wajir">
+        <item>Wajir Town</item>
+        <item>Habaswein</item>
+    </string-array>
+
+    <string-array name="towns_west_pokot">
+        <item>Kapenguria</item>
+        <item>Chepareria</item>
+    </string-array>
+
+    <!-- Nandi County Towns -->
+    <string-array name="towns_nandi">
+        <item>Kapsabet</item>
+        <item>Nandi Hills</item>
+        <item>Lessos</item>
+    </string-array>
+
+    <!-- Narok County Towns -->
+    <string-array name="towns_narok">
+        <item>Narok Town</item>
+        <item>Kilgoris</item>
+        <item>Ololulunga</item>
+    </string-array>
+
+    <!-- Nyamira County Towns -->
+    <string-array name="towns_nyamira">
+        <item>Nyamira Town</item>
+        <item>Kebirigo</item>
+        <item>Ikonge</item>
+    </string-array>
+
+    <!-- Nyandarua County Towns -->
+    <string-array name="towns_nyandarua">
+        <item>Ol Kalou</item>
+        <item>Engineer</item>
+        <item>Njabini</item>
+    </string-array>
+
+    <!-- Nyeri County Towns -->
+    <string-array name="towns_nyeri">
+        <item>Nyeri Town</item>
+        <item>Othaya</item>
+        <item>Karatina</item>
+    </string-array>
+
+    <!-- Samburu County Towns -->
+    <string-array name="towns_samburu">
+        <item>Maralal</item>
+        <item>Baragoi</item>
+        <item>Archers Post</item>
+    </string-array>
+
+    <!-- Siaya County Towns -->
+    <string-array name="towns_siaya">
+        <item>Siaya Town</item>
+        <item>Ugunja</item>
+        <item>Bondo</item>
+    </string-array>
+
+    <!-- Taita Taveta County Towns -->
+    <string-array name="towns_taita_taveta">
+        <item>Voi</item>
+        <item>Wundanyi</item>
+        <item>Taveta</item>
+    </string-array>
+
+    <!-- Tana River County Towns -->
+    <string-array name="towns_tana_river">
+        <item>Hola</item>
+        <item>Garsen</item>
+        <item>Bura</item>
+    </string-array>
+
+    <!-- Tharaka Nithi County Towns -->
+    <string-array name="towns_tharaka_nithi">
+        <item>Chuka</item>
+        <item>Marimanti</item>
+        <item>Gatunga</item>
+    </string-array>
+
+    <!-- Trans Nzoia County Towns -->
+    <string-array name="towns_trans_nzoia">
+        <item>Kitale</item>
+        <item>Kiminini</item>
+        <item>Endebess</item>
+    </string-array>
+
+    <!-- Mandera County Towns -->
+    <string-array name="towns_mandera">
+        <item>Mandera Town</item>
+        <item>Elwak</item>
+        <item>Rhamu</item>
+    </string-array>
+
+    <!-- Marsabit County Towns -->
+    <string-array name="towns_marsabit">
+        <item>Marsabit Town</item>
+        <item>Moyale</item>
+        <item>Laisamis</item>
+    </string-array>
+
+    <!-- Vihiga County Towns -->
+    <string-array name="towns_vihiga">
+        <item>Mbale</item>
+        <item>Chavakali</item>
+        <item>Luanda</item>
+    </string-array>
+
+    <!-- Kisumu County Towns -->
+    <string-array name="towns_kisumu">
+        <item>Kisumu City</item>
+        <item>Maseno</item>
+        <item>Ahero</item>
+    </string-array>
+
+    <!-- Meru County Towns -->
+    <string-array name="towns_meru">
+        <item>Meru Town</item>
+        <item>Maua</item>
+        <item>Nkubu</item>
+    </string-array>
+
+    <!-- Migori County Towns -->
+    <string-array name="towns_migori">
+        <item>Migori Town</item>
+        <item>Kehancha</item>
+        <item>Rongo</item>
+    </string-array>
+
+    <!-- Mombasa County Towns -->
+    <string-array name="towns_mombasa">
+        <item>Mombasa City</item>
+        <item>Likoni</item>
+        <item>Bamburi</item>
+    </string-array>
+
+    <!-- Murang'a County Towns -->
+    <string-array name="towns_muranga">
+        <item>Murang\'a Town</item>
+        <item>Kangema</item>
+        <item>Kenol</item>
+    </string-array>
+</resources>

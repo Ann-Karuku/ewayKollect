@@ -4,12 +4,9 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home"
-            android:title="@string/NavDrawer_home" />
         <item android:id="@+id/nav_account"
-            android:icon="@drawable/ic_account"
-            android:title="@string/NavDrawer_account"/>
+            android:icon="@drawable/ic_home"
+            android:title="@string/NavDrawer_home"/>
         <item android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="@string/NavDrawer_profile"/>

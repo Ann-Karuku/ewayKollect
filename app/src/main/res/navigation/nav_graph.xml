@@ -10,9 +10,6 @@
         android:label="AccountFragment"
         tools:layout="@layout/fragment_account" >
         <action
-        android:id="@+id/action_accountFragment_to_homeFragment"
-        app:destination="@id/homeFragment" />
-        <action
             android:id="@+id/action_accountFragment_to_myEwaste"
             app:destination="@id/myEwaste" />
         <action
@@ -27,15 +24,6 @@
         <action
             android:id="@+id/action_accountFragment_to_FAQsFragment"
             app:destination="@id/FAQsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.ewaykollect.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/myEwaste"
@@ -57,6 +45,9 @@
         <action
             android:id="@+id/action_profileFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -94,4 +85,13 @@
             android:id="@+id/action_addEwasteDialogFragment_to_myEwaste"
             app:destination="@id/myEwaste" />
     </dialog>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.ewaykollect.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

@@ -70,4 +70,12 @@
     <string name="change_pass">Change Password</string>
     <string name="update_prof">Update Profile</string>
     <string name="update">update</string>
+    <string name="company_name">company name</string>
+    <string name="company_email">company email</string>
+    <string name="company_tel">company telphone</string>
+    <string name="next">Next</string>
+    <string name="registration_number">Registration Number</string>
+    <string name="basicInfo">Step1.Basic Information</string>
+    <string name="companyDetails">Company Details</string>
+    <string name="wasteCat"><![CDATA[Waste Category & Password]]></string>
 </resources>

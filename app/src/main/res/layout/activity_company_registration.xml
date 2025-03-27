@@ -1,145 +1,204 @@
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="700dp"
-    tools:context=".CompanyRegistration"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/ic_registerbg">
 
-    <TextView
-        android:id="@+id/signUp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_an_account"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:layout_margin="10dp"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+        android:padding="20dp">
 
+        <!-- Step 1: Basic Information -->
+        <LinearLayout
+            android:id="@+id/stepOneLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-    <EditText
-        android:id="@+id/edtCName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/signUp"
-        android:background="#30ffffff"
-        android:hint="@string/name"
-        android:textColorHint="@color/white"
-        android:textSize="15sp"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_baseline_person_outline_24"
-        android:drawablePadding="20dp"/>
+            <TextView
+                android:id="@+id/signUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create_an_account"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/basicInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/basicInfo"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
-    <EditText
-        android:id="@+id/edtCEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtCName"
-        android:background="#30ffffff"
-        android:hint="@string/email"
-        android:textColorHint="@color/white"
-        android:textSize="15sp"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_baseline_email_24"
-        android:drawablePadding="20dp"/>
+            <EditText
+                android:id="@+id/edtCName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/company_name"
+                android:background="#30ffffff"
+                android:textColorHint="@color/white"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"/>
 
-    <!-- Company Type Spinner -->
-    <Spinner
-        android:id="@+id/spinnerCompanyType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtCEmail"
-        android:background="#30ffffff"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+            <EditText
+                android:id="@+id/edtCEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/company_email"
+                android:background="#30ffffff"
+                android:textColorHint="@color/white"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"/>
 
-    <!-- Registration Number -->
-    <EditText
-        android:id="@+id/edtRegNo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerCompanyType"
-        android:background="#30ffffff"
-        android:hint="Registration Number"
-        android:textColorHint="@color/white"
-        android:textSize="15sp"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_baseline_info_24"
-        android:drawablePadding="20dp"/>
+            <EditText
+                android:id="@+id/edtCPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/company_tel"
+                android:background="#30ffffff"
+                android:textColorHint="@color/white"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"/>
 
-    <!-- County Spinner -->
-    <Spinner
-        android:id="@+id/spinnerCounty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtRegNo"
-        android:background="#30ffffff"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextStep1Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/main_green"
+                android:text="@string/next"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-    <!-- Town Spinner -->
-    <Spinner
-        android:id="@+id/spinnerTown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerCounty"
-        android:background="#30ffffff"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+        <!-- Step 2: Company Details -->
+        <LinearLayout
+            android:id="@+id/stepTwoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    <Spinner
-        android:id="@+id/spinnerWasteCategories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerTown"
-        android:layout_margin="10dp"
-        android:background="@color/transparent"/>
+            <TextView
+                android:id="@+id/companyDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/companyDetails"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
-    <EditText
-        android:id="@+id/edtPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerWasteCategories"
-        android:background="#30ffffff"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:textSize="15sp"
-        android:textColorHint="@color/white"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:padding="10dp"/>
+            <Spinner
+                android:id="@+id/spinnerCompanyType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#30ffffff"
+                android:padding="10dp"/>
 
-    <EditText
-        android:id="@+id/edtRepeatPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtPassword"
-        android:background="#30ffffff"
-        android:hint="@string/repeat_password"
-        android:inputType="textPassword"
-        android:textSize="15sp"
-        android:textColorHint="@color/white"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:padding="10dp"/>
+            <EditText
+                android:id="@+id/edtRegNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registration_number"
+                android:background="#30ffffff"
+                android:textColorHint="@color/white"
+                android:padding="10dp"
+                android:textColor="@color/white"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signUpBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtRepeatPass"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/main_green"
-        android:text="@string/register"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            <Spinner
+                android:id="@+id/spinnerCounty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#30ffffff"
+                android:padding="10dp"/>
 
-</RelativeLayout>
+            <Spinner
+                android:id="@+id/spinnerTown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#30ffffff"
+                android:padding="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/nextStep2Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/main_green"
+                android:text="@string/next"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- Step 3: Waste Category & Password -->
+        <LinearLayout
+            android:id="@+id/stepThreeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/wasteCat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wasteCat"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/spinnerWasteCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"/>
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:background="#30ffffff"
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:padding="10dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/edtRepeatPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/repeat_password"
+                android:background="#30ffffff"
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:padding="10dp"
+                android:textColor="@color/white"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signUpBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/main_green"
+                android:text="@string/register"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

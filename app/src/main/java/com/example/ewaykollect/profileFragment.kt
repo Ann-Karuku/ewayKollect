@@ -31,6 +31,7 @@ class ProfileFragment : Fragment() {
     private lateinit var dpImage: ImageView
     private lateinit var cameraIcon: ImageView
     private lateinit var edt_prof :TextView
+    private lateinit var edt_pass:TextView
 
     private var imageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 1
@@ -81,6 +82,7 @@ class ProfileFragment : Fragment() {
 
         cameraIcon = root.findViewById(R.id.edt_camera)
         edt_prof=root.findViewById(R.id.edt_profile)
+        edt_pass=root.findViewById(R.id.change_pass)
 
         // Load existing profile image
         loadProfileImage()
@@ -94,6 +96,9 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
+        edt_pass.setOnClickListener{
+            findNavController().navigate(R.id.action_profileFragment_to_changePasswordFragment)
+        }
 
         return root
     }

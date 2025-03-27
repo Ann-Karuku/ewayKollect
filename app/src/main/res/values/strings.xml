@@ -60,4 +60,7 @@
     <string name="state">State:</string>
     <string name="faqs">FAQs</string>
     <string name="search_faqs">Search FAQs</string>
+    <string name="register_as_a">Register as a</string>
+    <string name="recycler_collector">Recycler/Collector</string>
+    <string name="ewaste_owner">Ewaste owner</string>
 </resources>

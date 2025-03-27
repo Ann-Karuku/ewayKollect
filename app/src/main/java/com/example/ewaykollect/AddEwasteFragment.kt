@@ -33,6 +33,7 @@ class AddEwasteDialogFragment : DialogFragment() {
     private var db = Firebase.firestore
     private lateinit var storageReference: StorageReference
     private var selectedImageUri: Uri? = null
+    private lateinit var progressBar: ProgressBar
 
     // Permission request code
     private val PERMISSION_REQUEST_CODE = 100
@@ -44,10 +45,9 @@ class AddEwasteDialogFragment : DialogFragment() {
         "Desktop Computers", "Monitors", "Printers",
         "Televisions", "Remote Controls", "DVD Players",
         "Washing Machines", "Refrigerators", "Microwaves",
-        "Air Conditioners", "Electric Fans", "Heaters"
+        "Air Conditioners", "Electric Fans", "Heaters","Phone Accesories","Cables"
     )
 
-    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -133,11 +133,10 @@ class AddEwasteDialogFragment : DialogFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
             selectedImageUri = data.data
-            Log.d("UploadDebug", "Image URI received: $selectedImageUri")
             val imageEView = view?.findViewById<ImageView>(R.id.imageEView)
             imageEView?.setImageURI(selectedImageUri)
         } else {
-            Log.d("UploadDebug", "No image selected or operation cancelled")
+            Toast.makeText(requireContext(),"No image Selected",Toast.LENGTH_SHORT).show()
         }
     }
 

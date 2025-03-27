@@ -7,30 +7,30 @@ android:layout_height="match_parent"
 tools:context=".EditProfileFragment"
 android:id="@+id/add_Ewaste">
 
-<TextView
-    android:id="@+id/signUp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/update_prof"
-    android:textColor="@color/black"
-    android:gravity="center"
-    android:layout_margin="10dp"
-    android:textSize="30sp"
-    android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_prof"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
 
-<EditText
-    android:id="@+id/edtUName"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/signUp"
-    android:background="@color/signup_grey"
-    android:hint="@string/name"
-    android:textColorHint="@color/black"
-    android:textSize="15sp"
-    android:layout_margin="10dp"
-    android:textColor="@color/black"
-    android:padding="16dp"
-    android:textCursorDrawable="@drawable/custom_cursor"/>
+    <EditText
+        android:id="@+id/edtUName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signUp"
+        android:background="@color/signup_grey"
+        android:hint="@string/name"
+        android:textColorHint="@color/black"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:padding="16dp"
+        android:textCursorDrawable="@drawable/custom_cursor"/>
     <EditText
         android:id="@+id/edtUEmail"
         android:layout_width="match_parent"
@@ -60,15 +60,15 @@ android:id="@+id/add_Ewaste">
         android:textCursorDrawable="@drawable/custom_cursor"
         android:inputType="phone"/>
 
-<Spinner
-    android:id="@+id/spinnerCounty"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/edtUPhone"
-    android:layout_margin="10dp"
-    android:background="@color/signup_grey"
-    android:spinnerMode="dropdown"
-    android:minHeight="48dp"/>
+    <Spinner
+        android:id="@+id/spinnerCounty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edtUPhone"
+        android:layout_margin="10dp"
+        android:background="@color/signup_grey"
+        android:spinnerMode="dropdown"
+        android:minHeight="48dp"/>
     <Spinner
         android:id="@+id/spinnerTown"
         android:layout_width="match_parent"
@@ -80,18 +80,18 @@ android:id="@+id/add_Ewaste">
         android:minHeight="48dp"/>
 
 
-<com.google.android.material.button.MaterialButton
-    android:id="@+id/uploadbtn"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/spinnerTown"
-    android:layout_centerHorizontal="true"
-    android:layout_margin="20dp"
-    android:backgroundTint="@color/main_green"
-    android:text="@string/update"
-    android:textSize="16sp"
-    android:textStyle="bold"
-    android:padding="16dp"
-    android:minHeight="48dp"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/updateProfbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerTown"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/main_green"
+        android:text="@string/update"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:minHeight="48dp"/>
 
 </RelativeLayout>

@@ -29,7 +29,7 @@ class EwasteAdapter(private val ewasteList: List<EwasteItem>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: EwasteViewHolder, position: Int) {
         val ewasteItem = ewasteList[position]
         holder.nameTextView.text = ewasteItem.name
-        holder.numTextView.text = ewasteItem.number.toString()
+        holder.numTextView.text = ewasteItem.number
         holder.stateTextView.text=ewasteItem.state
         holder.typeTextView.text=ewasteItem.type
 

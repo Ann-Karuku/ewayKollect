@@ -42,7 +42,7 @@
     <string name="upload_a_new_item">Upload a new Item</string>
     <string name="item_name">Item Name</string>
     <string name="create_an_account">Create an account</string>
-    <string name="name">name</string>
+    <string name="name">user name</string>
     <string name="email">email</string>
     <string name="phone">phone</string>
     <string name="password">password</string>
@@ -68,4 +68,6 @@
     <string name="town">Town</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_pass">Change Password</string>
+    <string name="update_prof">Update Profile</string>
+    <string name="update">update</string>
 </resources>

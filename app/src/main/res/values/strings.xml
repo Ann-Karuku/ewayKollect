@@ -78,4 +78,9 @@
     <string name="basicInfo">Step1.Basic Information</string>
     <string name="companyDetails">Company Details</string>
     <string name="wasteCat"><![CDATA[Waste Category & Password]]></string>
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="save_changes">Save Changes</string>
 </resources>

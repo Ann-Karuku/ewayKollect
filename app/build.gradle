@@ -60,8 +60,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:21.3.0'
     implementation 'com.google.firebase:firebase-storage-ktx:21.0.1'
 
-
+    //image dependencies
     implementation 'com.github.bumptech.glide:glide:3.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:3.8.0'
     implementation 'com.mikhaellopez:circularimageview:4.3.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
 

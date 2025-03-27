@@ -59,4 +59,5 @@
     <string name="datch">-</string>
     <string name="state">State:</string>
     <string name="faqs">FAQs</string>
+    <string name="search_faqs">Search FAQs</string>
 </resources>

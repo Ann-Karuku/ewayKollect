@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="my_e_waste_items">My E-Waste Items</string>
+    <string name="phonenumber">_071234.....</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_pass">Change Password</string>
 </resources>

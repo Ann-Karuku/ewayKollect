@@ -63,4 +63,9 @@
     <string name="register_as_a">Register as a</string>
     <string name="recycler_collector">Recycler/Collector</string>
     <string name="ewaste_owner">Ewaste owner</string>
+    <string name="phonenumber">_071234.....</string>
+    <string name="county">County</string>
+    <string name="town">Town</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_pass">Change Password</string>
 </resources>

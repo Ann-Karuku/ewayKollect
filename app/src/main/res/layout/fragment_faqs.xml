@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        android:backgroundTint="@color/other_green"/>
+        android:indeterminate="true"
+        android:indeterminateTint="@color/other_green"/>
 
     <!-- FAQs List (Container for dynamically added items) -->
     <ScrollView

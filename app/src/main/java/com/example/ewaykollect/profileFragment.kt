@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -18,9 +20,9 @@ import com.google.firebase.ktx.Firebase
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var prof_Logout :TextView
-
     private var db= Firebase.firestore
+
+    private lateinit var edt_prof :TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +35,7 @@ class ProfileFragment : Fragment() {
         // Set the title
         (activity as AppCompatActivity).supportActionBar?.title = "My Profile"
 
-        prof_Logout=root.findViewById(R.id.prof_logout)
-        prof_Logout.setOnClickListener {
-            Firebase.auth.signOut()
-//            startActivity(Intent(this, UserLogin::class.java))
-        }
-
         val userID= FirebaseAuth.getInstance().currentUser!!.uid
-
         val ref=db.collection("user").document(userID)
 
         ref.get().addOnSuccessListener {
@@ -64,6 +59,11 @@ class ProfileFragment : Fragment() {
             .addOnFailureListener{
                 Toast.makeText(this.context, "Failed to load data", Toast.LENGTH_SHORT).show()
             }
+
+        edt_prof=root.findViewById(R.id.edt_profile)
+        edt_prof.setOnClickListener{
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
 
 
         return root

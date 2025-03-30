@@ -30,12 +30,14 @@
             android:layout_margin="10dp"
             android:textColor="@color/white"
             android:padding="10dp"
+            android:minHeight="48dp"
             android:drawableStart="@drawable/ic_baseline_person_outline_24"
             android:drawablePadding="20dp"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:id="@+id/edtEmail"
             android:layout_below="@id/edtName"
             android:background="#30ffffff"
@@ -50,6 +52,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:id="@+id/edtPhone"
             android:layout_below="@id/edtEmail"
             android:background="#30ffffff"
@@ -65,6 +68,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:id="@+id/edtPassword"
             android:layout_below="@id/edtPhone"
             android:background="#30ffffff"
@@ -80,6 +84,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:id="@+id/edtRepeatPass"
             android:layout_below="@id/edtPassword"
             android:background="#30ffffff"
@@ -113,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/have_an_account"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/signUpBtn"/>
 
@@ -134,7 +139,7 @@
             android:text="@string/or_sign_in_with"
             android:textColor="@color/black"
             android:layout_centerHorizontal="true"
-            android:layout_above="@id/socials"/>
+            android:layout_below="@id/loginLink"/>
 
         <LinearLayout
             android:id="@+id/socials"

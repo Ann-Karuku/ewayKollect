@@ -1,8 +1,11 @@
 package com.example.ewaykollect
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -30,6 +33,9 @@ class ChangePasswordFragment : Fragment() {
         // Inflate the layout for this fragment
         val root=inflater.inflate(R.layout.fragment_change_password, container, false)
 
+        // Initialize FirebaseAuth
+        auth = FirebaseAuth.getInstance()
+
         // Initialize views
         currentPass = root.findViewById(R.id.et_current_password)
         newPass = root.findViewById(R.id.et_new_password)
@@ -53,7 +59,48 @@ class ChangePasswordFragment : Fragment() {
             sendVerificationEmail()
         }
 
+        //password toogle
+        setupPasswordToggle(currentPass)
+        setupPasswordToggle(newPass)
+        setupPasswordToggle(confirmPass)
+
         return root
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupPasswordToggle(editText: EditText) {
+        var isPasswordVisible = false
+
+        editText.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val drawableEnd = editText.compoundDrawablesRelative[2] // Get the drawableEnd (eye icon)
+                if (drawableEnd != null) {
+                    val iconBounds = drawableEnd.bounds
+                    val iconWidth = iconBounds.width()
+                    val editTextEnd = editText.right - editText.paddingRight
+                    val touchX = event.rawX.toInt()
+
+                    if (touchX >= (editTextEnd - iconWidth)) {
+                        // Toggle visibility
+                        isPasswordVisible = !isPasswordVisible
+                        editText.inputType = if (isPasswordVisible) {
+                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                        } else {
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        }
+                        editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            0, 0, if (isPasswordVisible) R.drawable.ic_eye_open else R.drawable.ic_eye_close, 0
+                        )
+                        editText.setSelection(editText.text.length) // Keep cursor at the end
+
+                        editText.performClick()
+
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            false
+        }
     }
 
     private fun checkEmailVerificationStatus() {

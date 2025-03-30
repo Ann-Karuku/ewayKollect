@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(this.context, "Failed to load data", Toast.LENGTH_SHORT).show()
             }
 
-
+        dpImage = root.findViewById(R.id.prof_image)
         cameraIcon = root.findViewById(R.id.edt_camera)
         edt_prof=root.findViewById(R.id.edt_profile)
         edt_pass=root.findViewById(R.id.change_pass)
@@ -137,7 +137,7 @@ class ProfileFragment : Fragment() {
 
     private fun saveImageUrlToFirestore(imageUrl: String) {
         val userId = auth.currentUser?.uid ?: return
-        firestoreRef.collection("users").document(userId)
+        firestoreRef.collection("user").document(userId)
             .update("profileImageUrl", imageUrl)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Profile updated", Toast.LENGTH_SHORT).show()
@@ -150,7 +150,7 @@ class ProfileFragment : Fragment() {
 
     private fun loadProfileImage() {
         val userId = auth.currentUser?.uid ?: return
-        firestoreRef.collection("users").document(userId).get()
+        firestoreRef.collection("user").document(userId).get()
             .addOnSuccessListener { document ->
                 val imageUrl = document.getString("profileImageUrl")
                 if (!imageUrl.isNullOrEmpty()) {

@@ -1,17 +1,12 @@
 package com.example.ewaykollect
 
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
@@ -29,7 +25,8 @@ class MyEwasteFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var firestoreListener: ListenerRegistration
-    private var selectedButton: Button? = null // To keep track of the selected button
+    private var selectedButton: Button? = null
+    private lateinit var auth: FirebaseAuth
 
     // Categorized list of e-waste items
     private val items = arrayOf(
@@ -69,7 +66,6 @@ class MyEwasteFragment : Fragment() {
 
         // Adding categories buttons dynamically
         val linearLytCategories = root.findViewById<LinearLayout>(R.id.linearLytCategories)
-        val spinnerCategories = root.findViewById<Spinner>(R.id.spnnrCategories)
         val maxButtonsToShow = 15
 
         // Add buttons to LinearLayout for the first categories
@@ -125,13 +121,20 @@ class MyEwasteFragment : Fragment() {
         return root
     }
     private fun fetchEwasteItems() {
-        // Reference to the Firestore collection
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(context, "Please log in to view your items", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Reference to the Firestore collection with user filter
         val collectionRef = firestore.collection("EwasteItems")
+            .whereEqualTo("userId", currentUser.uid)
 
         // Listen for changes to the collection
         firestoreListener = collectionRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
-                // Handle error
+                Toast.makeText(context, "Error fetching items: ${e.message}", Toast.LENGTH_SHORT).show()
                 return@addSnapshotListener
             }
 
@@ -157,8 +160,15 @@ class MyEwasteFragment : Fragment() {
     }
 
     private fun filterEwasteItemsByCategory(category: String) {
-        // Reference to the Firestore collection
+        val currentUser = auth.currentUser
+        if (currentUser==null) {
+            Toast.makeText(context, "Please log in to view your items", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Reference to the Firestore collection with user and category filter
         val collectionRef = firestore.collection("EwasteItems")
+            .whereEqualTo("userId", currentUser.uid)
 
         // Query to filter items by category
         val query = if (category == "All") {

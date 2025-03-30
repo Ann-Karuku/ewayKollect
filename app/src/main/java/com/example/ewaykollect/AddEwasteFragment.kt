@@ -21,6 +21,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -34,6 +35,7 @@ class AddEwasteDialogFragment : DialogFragment() {
     private lateinit var storageReference: StorageReference
     private var selectedImageUri: Uri? = null
     private lateinit var progressBar: ProgressBar
+    private lateinit var auth: FirebaseAuth
 
     // Permission request code
     private val PERMISSION_REQUEST_CODE = 100
@@ -45,7 +47,7 @@ class AddEwasteDialogFragment : DialogFragment() {
         "Desktop Computers", "Monitors", "Printers",
         "Televisions", "Remote Controls", "DVD Players",
         "Washing Machines", "Refrigerators", "Microwaves",
-        "Air Conditioners", "Electric Fans", "Heaters","Phone Accesories","Cables"
+        "Air Conditioners", "Electric Fans", "Heaters","Phone Accessories","Cables"
     )
 
 
@@ -57,6 +59,7 @@ class AddEwasteDialogFragment : DialogFragment() {
         val root: View = inflater.inflate(R.layout.fragment_add_ewaste, container, false)
 
         // Initialize Firebase and Storage Reference
+        auth = FirebaseAuth.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
 
         // Find views
@@ -87,14 +90,47 @@ class AddEwasteDialogFragment : DialogFragment() {
             val itemNo = edtNo.text.toString().trim()
             val itemState = edtState.text.toString().trim()
 
-            if (itemName.isNotEmpty() && itemType != "Select EWaste type" && itemNo.isNotEmpty() && itemState.isNotEmpty()) {
-                if (selectedImageUri != null) {
-                    uploadImageAndSaveData(itemName, itemType, itemNo, itemState)
-                } else {
-                    Toast.makeText(requireContext(), "Please upload an image", Toast.LENGTH_SHORT).show()
+            // Check if user is logged in
+            if (auth.currentUser == null) {
+                Toast.makeText(requireContext(), "Please log in to add an item", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Validate inputs
+            when {
+                itemName.isEmpty() -> {
+                    edtEName.error = "Item name is required"
+                    return@setOnClickListener
                 }
-            } else {
-                Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
+
+                itemType == "Select EWaste type" -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please select an e-waste type",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+
+                itemNo.isEmpty() -> {
+                    edtNo.error = "Number is required"
+                    return@setOnClickListener
+                }
+
+                itemState.isEmpty() -> {
+                    edtState.error = "State is required"
+                    return@setOnClickListener
+                }
+
+                selectedImageUri == null -> {
+                    Toast.makeText(requireContext(), "Please upload an image", Toast.LENGTH_SHORT)
+                        .show()
+                    return@setOnClickListener
+                }
+
+                else -> {
+                    uploadImageAndSaveData(itemName, itemType, itemNo, itemState)
+                }
             }
         }
 
@@ -188,7 +224,8 @@ class AddEwasteDialogFragment : DialogFragment() {
             "type" to itemType,
             "number" to itemNo,
             "state" to itemState,
-            "imageUrl" to imageUrl
+            "imageUrl" to imageUrl,
+            "userId" to FirebaseAuth.getInstance().currentUser?.uid
         )
 
         db.collection("EwasteItems")

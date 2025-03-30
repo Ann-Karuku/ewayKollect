@@ -84,4 +84,5 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="save_changes">Save Changes</string>
     <string name="resend_verification_email">Resend Verification Email</string>
+    <string name="toggle_password_visibility">Toggle Password Visibility</string>
 </resources>

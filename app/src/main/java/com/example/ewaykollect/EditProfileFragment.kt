@@ -109,7 +109,7 @@ class EditProfileFragment : Fragment() {
             "Tharaka Nithi" to R.array.towns_tharaka_nithi,
             "Trans Nzoia" to R.array.towns_trans_nzoia,
             "Turkana" to R.array.towns_turkana,
-            "Uasin Gishu" to R.array.towns_eldoret,
+            "Uasin Gishu" to R.array.towns_uasin_gishu,
             "Vihiga" to R.array.towns_vihiga,
             "Wajir" to R.array.towns_wajir,
             "West Pokot" to R.array.towns_west_pokot

@@ -18,6 +18,8 @@ class CompanyRegistration : AppCompatActivity() {
 
         val nextStep1Btn = findViewById<Button>(R.id.nextStep1Btn)
         val nextStep2Btn = findViewById<Button>(R.id.nextStep2Btn)
+        val prevStep2Btn= findViewById<Button>(R.id.prevStep2Btn)
+        val prevStep3Btn= findViewById<Button>(R.id.prevStep3Btn)
         val signUpBtn = findViewById<Button>(R.id.signUpBtn)
 
         nextStep1Btn.setOnClickListener {
@@ -30,6 +32,17 @@ class CompanyRegistration : AppCompatActivity() {
             // Hide step 2 and show step 3
             step2.visibility = View.GONE
             step3.visibility = View.VISIBLE
+        }
+
+        prevStep2Btn.setOnClickListener{
+            // Hide step 2 and show step 1
+            step1.visibility = View.VISIBLE
+            step2.visibility = View.GONE
+        }
+        prevStep3Btn.setOnClickListener{
+            // Hide step 2 and show step 1
+            step2.visibility = View.VISIBLE
+            step3.visibility = View.GONE
         }
 
         signUpBtn.setOnClickListener {

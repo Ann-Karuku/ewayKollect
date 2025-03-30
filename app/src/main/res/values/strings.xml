@@ -76,8 +76,8 @@
     <string name="next">Next</string>
     <string name="registration_number">Registration Number</string>
     <string name="basicInfo">Step1.Basic Information</string>
-    <string name="companyDetails">Company Details</string>
-    <string name="wasteCat"><![CDATA[Waste Category & Password]]></string>
+    <string name="companyDetails">Step2.Company Details</string>
+    <string name="wasteCat">Step3.Waste Category and Password</string>
     <string name="change_password">Change Password</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
@@ -85,5 +85,5 @@
     <string name="save_changes">Save Changes</string>
     <string name="resend_verification_email">Resend Verification Email</string>
     <string name="toggle_password_visibility">Toggle Password Visibility</string>
-    <string name="previous" />
+    <string name="previous">Previous</string>
 </resources>

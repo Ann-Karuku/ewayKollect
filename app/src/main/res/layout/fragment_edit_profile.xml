@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".EditProfileFragment"
-android:id="@+id/add_Ewaste">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EditProfileFragment"
+    android:id="@+id/add_Ewaste">
 
     <TextView
         android:id="@+id/signUp"
@@ -92,6 +92,7 @@ android:id="@+id/add_Ewaste">
         android:textSize="16sp"
         android:textStyle="bold"
         android:padding="16dp"
+        app:cornerRadius="10dp"
         android:minHeight="48dp"/>
 
 </RelativeLayout>

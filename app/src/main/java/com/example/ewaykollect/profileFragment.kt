@@ -108,6 +108,7 @@ class ProfileFragment : Fragment() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
@@ -153,7 +154,7 @@ class ProfileFragment : Fragment() {
             .addOnSuccessListener { document ->
                 val imageUrl = document.getString("profileImageUrl")
                 if (!imageUrl.isNullOrEmpty()) {
-                    Glide.with(this.context).load(imageUrl).into(dpImage)
+                    Glide.with(requireContext()).load(imageUrl).into(dpImage)
                 }
             }
             .addOnFailureListener {

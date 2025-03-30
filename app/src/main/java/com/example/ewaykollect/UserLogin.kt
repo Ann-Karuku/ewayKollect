@@ -28,12 +28,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.security.MessageDigest
 
 class UserLogin : AppCompatActivity() {
@@ -80,7 +76,7 @@ class UserLogin : AppCompatActivity() {
         fbBtn=findViewById(R.id.btn_facebook)
 
         // Initialize Firebase Auth
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
 
         // Initialize Facebook Login button
         callbackManager = CallbackManager.Factory.create()
@@ -147,6 +143,7 @@ class UserLogin : AppCompatActivity() {
                 }
             }
     }
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

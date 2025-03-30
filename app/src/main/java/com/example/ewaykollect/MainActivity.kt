@@ -21,7 +21,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -35,17 +34,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var googleSignInClient: GoogleSignInClient
-    // Initialize toolbar
-    val toolbar: Toolbar = findViewById(R.id.toolBar)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // Initialize Firebase Auth
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
 
 
+        // Initialize toolbar
+        val toolbar: Toolbar = findViewById(R.id.toolBar)
         setSupportActionBar(toolbar)
 
         // Initialize drawer layout
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Set up ActionBar with Navigation Controller
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_account, R.id.nav_profile, R.id.nav_settings
+            R.id.nav_account, R.id.nav_profile, R.id.nav_settings
         ), drawer)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -108,9 +108,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_home -> {
-                navController.navigate(R.id.homeFragment)
-            }
             R.id.nav_account -> {
                 navController.navigate(R.id.accountFragment)
             }
@@ -157,19 +154,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-        }
-    }
-
-    fun toggleDrawerIndicator(showDrawer: Boolean) {
-        val toggle = ActionBarDrawerToggle(
-            this, drawer, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        if (showDrawer) {
-            toggle.isDrawerIndicatorEnabled = true
-            toggle.syncState()
-        } else {
-            toggle.isDrawerIndicatorEnabled = false
         }
     }
 

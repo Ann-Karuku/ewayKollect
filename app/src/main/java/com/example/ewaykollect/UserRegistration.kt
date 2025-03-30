@@ -16,7 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -31,7 +30,6 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var loginLink: TextView
     private lateinit var googleBtn:ImageView
     private lateinit var facebookBtn:ImageView
-    private lateinit var image:ImageView
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -53,7 +51,7 @@ class UserRegistration : AppCompatActivity() {
         facebookBtn=findViewById(R.id.facebook)
 
         // Initialize Firebase Auth
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
 
         loginLink.setOnClickListener {
             val intent= Intent(this,UserLogin::class.java)

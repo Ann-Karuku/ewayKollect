@@ -158,7 +158,7 @@ class EditProfileFragment : Fragment() {
                 "town" to selectedTown
             )
 
-            db.collection("users").document(userId)
+            db.collection("user").document(userId)
                 .update(userUpdates)
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
@@ -173,7 +173,7 @@ class EditProfileFragment : Fragment() {
     private fun loadUserData() {
         val userId = auth.currentUser?.uid
         if (userId != null) {
-            db.collection("users").document(userId).get()
+            db.collection("user").document(userId).get()
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         edtName.setText(document.getString("name"))

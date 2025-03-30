@@ -81,11 +81,19 @@ class UserLogin : AppCompatActivity() {
         // Initialize Facebook Login button
         callbackManager = CallbackManager.Factory.create()
         fbBtn.setReadPermissions("email", "public_profile")
-        fbBtn.setOnClickListener {
-            fbSignin()
-        }
+        fbBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
 
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+            }
 
+            override fun onError(error: FacebookException) {
+                Log.d(TAG, "facebook:onError", error)
+            }
+        })
 
         registerLink.setOnClickListener {
                 val intent = Intent(this, RegisterChoice::class.java)
@@ -109,34 +117,36 @@ class UserLogin : AppCompatActivity() {
         }
 
 
-
-    private fun fbSignin() {
-        fbBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                handleFacebookAccessToken(loginResult.accessToken)
-            }
-
-            override fun onCancel() {
-                Log.d(TAG, "facebook:onCancel")
-            }
-
-            override fun onError(error: FacebookException) {
-                Log.d(TAG, "facebook:onError", error)
-            }
-        })
-    }
-
     private fun handleFacebookAccessToken(token: AccessToken) {
         val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                val userID = FirebaseAuth.getInstance().currentUser!!.uid
+                val userRef = db.collection("user").document(userID)
+
+                userRef.get().addOnSuccessListener { document ->
+                    if (!document.exists()) {
+                        val facebookUser = auth.currentUser
+                        val userMap = hashMapOf(
+                            "name" to (facebookUser?.displayName ?: "Not Updated"),
+                            "email" to (facebookUser?.email ?: "Not Updated"),
+                            "image" to (facebookUser?.photoUrl?.toString() ?: ""),
+                            "phone" to "Not Updated",
+                            "county" to "Not Updated",
+                            "town" to "Not Updated"
+                        )
+                        db.collection("user").document(userID).set(userMap)
+                    }
+                }
+
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Facebook Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -187,7 +197,7 @@ class UserLogin : AppCompatActivity() {
                         val userMap = hashMapOf(
                             "name" to (account.displayName ?: "Not Updated"),
                             "email" to (account.email ?: "Not Updated"),
-                            "profileImageUrl" to (account.photoUrl?.toString() ?: ""),
+                            "image" to (account.photoUrl?.toString() ?: ""),
                             "phone" to "Not Updated",
                             "county" to "Not Updated",
                             "town" to "Not Updated"

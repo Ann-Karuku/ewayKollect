@@ -1,23 +1,34 @@
 package com.example.ewaykollect
 
 import android.app.Activity
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
+import android.util.Base64
+import android.util.Log
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.startActivity
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.security.MessageDigest
 
 class UserRegistration : AppCompatActivity() {
 
@@ -29,7 +40,8 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var signInBtn: Button
     private lateinit var loginLink: TextView
     private lateinit var googleBtn:ImageView
-    private lateinit var facebookBtn:ImageView
+    private lateinit var fbBtn:LoginButton
+    private lateinit var callbackManager: CallbackManager
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -48,10 +60,30 @@ class UserRegistration : AppCompatActivity() {
         signInBtn=findViewById(R.id.signUpBtn)
         loginLink=findViewById(R.id.loginLink)
         googleBtn=findViewById(R.id.google)
-        facebookBtn=findViewById(R.id.facebook)
+        fbBtn=findViewById(R.id.facebook)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+
+        printHashKey(applicationContext)
+
+        // Initialize Facebook Login button
+        callbackManager = CallbackManager.Factory.create()
+        fbBtn.setReadPermissions("email", "public_profile")
+        fbBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(loginResult: LoginResult) {
+                handleFacebookAccessToken(loginResult.accessToken)
+            }
+
+            override fun onCancel() {
+                Log.d(TAG, "facebook:onCancel")
+            }
+
+            override fun onError(error: FacebookException) {
+                Log.d(TAG, "facebook:onError", error)
+            }
+        })
+
 
         loginLink.setOnClickListener {
             val intent= Intent(this,UserLogin::class.java)
@@ -77,6 +109,35 @@ class UserRegistration : AppCompatActivity() {
 
     }
 
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val userID = FirebaseAuth.getInstance().currentUser!!.uid
+                val userRef = db.collection("user").document(userID)
+
+                userRef.get().addOnSuccessListener { document ->
+                    if (!document.exists()) {
+                        val facebookUser = auth.currentUser
+                        val userMap = hashMapOf(
+                            "name" to (facebookUser?.displayName ?: "Not Updated"),
+                            "email" to (facebookUser?.email ?: "Not Updated"),
+                            "image" to (facebookUser?.photoUrl?.toString() ?: ""),
+                            "phone" to "Not Updated",
+                            "county" to "Not Updated",
+                            "town" to "Not Updated"
+                        )
+                        db.collection("user").document(userID).set(userMap)
+                    }
+                }
+
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                Toast.makeText(this, "Facebook Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     //method to open home activity after google auth
     private fun signInGoogle(){
         val signInIntent = googleSignInClient.signInIntent
@@ -108,16 +169,25 @@ class UserRegistration : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken , null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful){
-                val intent : Intent = Intent(this , MainActivity::class.java)
+                val intent= Intent(this , MainActivity::class.java)
 
                 val userID= FirebaseAuth.getInstance().currentUser!!.uid
+                val userRef = db.collection("user").document(userID)
 
-                val userMap= hashMapOf(
-                    "name" to account.displayName,
-                    "email" to account.email,
-                    "image" to account.photoUrl
-                )
-                db.collection("user").document(userID).set(userMap)
+                userRef.get().addOnSuccessListener { document ->
+                    if (!document.exists()) {
+                        // Only save the data if the user document does not exist
+                        val userMap = hashMapOf(
+                            "name" to (account.displayName ?: "Not Updated"),
+                            "email" to (account.email ?: "Not Updated"),
+                            "image" to (account.photoUrl?.toString() ?: ""),
+                            "phone" to "Not Updated",
+                            "county" to "Not Updated",
+                            "town" to "Not Updated"
+                        )
+                        db.collection("user").document(userID).set(userMap)
+                    }
+                }
 
                 startActivity(intent)
             }else{
@@ -127,16 +197,6 @@ class UserRegistration : AppCompatActivity() {
         }
     }
 
-
-
-//    //SIGNIN WITH FACEBOOK
-//    facebookBtn.setOnClickListener {
-//        signInFacebook()
-//    }
-
-    private fun signInFacebook() {
-        TODO("Not yet implemented")
-    }
 
 
     //SIGNIN WITH EMAIL AND PASSWORD
@@ -179,8 +239,11 @@ class UserRegistration : AppCompatActivity() {
                                 "name" to person_name,
                                 "email" to mail,
                                 "phone" to phoneNo,
-                                "password" to pass
-
+                                "password" to pass,
+                                "image" to  "",
+                                "phone" to "Not Updated",
+                                "county" to "Not Updated",
+                                "town" to "Not Updated"
                             )
                             db.collection("user").document(userID).set(userMap)
                                 .addOnSuccessListener {
@@ -211,6 +274,38 @@ class UserRegistration : AppCompatActivity() {
             }
           }
         }
+
+    //facebook login
+    private fun printHashKey(context: Context) {
+        try {
+            val packageInfo = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                )
+            } else {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    PackageManager.GET_SIGNATURES
+                )
+            }
+
+            val signatures = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                packageInfo.signingInfo.apkContentsSigners
+            } else {
+                packageInfo.signatures
+            }
+
+            for (signature in signatures) {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val hashKey = Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+                Log.i("AppLog", "Key Hash: $hashKey")
+            }
+        } catch (e: Exception) {
+            Log.e("AppLog", "Error getting hash key", e)
+        }
+    }
 
 
 

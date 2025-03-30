@@ -11,6 +11,7 @@ class CompanyRegistration : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_registration)
+        supportActionBar?.hide()
 
         val step1 = findViewById<LinearLayout>(R.id.stepOneLayout)
         val step2 = findViewById<LinearLayout>(R.id.stepTwoLayout)

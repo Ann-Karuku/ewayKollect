@@ -9,6 +9,8 @@ import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import android.util.Log
 import android.widget.*
@@ -50,10 +52,10 @@ class UserLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Install the splash screen
-         installSplashScreen()
-        // Splash screen delay for 3 seconds
-        Thread.sleep(3000)
+        installSplashScreen()
+        Handler(Looper.getMainLooper()).postDelayed({
+            setContentView(R.layout.activity_user_login)
+        }, 3000)
 
         setContentView(R.layout.activity_user_login)
         supportActionBar?.hide()
@@ -65,8 +67,6 @@ class UserLogin : AppCompatActivity() {
         Toast.makeText(applicationContext, networkStatus, Toast.LENGTH_SHORT).show()
 
         printHashKey(applicationContext)
-
-
 
         email = findViewById(R.id.edtEmail)
         password = findViewById(R.id.edtPassword)
@@ -127,21 +127,15 @@ class UserLogin : AppCompatActivity() {
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
-        Log.d(TAG, "handleFacebookAccessToken:$token")
-
         val credential = FacebookAuthProvider.getCredential(token.token)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                   val intent : Intent = Intent(this , MainActivity::class.java)
-                   startActivity(intent)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                }
+        auth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
+        }
     }
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -185,13 +179,22 @@ class UserLogin : AppCompatActivity() {
                 val intent= Intent(this , MainActivity::class.java)
 
                 val userID= FirebaseAuth.getInstance().currentUser!!.uid
+                val userRef = db.collection("user").document(userID)
 
-                val userMap= hashMapOf(
-                    "name" to account.displayName,
-                    "email" to account.email,
-                    "image" to account.photoUrl
-                )
-                db.collection("user").document(userID).set(userMap)
+                userRef.get().addOnSuccessListener { document ->
+                    if (!document.exists()) {
+                        // Only save the data if the user document does not exist
+                        val userMap = hashMapOf(
+                            "name" to (account.displayName ?: "Not Updated"),
+                            "email" to (account.email ?: "Not Updated"),
+                            "profileImageUrl" to (account.photoUrl?.toString() ?: ""),
+                            "phone" to "Not Updated",
+                            "county" to "Not Updated",
+                            "town" to "Not Updated"
+                        )
+                        db.collection("user").document(userID).set(userMap)
+                    }
+                }
 
                 startActivity(intent)
             }else{
@@ -204,14 +207,13 @@ class UserLogin : AppCompatActivity() {
     //authentication via email-password
 
     private fun perfomAuth() {
-        var email: String = email.text.toString()
-        var password: String = password.text.toString()
+        val inputEmail = email.text.toString()
+        val inputPassword = password.text.toString()
 
-
-        if (email.isEmpty() || password.isEmpty()) {
+        if (inputEmail.isEmpty() || inputPassword.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_SHORT).show()
         } else {
-            auth.signInWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(inputEmail, inputPassword)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -227,23 +229,36 @@ class UserLogin : AppCompatActivity() {
 
     //facebook login
     private fun printHashKey(context: Context) {
-
         try {
-            val info = context.packageManager.getPackageInfo(
-                context.packageName,
-                PackageManager.GET_SIGNATURES
-            )
-            for (signature in info.signatures) {
+            val packageInfo = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                )
+            } else {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    PackageManager.GET_SIGNATURES
+                )
+            }
+
+            val signatures = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                packageInfo.signingInfo.apkContentsSigners
+            } else {
+                packageInfo.signatures
+            }
+
+            for (signature in signatures) {
                 val md = MessageDigest.getInstance("SHA")
                 md.update(signature.toByteArray())
-                val hashKey = String(Base64.encode(md.digest(), 0))
-                Log.i("AppLog", "key:$hashKey=")
+                val hashKey = Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+                Log.i("AppLog", "Key Hash: $hashKey")
             }
         } catch (e: Exception) {
-            Log.e("AppLog", "error:", e)
+            Log.e("AppLog", "Error getting hash key", e)
         }
-
     }
+
 
     override fun onResume() {
         super.onResume()

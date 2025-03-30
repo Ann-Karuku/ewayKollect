@@ -62,6 +62,15 @@ class ChangePasswordFragment : Fragment() {
             sendVerificationEmail()
         }
 
+        //see if user is logged in with google and hide the current pass field
+        val user = auth.currentUser
+        val providers = user?.providerData?.map { it.providerId } ?: emptyList()
+        if (providers.contains("google.com")) {
+            currentPass.visibility = View.GONE
+        } else {
+            currentPass.visibility = View.VISIBLE
+        }
+
         //password toogle
         setupPasswordToggle(currentPass)
         setupPasswordToggle(newPass)
@@ -146,9 +155,33 @@ class ChangePasswordFragment : Fragment() {
     private fun updatePassword(current: String, new: String) {
         val user = auth.currentUser
 
-        if (user != null && user.email != null) {
-            val credential = EmailAuthProvider.getCredential(user.email!!, current)
+        if (user != null) {
+            // Check if user signed in with Google (no password exists)
+            val providers = user.providerData.map { it.providerId }
+            if (providers.contains("google.com")) {
+                // Google Sign-In users don't have a password, so just allow setting one
+                user.updatePassword(new).addOnCompleteListener { updateTask ->
+                    if (updateTask.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Password set successfully!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        findNavController().navigate(R.id.action_changePasswordFragment_to_profileFragment)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to set password!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                return
+            }
 
+
+        if (user.email != null) {
+            val credential = EmailAuthProvider.getCredential(user.email!!, current)
             // Re-authenticate the user
             user.reauthenticate(credential).addOnCompleteListener { authTask ->
                 if (authTask.isSuccessful) {
@@ -167,6 +200,7 @@ class ChangePasswordFragment : Fragment() {
             }
         } else {
             Toast.makeText(requireContext(), "User not authenticated!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -56,23 +56,24 @@ class ProfileFragment : Fragment() {
 
         ref.get().addOnSuccessListener {
             if(it!=null){
-                val name= it.data?.get("name").toString()
-                val email= it.data?.get("email").toString()
-                val phone=it.data?.get("phone").toString()
-                val county=it.data?.get("county").toString()
-                val town=it.data?.get("town").toString()
+                val name= it.data?.get("name")?:"Not Updated"
+                val email= it.data?.get("email")?:"Not Updated"
+                val phone=it.data?.get("phone")?:"Not Updated"
+                val county=it.data?.get("county")?:"Not Updated"
+                val town=it.data?.get("town")?:"Not Updated"
 
-                dpName=root.findViewById(R.id.prof_name)
-                dpName.setText(name)
-                dpMail=root.findViewById(R.id.prof_email)
-                dpMail.setText(email)
-                dpPhone=root.findViewById(R.id.prof_phone)
-                dpPhone.setText(phone)
-                dpCounty=root.findViewById(R.id.prof_county)
-                dpCounty.setText(county)
-                dpTown=root.findViewById(R.id.prof_subcounty)
-                dpTown.setText(town)
+                dpName = root.findViewById(R.id.prof_name)
+                dpMail = root.findViewById(R.id.prof_email)
+                dpPhone = root.findViewById(R.id.prof_phone)
+                dpCounty = root.findViewById(R.id.prof_county)
+                dpTown = root.findViewById(R.id.prof_subcounty)
 
+                // Now set the values
+                dpName.text = name.toString()
+                dpMail.text = email.toString()
+                dpPhone.text = phone.toString()
+                dpCounty.text = county.toString()
+                dpTown.text = town.toString()
             }
         }
             .addOnFailureListener{

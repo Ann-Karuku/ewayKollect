@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +33,8 @@ class ChangePasswordFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root=inflater.inflate(R.layout.fragment_change_password, container, false)
+        // Set the title
+        (activity as AppCompatActivity).supportActionBar?.title = "Change Password"
 
         // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance()

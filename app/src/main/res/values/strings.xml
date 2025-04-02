@@ -90,4 +90,5 @@
     <string name="maps">maps\n</string>
     <string name="horizontalScroll">Horizontal Scroll View</string>
     <string name="verticalScroll">Vertical ScrollView</string>
+    <string name="google_maps_key">YOUR_API_KEY_HERE</string>
 </resources>

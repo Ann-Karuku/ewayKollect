@@ -5,4 +5,7 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="change_pass">Change Password</string>
     <string name="wasteCat"><![CDATA[Waste Category & Password]]></string>
+    <string name="search_recyclers">Search Recyclers, refurbishers,...</string>
+    <string name="horizontalScroll">Horizontal Scroll View</string>
+    <string name="verticalScroll">Vertical ScrollView</string>
 </resources>

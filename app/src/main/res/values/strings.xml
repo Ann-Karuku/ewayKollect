@@ -86,4 +86,8 @@
     <string name="resend_verification_email">Resend Verification Email</string>
     <string name="toggle_password_visibility">Toggle Password Visibility</string>
     <string name="previous">Previous</string>
+    <string name="search_recyclers">Search Recyclers, refurbishers,...</string>
+    <string name="maps">maps\n</string>
+    <string name="horizontalScroll">Horizontal Scroll View</string>
+    <string name="verticalScroll">Vertical ScrollView</string>
 </resources>

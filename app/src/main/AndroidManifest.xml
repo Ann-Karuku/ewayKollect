@@ -29,6 +29,7 @@
             android:name=".RegisterChoice"
             android:exported="false" />
 
+        <!--fb keys-->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

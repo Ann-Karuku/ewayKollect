@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecyclersFragement"
+    tools:context=".RecyclersFragment"
     android:orientation="vertical">
 
-    <!-- Map View -->
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <!-- WebView for OpenStreetMap -->
+    <WebView
+        android:id="@+id/mapWebView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="8dp"
@@ -29,7 +29,7 @@
         app:boxBackgroundColor="@color/transparent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_faqs"
+            android:id="@+id/search_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -38,21 +38,6 @@
             android:textCursorDrawable="@drawable/custom_cursor"
             android:background="@null"/>
     </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Horizontal ScrollView for Groups -->
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollGroups"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:contentDescription="@string/horizontalScroll">
-
-        <LinearLayout
-            android:id="@+id/linearLytGroups"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
 
     <!-- Vertical ScrollView for Recycler Lists -->
     <ScrollView

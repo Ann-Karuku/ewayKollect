@@ -1,7 +1,5 @@
 package com.example.ewaykollect
 
-import com.google.type.LatLng
-
 data class RecyclerItem(
     val id: String,
     val name: String,
@@ -9,6 +7,6 @@ data class RecyclerItem(
     val acceptedTypes: List<String>,
     val contact: String,
     val rating: Double,
-    val coordinates: LatLng,
+    val coordinates: Pair<Double, Double>,
     val popularityScore: Int
 )

@@ -1,6 +1,7 @@
 package com.example.ewaykollect
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -36,6 +37,7 @@ class RecyclersFragment : Fragment() {
     private var allRecyclers: List<RecyclerItem> = emptyList()
     private val categories = listOf("Popular", "Highest Rated", "Nearest")
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +51,7 @@ class RecyclersFragment : Fragment() {
 
         // Initialize WebView for the map
         mapWebView = root.findViewById(R.id.mapWebView)
-        mapWebView.settings.javaScriptEnabled = true
+        this.mapWebView.settings.javaScriptEnabled = true
         mapWebView.webViewClient = WebViewClient()
         mapWebView.loadUrl("file:///android_asset/map.html")
 

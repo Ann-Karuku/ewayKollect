@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Set up Navigation View with NavController
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener(this)
 
         // Drawer toggle setup
         val toggle = ActionBarDrawerToggle(
@@ -78,8 +79,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
-
-        navView.setNavigationItemSelectedListener(this)
 
         // Initialize Google Sign-In client
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -90,6 +89,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Fetch Firebase auth details
         loadUserDetails(navView)
 
+        //listener to update the action bar icon (hamburger or back arrow) based on the destination
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (appBarConfiguration.topLevelDestinations.contains(destination.id)) {
+                toggle.isDrawerIndicatorEnabled = true // Show hamburger icon for top-level destinations
+            } else {
+                toggle.isDrawerIndicatorEnabled = false // Show back arrow for nested destinations
+            }
+        }
     }
 
     private fun loadUserDetails(navView: NavigationView) {
@@ -158,7 +165,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        // First, try to navigate up in the NavController’s back stack
+        val navigatedUp = navController.navigateUp(appBarConfiguration)
+        if (navigatedUp) {
+            return true
+        }
+        // If navigation didn’t happen fall back to default behavior
+        return super.onSupportNavigateUp()
     }
 
     @Deprecated("Deprecated in Java")
@@ -166,6 +179,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
+            if (navController.popBackStack()) {
+                return // If NavController handled the back press, return
+            }
             super.onBackPressed()
         }
     }

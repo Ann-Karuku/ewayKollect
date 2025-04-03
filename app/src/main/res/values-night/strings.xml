@@ -8,4 +8,5 @@
     <string name="search_recyclers">Search Recyclers, refurbishers,...</string>
     <string name="horizontalScroll">Horizontal Scroll View</string>
     <string name="verticalScroll">Vertical ScrollView</string>
+    <string name="dont_have_an_account">Dont have an account?</string>
 </resources>

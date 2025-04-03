@@ -91,4 +91,7 @@
     <string name="horizontalScroll">Horizontal Scroll View</string>
     <string name="verticalScroll">Vertical ScrollView</string>
     <string name="google_maps_key">YOUR_API_KEY_HERE</string>
+    <string name="welcome_back">Welcome back</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="dont_have_an_account">Dont have an account?</string>
 </resources>

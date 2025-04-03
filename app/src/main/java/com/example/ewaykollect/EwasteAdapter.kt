@@ -1,5 +1,6 @@
 package com.example.ewaykollect
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class EwasteAdapter(private val ewasteList: List<EwasteItem>) : RecyclerView.Adapter<EwasteAdapter.EwasteViewHolder>() {
+class EwasteAdapter(private var ewasteList: List<EwasteItem>) : RecyclerView.Adapter<EwasteAdapter.EwasteViewHolder>() {
 
     // ViewHolder class that represents each item view in the RecyclerView
     class EwasteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,4 +43,11 @@ class EwasteAdapter(private val ewasteList: List<EwasteItem>) : RecyclerView.Ada
 
     // Return the size of the dataset
     override fun getItemCount() = ewasteList.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newList: List<EwasteItem>) {
+        ewasteList = newList
+        notifyDataSetChanged()
+    }
+
 }

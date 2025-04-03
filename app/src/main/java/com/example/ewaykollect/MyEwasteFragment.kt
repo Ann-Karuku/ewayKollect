@@ -45,6 +45,10 @@ class MyEwasteFragment : Fragment() {
         // Set the title
         (activity as AppCompatActivity).supportActionBar?.title = "My Ewaste Items"
 
+        if (!::auth.isInitialized) {
+            auth = FirebaseAuth.getInstance()
+        }
+
         // Initialize RecyclerView
         recyclerView = root.findViewById(R.id.recyclerViewEwasteItems)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -154,8 +158,7 @@ class MyEwasteFragment : Fragment() {
             } ?: emptyList()
 
             // Update the adapter with the fetched data
-            ewasteAdapter = EwasteAdapter(ewasteList)
-            recyclerView.adapter = ewasteAdapter
+            ewasteAdapter.updateData(ewasteList)
         }
     }
 
@@ -200,9 +203,11 @@ class MyEwasteFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Remove Firestore listener to avoid memory leaks
-        firestoreListener.remove()
+        if (::firestoreListener.isInitialized) {
+            firestoreListener.remove()
+        }
     }
+
 }
 
 

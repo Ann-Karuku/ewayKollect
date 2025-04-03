@@ -20,6 +20,7 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -41,7 +42,7 @@ class UserLogin : AppCompatActivity() {
     private lateinit var signUpBtn: Button
     private lateinit var registerLink: TextView
     private lateinit var googleBtn: ImageView
-    private lateinit var fbBtn: LoginButton
+    private lateinit var fbBtn: ImageView
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var callbackManager: CallbackManager
@@ -80,8 +81,12 @@ class UserLogin : AppCompatActivity() {
 
         // Initialize Facebook Login button
         callbackManager = CallbackManager.Factory.create()
-        fbBtn.setReadPermissions("email", "public_profile")
-        fbBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+        fbBtn.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(
+                this, listOf("email", "public_profile")
+            )
+        }
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 handleFacebookAccessToken(loginResult.accessToken)
             }
@@ -150,8 +155,6 @@ class UserLogin : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        // Pass the activity result back to the Facebook SDK
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 

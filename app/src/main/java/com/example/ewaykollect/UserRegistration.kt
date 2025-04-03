@@ -16,6 +16,7 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -40,7 +41,7 @@ class UserRegistration : AppCompatActivity() {
     private lateinit var signInBtn: Button
     private lateinit var loginLink: TextView
     private lateinit var googleBtn:ImageView
-    private lateinit var fbBtn:LoginButton
+    private lateinit var fbBtn:ImageView
     private lateinit var callbackManager: CallbackManager
 
     private lateinit var auth: FirebaseAuth
@@ -69,8 +70,12 @@ class UserRegistration : AppCompatActivity() {
 
         // Initialize Facebook Login button
         callbackManager = CallbackManager.Factory.create()
-        fbBtn.setReadPermissions("email", "public_profile")
-        fbBtn.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+        fbBtn.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(
+                this, listOf("email", "public_profile")
+            )
+        }
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 handleFacebookAccessToken(loginResult.accessToken)
             }

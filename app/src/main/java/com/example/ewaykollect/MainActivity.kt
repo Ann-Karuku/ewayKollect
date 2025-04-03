@@ -43,6 +43,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
+        // ✅ Check if a user is logged in
+        if (auth.currentUser == null) {
+            startActivity(Intent(this, UserLogin::class.java))
+            finish() // Close MainActivity
+            return
+        }
 
         // Initialize toolbar
         val toolbar: Toolbar = findViewById(R.id.toolBar)
@@ -82,6 +88,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Fetch Firebase auth details
+        loadUserDetails(navView)
+
+    }
+
+    private fun loadUserDetails(navView: NavigationView) {
         val userID = auth.currentUser?.uid
         userID?.let {
             val ref = db.collection("user").document(it)
@@ -135,7 +146,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         googleSignInClient.signOut().addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 // Redirect to login screen
-                startActivity(Intent(this, UserLogin::class.java))
+                val intent = Intent(this, UserLogin::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
                 Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show()
                 finish()
             } else {

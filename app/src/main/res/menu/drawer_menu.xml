@@ -4,13 +4,13 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_account"
+        <item android:id="@+id/accountFragment"
             android:icon="@drawable/ic_home"
             android:title="@string/NavDrawer_home"/>
-        <item android:id="@+id/nav_profile"
+        <item android:id="@+id/profileFragment"
             android:icon="@drawable/ic_profile"
             android:title="@string/NavDrawer_profile"/>
-        <item android:id="@+id/nav_settings"
+        <item android:id="@+id/settingsFragment"
             android:icon="@drawable/ic_settings"
             android:title="@string/NavDrawer_settings"/>
     </group>
@@ -18,7 +18,7 @@
     <item android:title="@string/NavDrawer_other">
         <menu>
             <group>
-                <item android:id="@+id/nav_FAQs"
+                <item android:id="@+id/FAQsFragment"
                     android:icon="@drawable/ic_faqs"
                     android:title="@string/NavDrawer_faqs"/>
                 <item android:id="@+id/nav_logOut"

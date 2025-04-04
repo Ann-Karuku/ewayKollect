@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var toggle: ActionBarDrawerToggle
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +63,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navController = navHostFragment.navController
 
         // Set up ActionBar with Navigation Controller
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_account, R.id.nav_profile, R.id.nav_settings
-        ), drawer)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.accountFragment, R.id.profileFragment, R.id.settingsFragment),
+            drawer // Pass the drawer to link it with the action bar
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Set up Navigation View with NavController
@@ -73,12 +75,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         // Drawer toggle setup
-        val toggle = ActionBarDrawerToggle(
+        toggle = ActionBarDrawerToggle(
             this, drawer, toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer.addDrawerListener(toggle)
         toggle.syncState()
+
+        toggle.isDrawerIndicatorEnabled = true
 
         // Initialize Google Sign-In client
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -126,18 +130,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_account -> {
+            R.id.accountFragment -> {
                 navController.navigate(R.id.accountFragment)
             }
-            R.id.nav_profile -> {
+            R.id.profileFragment -> {
                 navController.navigate(R.id.profileFragment)
             }
-            R.id.nav_FAQs -> {
+            R.id.settingsFragment -> {
+                navController.navigate(R.id.settingsFragment)
+            }
+            R.id.FAQsFragment -> {
                 navController.navigate(R.id.FAQsFragment)
             }
-            // Other layouts here
             R.id.nav_logOut -> {
-                signOut()
+                signOut() // Sign out when logout is clicked
             }
         }
 

@@ -24,17 +24,19 @@ class AccountFragment : Fragment() {
 
         val myEwasteItems = root.findViewById<CardView>(R.id.cdvw_my_ewaste)
         myEwasteItems.setOnClickListener {
-            // Check if the current destination is AccountFragment
             if (findNavController().currentDestination?.id == R.id.accountFragment) {
-                // Navigate to other EWaste Fragment using the generated action
                 findNavController().navigate(R.id.action_accountFragment_to_myEwaste)
+            }
+        }
+        val recyclers=root.findViewById<CardView>(R.id.cdvw_recyclers)
+        recyclers.setOnClickListener {
+            if(findNavController().currentDestination?.id==R.id.accountFragment){
+                findNavController().navigate(R.id.action_accountFragment_to_recyclersFragment)
             }
         }
         val myNotifications = root.findViewById<CardView>(R.id.cdvw_my_notifications)
         myNotifications.setOnClickListener {
-            // Check if the current destination is AccountFragment
             if (findNavController().currentDestination?.id == R.id.accountFragment) {
-                // Navigate to other EWaste Fragment using the generated action
                 findNavController().navigate(R.id.action_accountFragment_to_notificationsFragment)
             }
         }

@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_accountFragment_to_FAQsFragment"
             app:destination="@id/FAQsFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_recyclersFragment"
+            app:destination="@id/recyclersFragment" />
     </fragment>
     <fragment
         android:id="@+id/myEwaste"
@@ -105,5 +108,14 @@
         <action
             android:id="@+id/action_changePasswordFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recyclersFragment"
+        android:name="com.example.ewaykollect.RecyclersFragment"
+        android:label="fragment_recyclers"
+        tools:layout="@layout/fragment_recyclers" >
+        <action
+            android:id="@+id/action_recyclersFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 </navigation>

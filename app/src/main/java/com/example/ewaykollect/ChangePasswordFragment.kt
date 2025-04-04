@@ -33,8 +33,6 @@ class ChangePasswordFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root=inflater.inflate(R.layout.fragment_change_password, container, false)
-        // Set the title
-        (activity as AppCompatActivity).supportActionBar?.title = "Change Password"
 
         // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance()

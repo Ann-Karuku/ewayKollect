@@ -19,9 +19,6 @@ class AccountFragment : Fragment() {
     ): View {
         val root: View = inflater.inflate(R.layout.fragment_account, container, false)
 
-        // Set the title
-        (activity as AppCompatActivity).supportActionBar?.title = "My Account"
-
         val myEwasteItems = root.findViewById<CardView>(R.id.cdvw_my_ewaste)
         myEwasteItems.setOnClickListener {
             if (findNavController().currentDestination?.id == R.id.accountFragment) {

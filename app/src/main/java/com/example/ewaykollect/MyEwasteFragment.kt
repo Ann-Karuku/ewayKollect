@@ -42,9 +42,6 @@ class MyEwasteFragment : Fragment() {
     ): View {
         val root: View = inflater.inflate(R.layout.fragment_my_ewaste, container, false)
 
-        // Set the title
-        (activity as AppCompatActivity).supportActionBar?.title = "My Ewaste Items"
-
         if (!::auth.isInitialized) {
             auth = FirebaseAuth.getInstance()
         }

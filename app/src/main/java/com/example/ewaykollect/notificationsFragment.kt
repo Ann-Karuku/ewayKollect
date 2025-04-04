@@ -15,8 +15,6 @@ class NotificationsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root= inflater.inflate(R.layout.fragment_notifications, container, false)
-        // Set the title
-        (activity as AppCompatActivity).supportActionBar?.title = "Notifications"
 
         return root
     }

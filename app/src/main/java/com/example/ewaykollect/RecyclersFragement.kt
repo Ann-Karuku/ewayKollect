@@ -44,8 +44,6 @@ class RecyclersFragment : Fragment() {
     ): View? {
         val root: View = inflater.inflate(R.layout.fragment_recyclers, container, false)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "Recyclers"
-
         firestore = FirebaseFirestore.getInstance()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 

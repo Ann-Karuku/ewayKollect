@@ -38,8 +38,6 @@ class EditProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val root=inflater.inflate(R.layout.fragment_edit_profile, container, false)
-        // Set the title
-        (activity as AppCompatActivity).supportActionBar?.title = "Edit Profile"
 
         edtName=root.findViewById(R.id.edtUName)
         edtEmail=root.findViewById(R.id.edtUEmail)

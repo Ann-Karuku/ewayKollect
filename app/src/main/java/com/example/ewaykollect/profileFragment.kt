@@ -48,9 +48,6 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         var root:View=inflater.inflate(R.layout.fragment_profile, container, false)
 
-        // Set the title
-        (activity as AppCompatActivity).supportActionBar?.title = "My Profile"
-
         val userID= auth.currentUser!!.uid
         val ref=db.collection("user").document(userID)
 

@@ -85,19 +85,19 @@ class MyEwasteFragment : Fragment() {
                 // Create a ShapeDrawable programmatically for rounded corners
                 val drawable = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
-                    cornerRadius = 12f // Adjust the radius for rounding
-                    setColor(ContextCompat.getColor(requireContext(), R.color.light_green)) // Default color
+                    cornerRadius = 12f
+                    setColor(ContextCompat.getColor(requireContext(), R.color.main_grey)) // Default color
                     setStroke(1, ContextCompat.getColor(requireContext(), R.color.other_green)) // Border color and width
                 }
                 background = drawable
-                setPadding(16, 5, 16, 5)
+                setPadding(16, 2, 16, 2)
             }
             button.setOnClickListener {
                 // Deselect the previously selected button
                 selectedButton?.background = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
                     cornerRadius = 12f
-                    setColor(ContextCompat.getColor(requireContext(), R.color.light_green))
+                    setColor(ContextCompat.getColor(requireContext(), R.color.main_grey))
                     setStroke(1, ContextCompat.getColor(requireContext(), R.color.other_green))
                 }
 
@@ -112,8 +112,6 @@ class MyEwasteFragment : Fragment() {
 
                 // Filter and update the RecyclerView based on the selected category
                 filterEwasteItemsByCategory(category)
-
-                Toast.makeText(requireContext(), category, Toast.LENGTH_SHORT).show()
             }
             linearLytCategories.addView(button)
         }

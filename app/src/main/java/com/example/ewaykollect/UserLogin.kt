@@ -50,13 +50,22 @@ class UserLogin : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Install the splash screen
+        val splashScreen = installSplashScreen()
+
+        // Keep the splash screen visible for 3 seconds
+        var isLoading = true
+        splashScreen.setKeepOnScreenCondition { isLoading }
+
         super.onCreate(savedInstanceState)
-        installSplashScreen()
-        //delay the transition to UserLogin activity for 3 seconds
-        Handler(Looper.getMainLooper()).postDelayed({
-            setContentView(R.layout.activity_user_login)
-        }, 3000)
         supportActionBar?.hide()
+        // Delay the "loading complete" state
+        Handler(Looper.getMainLooper()).postDelayed({
+            isLoading = false
+        }, 3000)
+
+        setContentView(R.layout.activity_user_login)
+
 
         val receiver = connectivityReceiver()
         val networkStatus: String? = receiver.status

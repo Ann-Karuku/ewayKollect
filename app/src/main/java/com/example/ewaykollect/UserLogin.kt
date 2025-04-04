@@ -22,7 +22,6 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -54,10 +53,6 @@ class UserLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
-        Handler(Looper.getMainLooper()).postDelayed({
-            setContentView(R.layout.activity_user_login)
-        }, 3000)
-
         setContentView(R.layout.activity_user_login)
         supportActionBar?.hide()
 
@@ -73,56 +68,59 @@ class UserLogin : AppCompatActivity() {
         password = findViewById(R.id.edtPassword)
         signUpBtn = findViewById(R.id.signUpBtn)
         registerLink = findViewById(R.id.regLink)
-        googleBtn=findViewById(R.id.google)
-        fbBtn=findViewById(R.id.btn_facebook)
+        googleBtn = findViewById(R.id.google)
+        fbBtn = findViewById(R.id.btn_facebook)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Initialize Facebook Login button
+        signUpBtn.setOnClickListener {
+            perfomAuth()
+        }
+
+        registerLink.setOnClickListener {
+            val intent = Intent(this, RegisterChoice::class.java)
+            startActivity(intent)
+        }
+
+        //google authentication
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        googleBtn.setOnClickListener {
+            signInGoogle()
+        }
+
+
+        // Initialize Facebook authentication
         callbackManager = CallbackManager.Factory.create()
         fbBtn.setOnClickListener {
             LoginManager.getInstance().logInWithReadPermissions(
                 this, listOf("email", "public_profile")
             )
         }
-        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                handleFacebookAccessToken(loginResult.accessToken)
-            }
+        LoginManager.getInstance()
+            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    handleFacebookAccessToken(loginResult.accessToken)
+                }
 
-            override fun onCancel() {
-                Log.d(TAG, "facebook:onCancel")
-            }
+                override fun onCancel() {
+                    Log.d(TAG, "facebook:onCancel")
+                }
 
-            override fun onError(error: FacebookException) {
-                Log.d(TAG, "facebook:onError", error)
-            }
-        })
+                override fun onError(error: FacebookException) {
+                    Log.d(TAG, "facebook:onError", error)
+                }
+            })
 
-        registerLink.setOnClickListener {
-                val intent = Intent(this, RegisterChoice::class.java)
-                startActivity(intent)
-            }
+    }
 
-        signUpBtn.setOnClickListener {
-                perfomAuth() }
-
-            //google authentication
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-
-            googleSignInClient = GoogleSignIn.getClient(this , gso)
-
-            googleBtn.setOnClickListener {
-                signInGoogle()
-            }
-        }
-
-
-    private fun handleFacebookAccessToken(token: AccessToken) {
+ private fun handleFacebookAccessToken(token: AccessToken) {
         val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -218,7 +216,6 @@ class UserLogin : AppCompatActivity() {
     }
 
     //authentication via email-password
-
     private fun perfomAuth() {
         val inputEmail = email.text.toString()
         val inputPassword = password.text.toString()
@@ -229,16 +226,16 @@ class UserLogin : AppCompatActivity() {
             auth.signInWithEmailAndPassword(inputEmail, inputPassword)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
                         val intent2 = Intent(this, MainActivity::class.java)
                         startActivity(intent2)
+                        finish()
                     } else {
-                        // If sign in fails, display a message to the user.
                         Toast.makeText(this, "Incorrect email/password", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
     }
+
 
     //facebook login
     private fun printHashKey(context: Context) {

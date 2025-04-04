@@ -43,11 +43,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-
-        // ✅ Check if a user is logged in
         if (auth.currentUser == null) {
             startActivity(Intent(this, UserLogin::class.java))
-            finish() // Close MainActivity
+            finish()
             return
         }
 
@@ -65,8 +63,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Set up ActionBar with Navigation Controller
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.accountFragment, R.id.profileFragment, R.id.settingsFragment),
-            drawer // Pass the drawer to link it with the action bar
+            drawer
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Set up Navigation View with NavController
@@ -93,12 +92,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Fetch Firebase auth details
         loadUserDetails(navView)
 
-        //listener to update the action bar icon (hamburger or back arrow) based on the destination
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            // Set the ActionBar title based on the destination
+            when (destination.id) {
+                R.id.accountFragment -> supportActionBar?.title = "My Account"
+                R.id.myEwaste -> supportActionBar?.title = "My E-Waste"
+                R.id.profileFragment -> supportActionBar?.title = "Profile"
+                R.id.settingsFragment -> supportActionBar?.title = "Settings"
+                R.id.notificationsFragment -> supportActionBar?.title = "Notifications"
+                R.id.FAQsFragment -> supportActionBar?.title = "FAQs"
+                R.id.addEwasteDialogFragment -> supportActionBar?.title = "Add E-Waste"
+                R.id.editProfileFragment -> supportActionBar?.title = "Edit Profile"
+                R.id.changePasswordFragment -> supportActionBar?.title = "Change Password"
+                R.id.recyclersFragment -> supportActionBar?.title = "Recyclers"
+                else -> supportActionBar?.title = "EwayKollect" // Default title
+            }
             if (appBarConfiguration.topLevelDestinations.contains(destination.id)) {
-                toggle.isDrawerIndicatorEnabled = true // Show hamburger icon for top-level destinations
+                toggle.isDrawerIndicatorEnabled = true
             } else {
-                toggle.isDrawerIndicatorEnabled = false // Show back arrow for nested destinations
+                toggle.isDrawerIndicatorEnabled = false
+            }
+        }
+
+        toolbar.setNavigationOnClickListener {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START)
+            } else {
+                val popped = navController.popBackStack()
+                if (!popped) {
+                    finish()
+                }
             }
         }
     }
@@ -143,7 +167,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 navController.navigate(R.id.FAQsFragment)
             }
             R.id.nav_logOut -> {
-                signOut() // Sign out when logout is clicked
+                signOut()
             }
         }
 
@@ -171,13 +195,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        // First, try to navigate up in the NavController’s back stack
-        val navigatedUp = navController.navigateUp(appBarConfiguration)
-        if (navigatedUp) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
             return true
         }
-        // If navigation didn’t happen fall back to default behavior
-        return super.onSupportNavigateUp()
+        val popped = navController.popBackStack()
+        return popped || super.onSupportNavigateUp()
     }
 
     @Deprecated("Deprecated in Java")
@@ -186,7 +209,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer.closeDrawer(GravityCompat.START)
         } else {
             if (navController.popBackStack()) {
-                return // If NavController handled the back press, return
+                return
             }
             super.onBackPressed()
         }

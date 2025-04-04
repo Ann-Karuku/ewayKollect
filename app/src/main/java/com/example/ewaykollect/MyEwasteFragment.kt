@@ -87,10 +87,9 @@ class MyEwasteFragment : Fragment() {
                     shape = GradientDrawable.RECTANGLE
                     cornerRadius = 12f
                     setColor(ContextCompat.getColor(requireContext(), R.color.main_grey)) // Default color
-                    setStroke(1, ContextCompat.getColor(requireContext(), R.color.other_green)) // Border color and width
-                }
+                   }
                 background = drawable
-                setPadding(16, 2, 16, 2)
+                setPadding(16, 1, 16, 1)
             }
             button.setOnClickListener {
                 // Deselect the previously selected button
@@ -98,16 +97,14 @@ class MyEwasteFragment : Fragment() {
                     shape = GradientDrawable.RECTANGLE
                     cornerRadius = 12f
                     setColor(ContextCompat.getColor(requireContext(), R.color.main_grey))
-                    setStroke(1, ContextCompat.getColor(requireContext(), R.color.other_green))
-                }
+                  }
 
                 // Select the current button
                 button.background = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
                     cornerRadius = 12f
                     setColor(ContextCompat.getColor(requireContext(), R.color.other_green)) // Active button color
-                    setStroke(1, ContextCompat.getColor(requireContext(), R.color.other_green))
-                }
+                  }
                 selectedButton = button
 
                 // Filter and update the RecyclerView based on the selected category

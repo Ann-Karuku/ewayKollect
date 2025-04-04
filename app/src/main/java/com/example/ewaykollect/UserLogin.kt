@@ -51,7 +51,11 @@ class UserLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_login)
+        installSplashScreen()
+        //delay the transition to UserLogin activity for 3 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            setContentView(R.layout.activity_user_login)
+        }, 3000)
         supportActionBar?.hide()
 
         val receiver = connectivityReceiver()

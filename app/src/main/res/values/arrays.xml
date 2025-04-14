@@ -1,6 +1,43 @@
 <resources>
+    <string-array name="company_types">
+        <item>Select Company Type</item>
+        <item>Collector</item>
+        <item>Recycler</item>
+        <item>Refurbisher / Reconditioner</item>
+        <item>IT Asset Disposal (ITAD)</item>
+        <item>Parts Salvage / Repair Shop</item>
+    </string-array>
+
+    <string-array name="waste_categories">
+        <item>Select Waste Category</item>
+        <item>Mobile Phones</item>
+        <item>Tablets</item>
+        <item>Laptops</item>
+        <item>Desktop Computers</item>
+        <item>Computer Accessories</item>
+        <item>Monitors</item>
+        <item>Printers and Scanners</item>
+        <item>Televisions</item>
+        <item>DVD/Blu-ray Players</item>
+        <item>Game Consoles</item>
+        <item>Remote Controls</item>
+        <item>Washing Machines</item>
+        <item>Refrigerators</item>
+        <item>Microwaves</item>
+        <item>Air Conditioners</item>
+        <item>Electric Fans</item>
+        <item>Heaters</item>
+        <item>Chargers and Power Cables</item>
+        <item>Networking Equipment (Routers, Modems)</item>
+        <item>Batteries (Lithium-ion, Lead-acid)</item>
+        <item>Solar Equipment</item>
+        <item>E-waste Mixed (Unsorted)</item>
+    </string-array>
+
+
     <!-- List of Counties in Kenya -->
     <string-array name="kenya_counties">
+        <item>Select County</item>
         <item>Baringo</item>
         <item>Bomet</item>
         <item>Bungoma</item>

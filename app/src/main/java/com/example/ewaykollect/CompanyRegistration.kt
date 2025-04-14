@@ -59,7 +59,7 @@ class CompanyRegistration : AppCompatActivity() {
         ArrayAdapter.createFromResource(
             this,
             R.array.company_types,
-            android.R.layout.simple_spinner_item
+            R.layout.spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerCompanyType.adapter = adapter
@@ -68,7 +68,7 @@ class CompanyRegistration : AppCompatActivity() {
         ArrayAdapter.createFromResource(
             this,
             R.array.waste_categories,
-            android.R.layout.simple_spinner_item
+            R.layout.spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerWasteCategories.adapter = adapter
@@ -210,7 +210,7 @@ class CompanyRegistration : AppCompatActivity() {
         )
 
         // Populate Counties Spinner
-        val countyAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, countiesArray)
+        val countyAdapter = ArrayAdapter(this, R.layout.spinner_item, countiesArray)
         countyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCounty.adapter = countyAdapter
 
@@ -229,7 +229,7 @@ class CompanyRegistration : AppCompatActivity() {
         val townArrayId = townMap[county] ?: return
         val townArray = resources.getStringArray(townArrayId)
 
-        val townAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, townArray)
+        val townAdapter = ArrayAdapter(this, R.layout.spinner_item, townArray)
         townAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTown.adapter = townAdapter
     }

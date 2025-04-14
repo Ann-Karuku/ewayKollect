@@ -84,11 +84,13 @@
                 android:text="@string/next"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/txt_login"
                     android:layout_width="wrap_content"
@@ -165,10 +167,10 @@
                 android:layout_margin="10dp"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp">
 
                 <com.google.android.material.button.MaterialButton
@@ -190,27 +192,29 @@
                     android:text="@string/next"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
-                <LinearLayout
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/txt2_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:id="@+id/txt2_login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/have_an_account"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                    android:text="@string/have_an_account"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
 
-                    <TextView
-                        android:id="@+id/loginLink2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/login"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/loginLink2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -268,10 +272,10 @@
                 android:textColor="@color/white"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp">
 
                 <com.google.android.material.button.MaterialButton
@@ -293,27 +297,29 @@
                     android:text="@string/register"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
-                <LinearLayout
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/txt_login3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:id="@+id/txt_login3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/have_an_account"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"/>
+                    android:text="@string/have_an_account"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
 
-                    <TextView
-                        android:id="@+id/loginLink3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/login"
-                        android:textStyle="bold"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/loginLink3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
 

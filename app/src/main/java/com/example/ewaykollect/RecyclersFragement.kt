@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import org.json.JSONArray
@@ -61,17 +64,15 @@ class RecyclersFragment : Fragment() {
             }
         }
 
-        val searchView = root.findViewById<SearchView>(R.id.search_recycler)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                filterRecyclers(query ?: "")
-                return true
+        val searchEditText = root.findViewById<TextInputEditText>(R.id.search_recycler)
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterRecyclers(s.toString())
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterRecyclers(newText ?: "")
-                return true
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
 
         fetchRecyclers()

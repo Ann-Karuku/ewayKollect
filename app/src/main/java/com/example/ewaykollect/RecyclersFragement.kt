@@ -112,7 +112,7 @@ class RecyclersFragment : Fragment() {
     }
 
     private fun fetchRecyclers() {
-        val collectionRef = firestore.collection("Recyclers")
+        val collectionRef = firestore.collection("companies")
         firestoreListener = collectionRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Toast.makeText(context, "Error fetching recyclers: ${e.message}", Toast.LENGTH_SHORT).show()

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -15,8 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
@@ -34,8 +31,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var toggle: ActionBarDrawerToggle
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,41 +55,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Set up ActionBar with Navigation Controller
+        // Set up AppBarConfiguration
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.accountFragment, R.id.profileFragment, R.id.settingsFragment),
             drawer
         )
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Set up Navigation View with NavController
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
-        // Drawer toggle setup
-        toggle = ActionBarDrawerToggle(
-            this, drawer, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        )
-        drawer.addDrawerListener(toggle)
-        toggle.syncState()
-
-        toggle.isDrawerIndicatorEnabled = true
-
-        // Initialize Google Sign-In client
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
         // Fetch Firebase auth details
         loadUserDetails(navView)
 
-
+        // Update ActionBar title and navigation icon based on destination
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            // Set the ActionBar title based on the destination
             when (destination.id) {
                 R.id.accountFragment -> supportActionBar?.title = "My Account"
                 R.id.myEwaste -> supportActionBar?.title = "My E-Waste"
@@ -106,25 +82,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.editProfileFragment -> supportActionBar?.title = "Edit Profile"
                 R.id.changePasswordFragment -> supportActionBar?.title = "Change Password"
                 R.id.recyclersFragment -> supportActionBar?.title = "Recyclers"
-                else -> supportActionBar?.title = "EwayKollect" // Default title
+                else -> supportActionBar?.title = "EwayKollect"
             }
+            // Set navigation icon based on destination
             if (appBarConfiguration.topLevelDestinations.contains(destination.id)) {
-                toggle.isDrawerIndicatorEnabled = true
+                toolbar.setNavigationIcon(R.drawable.ic_menu) // Drawer icon
             } else {
-                toggle.isDrawerIndicatorEnabled = false
+                toolbar.setNavigationIcon(R.drawable.ic_arrow_back) // Back arrow
             }
         }
 
+        // Custom navigation click listener
         toolbar.setNavigationOnClickListener {
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START)
+            val currentDestination = navController.currentDestination?.id
+            if (appBarConfiguration.topLevelDestinations.contains(currentDestination)) {
+               if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START)
+                } else {
+                    drawer.openDrawer(GravityCompat.START)
+                }
             } else {
-                val popped = navController.popBackStack()
-                if (!popped) {
-                    finish()
+                if (!navController.popBackStack()) {
+                    navController.navigate(R.id.accountFragment)
                 }
             }
         }
+
+        // Initialize Google Sign-In client
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
     private fun loadUserDetails(navView: NavigationView) {
@@ -133,8 +121,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val ref = db.collection("user").document(it)
             ref.get().addOnSuccessListener { document ->
                 if (document != null) {
-                    val name = document.getString("name")
-                    val email = document.getString("email")
+                    val name = document.getString("name") ?: "No Name"
+                    val email = document.getString("email") ?: "No Email"
                     val image = document.getString("image")
 
                     val headerView: View = navView.getHeaderView(0)
@@ -144,7 +132,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     dpName.text = name
                     dpMail.text = email
-                    Glide.with(this).load(image).into(dpImage)
+                    if (!image.isNullOrEmpty()) {
+                        Glide.with(this).load(image).into(dpImage)
+                    } else {
+                        dpImage.setImageResource(R.drawable.icon)
+                    }
                 }
             }.addOnFailureListener {
                 Toast.makeText(this, "Failed to load data", Toast.LENGTH_SHORT).show()
@@ -194,25 +186,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-            return true
-        }
-        val popped = navController.popBackStack()
-        return popped || super.onSupportNavigateUp()
-    }
-
-    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+       if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
-            if (navController.popBackStack()) {
-                return
+            if (!navController.popBackStack()) {
+                super.onBackPressed()
             }
-            super.onBackPressed()
         }
     }
-
 }

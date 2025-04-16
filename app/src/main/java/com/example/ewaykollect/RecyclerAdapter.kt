@@ -3,8 +3,10 @@ package com.example.ewaykollect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class RecyclerAdapter(
     private var recyclers: List<RecyclerItem>
@@ -15,6 +17,7 @@ class RecyclerAdapter(
         val location: TextView = itemView.findViewById(R.id.recyclerLocation)
         val types: TextView = itemView.findViewById(R.id.recyclerTypes)
         val rating: TextView = itemView.findViewById(R.id.recyclerRating)
+        val logo: ImageView = itemView.findViewById(R.id.recyclerLogo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
@@ -24,7 +27,7 @@ class RecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-       return recyclers.size
+        return recyclers.size
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
@@ -33,6 +36,10 @@ class RecyclerAdapter(
         holder.location.text = recycler.location
         holder.types.text = "Accepts: ${recycler.acceptedTypes.joinToString()}"
         holder.rating.text = "Rating: ${recycler.rating}"
+        Glide.with(holder.itemView.context)
+            .load(recycler.logoUrl ?: R.drawable.ic_placeholder_logo)
+            .placeholder(R.drawable.ic_placeholder_logo)
+            .into(holder.logo)
     }
 
     fun updateList(newList: List<RecyclerItem>) {
@@ -40,4 +47,3 @@ class RecyclerAdapter(
         notifyDataSetChanged()
     }
 }
-

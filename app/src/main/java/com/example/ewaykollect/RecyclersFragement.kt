@@ -15,8 +15,6 @@ import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -50,13 +48,11 @@ class RecyclersFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        // Initialize WebView for the map
         mapWebView = root.findViewById(R.id.mapWebView)
         this.mapWebView.settings.javaScriptEnabled = true
         mapWebView.webViewClient = WebViewClient()
         mapWebView.loadUrl("file:///android_asset/map.html")
 
-        // Wait for the WebView to load before updating the map
         mapWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
@@ -81,30 +77,28 @@ class RecyclersFragment : Fragment() {
     }
 
     private fun setupMap() {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    if (location != null) {
-                        userLocation = Pair(location.longitude, location.latitude)
-                        updateMapCenter(location.longitude, location.latitude, 12)
-                        updateMapMarkers()
-                    } else {
-                        // Fallback to a default location (Nairobi, Kenya)
-                        userLocation = Pair(36.817223, -1.286389)
-                        updateMapCenter(36.817223, -1.286389, 12)
-                        updateMapMarkers()
-                    }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    userLocation = Pair(location.longitude, location.latitude)
+                    updateMapCenter(location.longitude, location.latitude, 12)
+                    updateMapMarkers()
+                } else {
+                    userLocation = Pair(36.817223, -1.286389)
+                    updateMapCenter(36.817223, -1.286389, 12)
+                    updateMapMarkers()
                 }
-            } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    101
-                )
-                // Fallback to a default location (Nairobi, Kenya)
-                userLocation = Pair(36.817223, -1.286389)
-                updateMapCenter(36.817223, -1.286389, 12)
-                updateMapMarkers()
             }
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+            userLocation = Pair(36.817223, -1.286389)
+            updateMapCenter(36.817223, -1.286389, 12)
+            updateMapMarkers()
+        }
     }
 
     private fun updateMapCenter(lon: Double, lat: Double, zoom: Int) {
@@ -122,16 +116,17 @@ class RecyclersFragment : Fragment() {
             allRecyclers = snapshot?.documents?.mapNotNull { doc ->
                 RecyclerItem(
                     id = doc.id,
-                    name = doc.getString("name") ?: "",
-                    location = "${doc.get("location.subCounty")}, ${doc.get("location.county")}",
-                    acceptedTypes = doc.get("acceptedTypes") as? List<String> ?: emptyList(),
+                    name = doc.getString("companyName") ?: "",
+                    location = "${doc.get("location.town")}, ${doc.get("location.county")}",
+                    acceptedTypes = doc.get("wasteCategory") as? List<String> ?: emptyList(),
                     contact = doc.get("contact.phone")?.toString() ?: "",
                     rating = doc.getDouble("rating") ?: 0.0,
                     coordinates = Pair(
                         doc.get("coordinates.longitude") as? Double ?: 0.0,
                         doc.get("coordinates.latitude") as? Double ?: 0.0
                     ),
-                    popularityScore = doc.getLong("popularityScore")?.toInt() ?: 0
+                    popularityScore = doc.getLong("popularityScore")?.toInt() ?: 0,
+                    logoUrl = doc.getString("logoUrl")
                 )
             } ?: emptyList()
 

@@ -8,5 +8,6 @@ data class RecyclerItem(
     val contact: String,
     val rating: Double,
     val coordinates: Pair<Double, Double>,
-    val popularityScore: Int
+    val popularityScore: Int,
+    val logoUrl: String? = null
 )

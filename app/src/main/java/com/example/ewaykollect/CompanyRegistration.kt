@@ -1,9 +1,18 @@
 package com.example.ewaykollect
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -11,18 +20,23 @@ import org.mindrot.jbcrypt.BCrypt
 
 class CompanyRegistration : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var countiesArray: Array<String>
     private lateinit var townMap: Map<String, Int>
     private lateinit var spinnerCounty: Spinner
     private lateinit var spinnerTown: Spinner
+    private var latitude: Double = -1.286389 // Default: Nairobi
+    private var longitude: Double = 36.817223
+    private val selectedWasteCategories = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_registration)
         supportActionBar?.hide()
 
-        // Initialize Firestore
+        // Initialize Firestore and Location
         db = Firebase.firestore
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Layouts
         val step1 = findViewById<LinearLayout>(R.id.stepOneLayout)
@@ -37,11 +51,11 @@ class CompanyRegistration : AppCompatActivity() {
         // Step 2 fields
         val spinnerCompanyType = findViewById<Spinner>(R.id.spinnerCompanyType)
         val edtRegNo = findViewById<EditText>(R.id.edtRegNo)
-        spinnerCounty = findViewById<Spinner>(R.id.spinnerCounty)
-        spinnerTown = findViewById<Spinner>(R.id.spinnerTown)
+        spinnerCounty = findViewById(R.id.spinnerCounty)
+        spinnerTown = findViewById(R.id.spinnerTown)
 
         // Step 3 fields
-        val spinnerWasteCategories = findViewById<Spinner>(R.id.spinnerWasteCategories)
+        val wasteCategoriesTextView = findViewById<TextView>(R.id.spinnerWasteCategories)
         val edtPassword = findViewById<EditText>(R.id.edtPassword)
         val edtRepeatPass = findViewById<EditText>(R.id.edtRepeatPass)
 
@@ -55,7 +69,7 @@ class CompanyRegistration : AppCompatActivity() {
         // Setup spinners
         setupSpinners()
 
-        // Setup company type and waste categories spinners
+        // Setup company type spinner
         ArrayAdapter.createFromResource(
             this,
             R.array.company_types,
@@ -65,14 +79,38 @@ class CompanyRegistration : AppCompatActivity() {
             spinnerCompanyType.adapter = adapter
         }
 
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.waste_categories,
-            R.layout.spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerWasteCategories.adapter = adapter
+        // Setup waste categories multi-select
+        val wasteCategories = resources.getStringArray(R.array.waste_categories).toList()
+        wasteCategoriesTextView.setOnClickListener {
+            val checkedItems = BooleanArray(wasteCategories.size) { index ->
+                selectedWasteCategories.contains(wasteCategories[index])
+            }
+            AlertDialog.Builder(this)
+                .setTitle("Select Waste Categories")
+                .setMultiChoiceItems(
+                    wasteCategories.toTypedArray(),
+                    checkedItems
+                ) { _, which, isChecked ->
+                    val category = wasteCategories[which]
+                    if (isChecked) {
+                        selectedWasteCategories.add(category)
+                    } else {
+                        selectedWasteCategories.remove(category)
+                    }
+                }
+                .setPositiveButton("OK") { _, _ ->
+                    if (selectedWasteCategories.isEmpty()) {
+                        wasteCategoriesTextView.text = "Select categories"
+                    } else {
+                        wasteCategoriesTextView.text = selectedWasteCategories.joinToString(", ")
+                    }
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
+
+        // Get location
+        requestLocation()
 
         nextStep1Btn.setOnClickListener {
             if (validateStep1(edtCName, edtCEmail, edtCPhone)) {
@@ -99,20 +137,30 @@ class CompanyRegistration : AppCompatActivity() {
         }
 
         signUpBtn.setOnClickListener {
-            if (validateStep3(edtPassword, edtRepeatPass, spinnerWasteCategories)) {
+            if (validateStep3(edtPassword, edtRepeatPass)) {
                 // Hash the password
                 val hashedPassword = BCrypt.hashpw(edtPassword.text.toString(), BCrypt.gensalt())
 
                 val company = hashMapOf(
                     "companyName" to edtCName.text.toString(),
                     "email" to edtCEmail.text.toString(),
-                    "phone" to edtCPhone.text.toString(),
+                    "contact" to mapOf(
+                        "phone" to edtCPhone.text.toString()
+                    ),
                     "companyType" to spinnerCompanyType.selectedItem.toString(),
                     "registrationNumber" to edtRegNo.text.toString(),
-                    "county" to spinnerCounty.selectedItem.toString(),
-                    "town" to spinnerTown.selectedItem.toString(),
-                    "wasteCategory" to spinnerWasteCategories.selectedItem.toString(),
-                    "password" to hashedPassword
+                    "location" to mapOf(
+                        "county" to spinnerCounty.selectedItem.toString(),
+                        "town" to spinnerTown.selectedItem.toString()
+                    ),
+                    "coordinates" to mapOf(
+                        "latitude" to latitude,
+                        "longitude" to longitude
+                    ),
+                    "wasteCategory" to selectedWasteCategories,
+                    "password" to hashedPassword,
+                    "rating" to 0.0,
+                    "popularityScore" to 0L
                 )
 
                 // Check if email already exists
@@ -130,7 +178,8 @@ class CompanyRegistration : AppCompatActivity() {
                                         "Registration Successful!",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    finish() // Close activity or redirect to login
+                                    startActivity(Intent(this, MainActivity::class.java))
+                                    finish()
                                 }
                                 .addOnFailureListener { e ->
                                     Toast.makeText(
@@ -151,6 +200,34 @@ class CompanyRegistration : AppCompatActivity() {
                         ).show()
                     }
             }
+        }
+    }
+
+    private fun requestLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    latitude = location.latitude
+                    longitude = location.longitude
+                }
+            }
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            requestLocation()
         }
     }
 
@@ -274,7 +351,7 @@ class CompanyRegistration : AppCompatActivity() {
         }
     }
 
-    private fun validateStep3(password: EditText, repeatPass: EditText, wasteCategory: Spinner): Boolean {
+    private fun validateStep3(password: EditText, repeatPass: EditText): Boolean {
         return when {
             password.text.isEmpty() -> {
                 password.error = "Password is required"
@@ -288,8 +365,8 @@ class CompanyRegistration : AppCompatActivity() {
                 repeatPass.error = "Passwords do not match"
                 false
             }
-            wasteCategory.selectedItemPosition == 0 -> {
-                Toast.makeText(this, "Please select a waste category", Toast.LENGTH_SHORT).show()
+            selectedWasteCategories.isEmpty() -> {
+                Toast.makeText(this, "Please select at least one waste category", Toast.LENGTH_SHORT).show()
                 false
             }
             else -> true

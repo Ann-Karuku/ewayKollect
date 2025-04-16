@@ -8,18 +8,31 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/other_green</item>
         <item name="colorSecondaryVariant">@color/main_green</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color.-->
-        <item name="android:statusBarColor" >@color/main_green</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/main_green</item>
+        <!-- Customize your theme here.-->
 
     </style>
 
     <style name="Theme.splashscreen" parent="Theme.SplashScreen">
-
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo3</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
         <item name="postSplashScreenTheme">@style/Theme.EwayKollect</item>
-
     </style>
+
+    //new added theme
+    <style name="CustomTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/other_green</item>
+    </style>
+
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/black</item>
+        <item name="cursorColor">@color/other_green</item>
+    </style>
+
+
+
 </resources>

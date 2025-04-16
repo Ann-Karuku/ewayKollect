@@ -28,6 +28,11 @@
         <item name="android:statusBarColor">@color/other_green</item>
     </style>
 
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/black</item>
+        <item name="cursorColor">@color/other_green</item>
+    </style>
+
 
 
 </resources>

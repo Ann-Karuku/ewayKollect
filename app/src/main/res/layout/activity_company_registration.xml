@@ -36,7 +36,8 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
             <EditText
                 android:id="@+id/edtCName"
@@ -125,7 +126,8 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
             <Spinner
                 android:id="@+id/spinnerCompanyType"
@@ -133,7 +135,6 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:background="#30ffffff"
-                android:padding="10dp"
                 android:layout_margin="10dp"/>
 
             <EditText
@@ -154,7 +155,6 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:background="#30ffffff"
-                android:padding="10dp"
                 android:layout_margin="10dp"/>
 
             <Spinner
@@ -163,7 +163,6 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:background="#30ffffff"
-                android:padding="10dp"
                 android:layout_margin="10dp"/>
 
             <LinearLayout
@@ -234,16 +233,21 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
-            <Spinner
+            <!-- Inside stepThreeLayout -->
+            <TextView
                 android:id="@+id/spinnerWasteCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:background="#30ffffff"
                 android:padding="10dp"
-                android:layout_margin="10dp"/>
+                android:text="@string/select_categories"
+                android:background="#30ffffff"
+                android:textColorHint="@color/white"
+                android:layout_margin="10dp"
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/edtPassword"

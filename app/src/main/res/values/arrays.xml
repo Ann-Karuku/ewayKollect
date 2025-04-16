@@ -9,7 +9,7 @@
     </string-array>
 
     <string-array name="waste_categories">
-        <item>Select Waste Category</item>
+        <item>E-waste Mixed (Unsorted)</item>
         <item>Mobile Phones</item>
         <item>Tablets</item>
         <item>Laptops</item>
@@ -31,7 +31,6 @@
         <item>Networking Equipment (Routers, Modems)</item>
         <item>Batteries (Lithium-ion, Lead-acid)</item>
         <item>Solar Equipment</item>
-        <item>E-waste Mixed (Unsorted)</item>
     </string-array>
 
 

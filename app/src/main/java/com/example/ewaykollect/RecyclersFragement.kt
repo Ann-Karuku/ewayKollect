@@ -121,9 +121,9 @@ class RecyclersFragment : Fragment() {
                     acceptedTypes = doc.get("wasteCategory") as? List<String> ?: emptyList(),
                     contact = doc.get("contact.phone")?.toString() ?: "",
                     rating = doc.getDouble("rating") ?: 0.0,
-                    coordinates = Pair(
-                        doc.get("coordinates.longitude") as? Double ?: 0.0,
-                        doc.get("coordinates.latitude") as? Double ?: 0.0
+                    coordinates = Coordinates(
+                        longitude = doc.get("coordinates.longitude") as? Double ?: 0.0,
+                        latitude = doc.get("coordinates.latitude") as? Double ?: 0.0
                     ),
                     popularityScore = doc.getLong("popularityScore")?.toInt() ?: 0,
                     logoUrl = doc.getString("logoUrl")
@@ -139,8 +139,8 @@ class RecyclersFragment : Fragment() {
         val markersArray = JSONArray()
         recyclers.forEach { recycler ->
             val marker = JSONObject().apply {
-                put("lon", recycler.coordinates.first)
-                put("lat", recycler.coordinates.second)
+                put("lon", recycler.coordinates.longitude)
+                put("lat", recycler.coordinates.latitude)
                 put("name", recycler.name)
                 put("description", recycler.location)
             }
@@ -186,8 +186,8 @@ class RecyclersFragment : Fragment() {
                         "Nearest" -> userLocation?.let { location ->
                             recyclers.sortedBy { recycler ->
                                 val recyclerLocation = Location("").apply {
-                                    latitude = recycler.coordinates.second
-                                    longitude = recycler.coordinates.first
+                                    latitude = recycler.coordinates.latitude
+                                    longitude = recycler.coordinates.longitude
                                 }
                                 val userLoc = Location("").apply {
                                     latitude = location.second

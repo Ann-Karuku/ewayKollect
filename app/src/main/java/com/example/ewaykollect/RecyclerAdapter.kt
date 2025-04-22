@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -40,6 +42,10 @@ class RecyclerAdapter(
             .load(recycler.logoUrl ?: R.drawable.ic_placeholder_logo)
             .placeholder(R.drawable.ic_placeholder_logo)
             .into(holder.logo)
+        holder.itemView.setOnClickListener {
+            val bundle = bundleOf("RECYCLER_ITEM" to recycler)
+            it.findNavController().navigate(R.id.action_recyclersFragment_to_recyclerDetailsFragment, bundle)
+        }
     }
 
     fun updateList(newList: List<RecyclerItem>) {

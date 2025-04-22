@@ -117,5 +117,17 @@
         <action
             android:id="@+id/action_recyclersFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_recyclersFragment_to_recyclerDetailsFragment"
+            app:destination="@id/recyclerDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recyclerDetailsFragment"
+        android:name="com.example.ewaykollect.RecyclerDetailsFragment"
+        android:label="fragment_recycler_details"
+        tools:layout="@layout/fragment_recycler_details" >
+        <action
+            android:id="@+id/action_recyclerDetailsFragment_to_recyclersFragment"
+            app:destination="@id/recyclersFragment" />
     </fragment>
 </navigation>

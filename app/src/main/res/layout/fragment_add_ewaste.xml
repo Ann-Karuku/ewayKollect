@@ -107,6 +107,7 @@
         android:text="@string/submit"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textColor="white"
         android:padding="16dp"
         android:minHeight="48dp"/>
 

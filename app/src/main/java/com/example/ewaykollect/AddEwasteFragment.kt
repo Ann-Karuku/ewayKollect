@@ -1,241 +1,188 @@
 package com.example.ewaykollect
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import java.io.File
+import java.util.*
 
 class AddEwasteDialogFragment : DialogFragment() {
 
-    // DB initialization
-    private var db = Firebase.firestore
-    private lateinit var storageReference: StorageReference
-    private var selectedImageUri: Uri? = null
-    private lateinit var progressBar: ProgressBar
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
     private lateinit var auth: FirebaseAuth
+    private var imageUri: Uri? = null
 
-    // Permission request code
-    private val PERMISSION_REQUEST_CODE = 100
-    private val IMAGE_PICK_CODE = 1000
-
-    // Categorized list of e-waste items
-    private val items = arrayOf(
-        "Select EWaste type", "Mobile Phones", "Tablets", "Laptops",
-        "Desktop Computers", "Monitors", "Printers",
-        "Televisions", "Remote Controls", "DVD Players",
-        "Washing Machines", "Refrigerators", "Microwaves",
-        "Air Conditioners", "Electric Fans", "Heaters","Phone Accessories","Cables"
-    )
-
+    private val pickImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            imageUri = result.data?.data
+            view?.findViewById<ImageView>(R.id.imageEView)?.setImageURI(imageUri)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate your custom layout for the dialog
-        val root: View = inflater.inflate(R.layout.fragment_add_ewaste, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_ewaste, container, false)
 
-        // Initialize Firebase and Storage Reference
+        firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
-        storageReference = FirebaseStorage.getInstance().reference
 
-        // Find views
-        val edtEName = root.findViewById<EditText>(R.id.edtEName)
-        val edtNo = root.findViewById<EditText>(R.id.edtENo)
-        val edtState = root.findViewById<EditText>(R.id.edtState)
-        val buttonUploadPhoto = root.findViewById<Button>(R.id.btnUploadPhoto)
-        val uploadBtn = root.findViewById<com.google.android.material.button.MaterialButton>(R.id.uploadbtn)
-        val spinner = root.findViewById<Spinner>(R.id.spinnerType)
-        progressBar = root.findViewById(R.id.progressBar)
+        val companyId = arguments?.getString("COMPANY_ID") ?: ""
+        val companyName = arguments?.getString("COMPANY_NAME") ?: ""
 
-        // Creating an ArrayAdapter using the EwasteItems array
-        val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, items)
-        spinner.adapter = arrayAdapter
+        // UI elements
+        val nameEditText = view.findViewById<EditText>(R.id.edtEName)
+        val typeSpinner = view.findViewById<Spinner>(R.id.spinnerType)
+        val numberEditText = view.findViewById<EditText>(R.id.edtENo)
+        val stateEditText = view.findViewById<EditText>(R.id.edtState)
+        val uploadPhotoButton = view.findViewById<Button>(R.id.btnUploadPhoto)
+        val submitButton = view.findViewById<Button>(R.id.uploadbtn)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
-        // Check and request permissions
-        checkAndRequestPermissions()
+        // Populate spinner with e-waste types
+        val types = arrayOf(
+            "Mobile Phones", "Tablets", "Laptops", "Desktop Computers",
+            "Monitors", "Printers", "Televisions", "Remote Controls",
+            "DVD Players", "Washing Machines", "Refrigerators", "Microwaves",
+            "Air Conditioners", "Electric Fans", "Heaters"
+        )
+        typeSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, types)
 
-        // Handle photo upload button click
-        buttonUploadPhoto.setOnClickListener {
-            openImagePicker()
+        // Photo upload
+        uploadPhotoButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK).apply { type = "image/*" }
+            pickImage.launch(intent)
         }
 
-        // Handle form submission
-        uploadBtn.setOnClickListener {
-            val itemName = edtEName.text.toString().trim()
-            val itemType = spinner.selectedItem.toString()
-            val itemNo = edtNo.text.toString().trim()
-            val itemState = edtState.text.toString().trim()
+        // Submit form
+        submitButton.setOnClickListener {
+            val name = nameEditText.text.toString().trim()
+            val type = typeSpinner.selectedItem.toString()
+            val number = numberEditText.text.toString().toIntOrNull() ?: 0
+            val state = stateEditText.text.toString().trim()
+            val userId = auth.currentUser?.uid
 
-            // Check if user is logged in
-            if (auth.currentUser == null) {
-                Toast.makeText(requireContext(), "Please log in to add an item", Toast.LENGTH_SHORT).show()
+            if (name.isEmpty() || number <= 0 || state.isEmpty()) {
+                Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Validate inputs
-            when {
-                itemName.isEmpty() -> {
-                    edtEName.error = "Item name is required"
-                    return@setOnClickListener
-                }
+            progressBar.visibility = View.VISIBLE
+            submitButton.isEnabled = false
 
-                itemType == "Select EWaste type" -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Please select an e-waste type",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@setOnClickListener
-                }
+            // Save e-waste item and pickup request
+            saveEwasteItem(name, type, number, state, userId, companyId, companyName, progressBar, submitButton)
+        }
 
-                itemNo.isEmpty() -> {
-                    edtNo.error = "Number is required"
-                    return@setOnClickListener
-                }
+        return view
+    }
 
-                itemState.isEmpty() -> {
-                    edtState.error = "State is required"
-                    return@setOnClickListener
-                }
-
-                selectedImageUri == null -> {
-                    Toast.makeText(requireContext(), "Please upload an image", Toast.LENGTH_SHORT)
-                        .show()
-                    return@setOnClickListener
-                }
-
-                else -> {
-                    uploadImageAndSaveData(itemName, itemType, itemNo, itemState)
-                }
+    private fun saveEwasteItem(
+        name: String,
+        type: String,
+        number: Int,
+        state: String,
+        userId: String?,
+        companyId: String,
+        companyName: String,
+        progressBar: ProgressBar,
+        submitButton: Button
+    ) {
+        // Upload image to Firebase Storage if selected
+        val uploadTask = imageUri?.let {
+            val ref = storage.reference.child("ewaste_images/${UUID.randomUUID()}.jpg")
+            ref.putFile(it).continueWithTask { task ->
+                if (!task.isSuccessful) throw task.exception!!
+                ref.downloadUrl
             }
         }
 
-        return root
-    }
-
-    private fun checkAndRequestPermissions() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(requireActivity(),
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_CODE)
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d("PermissionDebug", "Read External Storage permission granted")
-            } else {
-                Toast.makeText(requireContext(), "Permission denied. Cannot access external storage.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
-            selectedImageUri = data.data
-            val imageEView = view?.findViewById<ImageView>(R.id.imageEView)
-            imageEView?.setImageURI(selectedImageUri)
-        } else {
-            Toast.makeText(requireContext(),"No image Selected",Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun uploadImageAndSaveData(itemName: String, itemType: String, itemNo: String, itemState: String) {
-        // Show ProgressBar
-        progressBar.visibility = View.VISIBLE
-
-        val imageRef = storageReference.child("eway_images/${System.currentTimeMillis()}.jpg")
-
-        selectedImageUri?.let { uri ->
-            try {
-                // Open the input stream from the URI using the content resolver
-                val stream = requireContext().contentResolver.openInputStream(uri)
-
-                if (stream != null) {
-                    // Upload the stream to Firebase Storage
-                    val uploadTask = imageRef.putStream(stream)
-                    uploadTask.addOnSuccessListener {
-                        imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                            val imageUrl = downloadUri.toString()
-                            saveDataToFirestore(itemName, itemType, itemNo, itemState, imageUrl)
-                        }
-                    }.addOnFailureListener { exception ->
-                        Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
-                    }.addOnCompleteListener {
-                        // Hide ProgressBar
-                        progressBar.visibility = View.GONE
-                    }
-                } else {
-                    Toast.makeText(requireContext(), "Failed to open image file", Toast.LENGTH_SHORT).show()
-                    // Hide ProgressBar in case of failure
-                    progressBar.visibility = View.GONE
-                }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Error uploading image", Toast.LENGTH_SHORT).show()
-                // Hide ProgressBar in case of exception
-                progressBar.visibility = View.GONE
-            }
-        } ?: run {
-            Toast.makeText(requireContext(), "No image URI available for upload", Toast.LENGTH_SHORT).show()
-            // Hide ProgressBar if no image URI
+        uploadTask?.addOnSuccessListener { uri ->
+            val imageUrl = uri.toString()
+            saveToFirestore(name, type, number, state, userId, companyId, companyName, imageUrl, progressBar, submitButton)
+        }?.addOnFailureListener { e ->
+            Toast.makeText(context, "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.GONE
-        }
+            submitButton.isEnabled = true
+        } ?: saveToFirestore(name, type, number, state, userId, companyId, companyName, "", progressBar, submitButton)
     }
 
-    private fun saveDataToFirestore(itemName: String, itemType: String, itemNo: String, itemState: String, imageUrl: String) {
-        val ewasteItem = mapOf(
-            "name" to itemName,
-            "type" to itemType,
-            "number" to itemNo,
-            "state" to itemState,
+    private fun saveToFirestore(
+        name: String,
+        type: String,
+        number: Int,
+        state: String,
+        userId: String?,
+        companyId: String,
+        companyName: String,
+        imageUrl: String,
+        progressBar: ProgressBar,
+        submitButton: Button
+    ) {
+        // Save to EwasteItems
+        val ewasteItem = hashMapOf(
             "imageUrl" to imageUrl,
-            "userId" to FirebaseAuth.getInstance().currentUser?.uid
+            "name" to name,
+            "number" to number,
+            "state" to state,
+            "type" to type,
+            "userId" to userId
         )
 
-        db.collection("EwasteItems")
-            .add(ewasteItem)
+        firestore.collection("EwasteItems").add(ewasteItem)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Item uploaded successfully", Toast.LENGTH_SHORT).show()
-                dismiss()
+                // Save to pickupRequests if companyId is provided
+                if (companyId.isNotEmpty()) {
+                    val pickupRequest = hashMapOf(
+                        "companyId" to companyId,
+                        "companyName" to companyName,
+                        "ewasteName" to name,
+                        "ewasteType" to type,
+                        "quantity" to number,
+                        "state" to state,
+                        "imageUrl" to imageUrl,
+                        "userId" to userId,
+                        "requestTime" to System.currentTimeMillis(),
+                        "status" to "pending"
+                    )
+
+                    firestore.collection("pickupRequests").add(pickupRequest)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Pickup request submitted for $companyName", Toast.LENGTH_SHORT).show()
+                            findNavController().popBackStack(R.id.recyclerDetailsFragment, false)
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(context, "Error saving pickup request: ${e.message}", Toast.LENGTH_SHORT).show()
+                            progressBar.visibility = View.GONE
+                            submitButton.isEnabled = true
+                        }
+                } else {
+                    Toast.makeText(context, "E-waste item added", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack(R.id.myEwasteFragment, false)
+                }
             }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to upload item", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Error saving e-waste item: ${e.message}", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.GONE
+                submitButton.isEnabled = true
             }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 }

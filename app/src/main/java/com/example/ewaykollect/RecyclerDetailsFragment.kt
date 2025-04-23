@@ -8,7 +8,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -25,7 +27,10 @@ class RecyclerDetailsFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
 
         val recyclerItem = arguments?.getSerializable("RECYCLER_ITEM") as? RecyclerItem
-            ?: return null
+            ?: run {
+                Toast.makeText(context, "Error: No recycler data", Toast.LENGTH_SHORT).show()
+                return null
+            }
 
         view.findViewById<TextView>(R.id.detailName).text = recyclerItem.name
         view.findViewById<TextView>(R.id.detailLocation).text = recyclerItem.location
@@ -39,27 +44,13 @@ class RecyclerDetailsFragment : Fragment() {
             .into(view.findViewById(R.id.detailLogo))
 
         view.findViewById<Button>(R.id.requestPickupButton).setOnClickListener {
-            requestPickup(recyclerItem)
+            val bundle = bundleOf(
+                "COMPANY_ID" to recyclerItem.id,
+                "COMPANY_NAME" to recyclerItem.name
+            )
+            findNavController().navigate(R.id.action_recyclerDetailsFragment_to_selectOrUploadEwasteFragment, bundle)
         }
 
         return view
-    }
-
-    private fun requestPickup(recyclerItem: RecyclerItem) {
-        val request = hashMapOf(
-            "companyId" to recyclerItem.id,
-            "companyName" to recyclerItem.name,
-            "requestTime" to System.currentTimeMillis(),
-            "status" to "pending"
-        )
-
-        firestore.collection("pickupRequests")
-            .add(request)
-            .addOnSuccessListener {
-                Toast.makeText(context, "Pickup requested for ${recyclerItem.name}", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 }

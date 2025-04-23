@@ -9,9 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class EwasteAdapter(private var ewasteList: List<EwasteItem>) : RecyclerView.Adapter<EwasteAdapter.EwasteViewHolder>() {
+class EwasteAdapter(
+    private var ewasteList: List<EwasteItem>,
+    private val onItemClick: (EwasteItem) -> Unit = {}
+) : RecyclerView.Adapter<EwasteAdapter.EwasteViewHolder>() {
 
-    // ViewHolder class that represents each item view in the RecyclerView
     class EwasteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageViewEwaste)
         val nameTextView: TextView = itemView.findViewById(R.id.textViewEwasteName)
@@ -20,28 +22,26 @@ class EwasteAdapter(private var ewasteList: List<EwasteItem>) : RecyclerView.Ada
         val stateTextView: TextView = itemView.findViewById(R.id.textViewEwasteState)
     }
 
-    // Inflate the item layout and create the ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EwasteViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ewaste, parent, false)
         return EwasteViewHolder(view)
     }
 
-    // Bind the data to the views in the ViewHolder
     override fun onBindViewHolder(holder: EwasteViewHolder, position: Int) {
         val ewasteItem = ewasteList[position]
         holder.nameTextView.text = ewasteItem.name
         holder.numTextView.text = ewasteItem.number
-        holder.stateTextView.text=ewasteItem.state
-        holder.typeTextView.text=ewasteItem.type
+        holder.stateTextView.text = ewasteItem.state
+        holder.typeTextView.text = ewasteItem.type
 
-
-        // Use Glide to load the image into the ImageView
         Glide.with(holder.itemView.context)
-            .load(ewasteItem.imageUrl)
+            .load(ewasteItem.imageUrl.takeIf { it.isNotEmpty() } ?: R.drawable.baseline_camera)
+            .placeholder(R.drawable.baseline_camera)
             .into(holder.imageView)
+
+        holder.itemView.setOnClickListener { onItemClick(ewasteItem) }
     }
 
-    // Return the size of the dataset
     override fun getItemCount() = ewasteList.size
 
     @SuppressLint("NotifyDataSetChanged")
@@ -49,5 +49,4 @@ class EwasteAdapter(private var ewasteList: List<EwasteItem>) : RecyclerView.Ada
         ewasteList = newList
         notifyDataSetChanged()
     }
-
 }

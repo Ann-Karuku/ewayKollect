@@ -110,6 +110,17 @@ class SelectOrUploadEwasteFragment : Fragment() {
             .addOnSuccessListener {
                 Toast.makeText(context, "Pickup request submitted for $companyName", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack(R.id.recyclerDetailsFragment, false)
+
+                // Add notification
+                firestore.collection("notifications").add(
+                    hashMapOf(
+                        "userId" to userId,
+                        "type" to "pickup_request",
+                        "message" to "New pickup request for ${ewasteItem.name}",
+                        "timestamp" to System.currentTimeMillis(),
+                        "read" to false
+                    )
+                )
             }
             .addOnFailureListener { e ->
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()

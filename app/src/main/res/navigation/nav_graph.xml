@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_addEwasteDialogFragment_to_myEwaste"
             app:destination="@id/myEwaste" />
+        <action
+            android:id="@+id/action_addEwasteDialogFragment_to_selectOrUploadEwasteFragment"
+            app:destination="@id/selectOrUploadEwasteFragment" />
     </dialog>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -129,5 +132,19 @@
         <action
             android:id="@+id/action_recyclerDetailsFragment_to_recyclersFragment"
             app:destination="@id/recyclersFragment" />
+        <action
+            android:id="@+id/action_recyclerDetailsFragment_to_selectOrUploadEwasteFragment"
+            app:destination="@id/selectOrUploadEwasteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectOrUploadEwasteFragment"
+        android:name="com.example.ewaykollect.SelectOrUploadEwasteFragment"
+        android:label="SelectOrUploadEwasteFragment" >
+        <action
+            android:id="@+id/action_selectOrUploadEwasteFragment_to_recyclerDetailsFragment"
+            app:destination="@id/recyclerDetailsFragment" />
+        <action
+            android:id="@+id/action_selectOrUploadEwasteFragment_to_addEwasteDialogFragment"
+            app:destination="@id/addEwasteDialogFragment" />
     </fragment>
 </navigation>

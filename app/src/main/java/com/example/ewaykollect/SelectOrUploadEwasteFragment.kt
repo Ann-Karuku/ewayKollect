@@ -75,7 +75,7 @@ class SelectOrUploadEwasteFragment : Fragment() {
                 val ewasteList = snapshot?.documents?.mapNotNull { doc ->
                     val imageUrl = doc.getString("imageUrl") ?: ""
                     val name = doc.getString("name") ?: return@mapNotNull null
-                    val number = doc.getString("number") ?: ""
+                    val number = doc.get("number")?.toString() ?: "0"
                     val state = doc.getString("state") ?: return@mapNotNull null
                     val type = doc.getString("type") ?: return@mapNotNull null
                     EwasteItem(imageUrl, name, number, state, type)

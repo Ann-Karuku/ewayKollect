@@ -32,7 +32,7 @@ class NotificationAdapter(
         val backgroundColor = if (notification.read) {
             android.R.color.white
         } else {
-            R.color.main_green
+            R.color.other_green
         }
         holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, backgroundColor))
 

@@ -1,6 +1,7 @@
 package com.example.ewaykollect
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,9 @@ class NotificationsFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         if (auth.currentUser == null) {
-            Toast.makeText(context, "Please sign in", Toast.LENGTH_SHORT).show()
+            if (isAdded && context != null) {
+                Toast.makeText(context, "Please sign in", Toast.LENGTH_SHORT).show()
+            }
             return null
         }
 
@@ -50,12 +53,15 @@ class NotificationsFragment : Fragment() {
             .whereEqualTo("userId", userId)
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, e ->
+                if (!isAdded || context == null) {
+                    return@addSnapshotListener
+                }
                 if (e != null) {
                     Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
-                val notifications = snapshot?.documents?.mapNotNull { doc ->
-                    NotificationItem(
+               val notifications = snapshot?.documents?.mapNotNull { doc ->
+                   NotificationItem(
                         id = doc.id,
                         userId = doc.getString("userId") ?: "",
                         type = doc.getString("type") ?: "",
@@ -72,12 +78,14 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun markAsRead(notification: NotificationItem) {
-        if (!notification.read) {
+        if (!notification.read && isAdded && context != null) {
             firestore.collection("notifications")
                 .document(notification.id)
                 .update("read", true)
                 .addOnFailureListener { e ->
-                    Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    if (isAdded && context != null) {
+                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
         }
     }

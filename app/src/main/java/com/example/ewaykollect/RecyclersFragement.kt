@@ -7,6 +7,7 @@ import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,23 +50,25 @@ class RecyclersFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         mapWebView = root.findViewById(R.id.mapWebView)
-        this.mapWebView.settings.javaScriptEnabled = true
-        mapWebView.webViewClient = WebViewClient()
-        mapWebView.loadUrl("file:///android_asset/map.html")
-
+        mapWebView.settings.javaScriptEnabled = true
         mapWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                setupMap()
+                if (isAdded && context != null) {
+                    setupMap()
+                }
             }
         }
+        mapWebView.loadUrl("file:///android_asset/map.html")
 
         val searchEditText = root.findViewById<TextInputEditText>(R.id.search_recycler)
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterRecyclers(s.toString())
+                if (isAdded && context != null) {
+                    filterRecyclers(s.toString())
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -77,8 +80,12 @@ class RecyclersFragment : Fragment() {
     }
 
     private fun setupMap() {
+        if (!isAdded || context == null) {
+            return
+        }
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (!isAdded || context == null) return@addOnSuccessListener
                 if (location != null) {
                     userLocation = Pair(location.longitude, location.latitude)
                     updateMapCenter(location.longitude, location.latitude, 12)
@@ -102,12 +109,14 @@ class RecyclersFragment : Fragment() {
     }
 
     private fun updateMapCenter(lon: Double, lat: Double, zoom: Int) {
+        if (!isAdded || context == null) return
         mapWebView.evaluateJavascript("setMapCenter($lon, $lat, $zoom);") { }
     }
 
     private fun fetchRecyclers() {
         val collectionRef = firestore.collection("companies")
         firestoreListener = collectionRef.addSnapshotListener { snapshot, e ->
+            if (!isAdded || context == null) return@addSnapshotListener
             if (e != null) {
                 Toast.makeText(context, "Error fetching recyclers: ${e.message}", Toast.LENGTH_SHORT).show()
                 return@addSnapshotListener
@@ -136,6 +145,7 @@ class RecyclersFragment : Fragment() {
     }
 
     private fun updateMapMarkers(recyclers: List<RecyclerItem> = allRecyclers) {
+        if (!isAdded || context == null) return
         val markersArray = JSONArray()
         recyclers.forEach { recycler ->
             val marker = JSONObject().apply {
@@ -165,6 +175,7 @@ class RecyclersFragment : Fragment() {
     }
 
     private fun updateRecyclerGroups(recyclers: List<RecyclerItem> = allRecyclers) {
+        if (!isAdded || context == null) return
         val verticalRecyclerGroups = view?.findViewById<LinearLayout>(R.id.verticalRecyclerContainer)
         verticalRecyclerGroups?.removeAllViews()
 

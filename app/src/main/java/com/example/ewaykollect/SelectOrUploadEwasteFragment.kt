@@ -1,6 +1,7 @@
 package com.example.ewaykollect
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,15 +113,20 @@ class SelectOrUploadEwasteFragment : Fragment() {
                 findNavController().popBackStack(R.id.recyclerDetailsFragment, false)
 
                 // Add notification
-                firestore.collection("notifications").add(
-                    hashMapOf(
-                        "userId" to userId,
-                        "type" to "pickup_request",
-                        "message" to "New pickup request for ${ewasteItem.name}",
-                        "timestamp" to System.currentTimeMillis(),
-                        "read" to false
-                    )
+                val notification = hashMapOf(
+                    "userId" to userId,
+                    "type" to "pickup_request",
+                    "message" to "New pickup request for ${ewasteItem.name} to $companyName",
+                    "timestamp" to System.currentTimeMillis(),
+                    "read" to false
                 )
+                firestore.collection("notifications").add(notification)
+                    .addOnSuccessListener { docRef ->
+                        Log.d("SelectOrUploadEwaste", "Notification saved: ${docRef.id}, $notification")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("SelectOrUploadEwaste", "Error saving notification: ${e.message}", e)
+                       }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()

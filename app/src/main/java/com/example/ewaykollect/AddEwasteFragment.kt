@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +43,6 @@ class AddEwasteDialogFragment : DialogFragment() {
 
         val companyId = arguments?.getString("COMPANY_ID") ?: ""
         val companyName = arguments?.getString("COMPANY_NAME") ?: ""
-
-        // UI elements
         val nameEditText = view.findViewById<EditText>(R.id.edtEName)
         val typeSpinner = view.findViewById<Spinner>(R.id.spinnerType)
         val numberEditText = view.findViewById<EditText>(R.id.edtENo)
@@ -52,7 +51,6 @@ class AddEwasteDialogFragment : DialogFragment() {
         val submitButton = view.findViewById<Button>(R.id.uploadbtn)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
-        // Populate spinner with e-waste types
         val types = arrayOf(
             "Mobile Phones", "Tablets", "Laptops", "Desktop Computers",
             "Monitors", "Printers", "Televisions", "Remote Controls",
@@ -61,13 +59,11 @@ class AddEwasteDialogFragment : DialogFragment() {
         )
         typeSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, types)
 
-        // Photo upload
         uploadPhotoButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK).apply { type = "image/*" }
             pickImage.launch(intent)
         }
 
-        // Submit form
         submitButton.setOnClickListener {
             val name = nameEditText.text.toString().trim()
             val type = typeSpinner.selectedItem.toString()
@@ -75,15 +71,23 @@ class AddEwasteDialogFragment : DialogFragment() {
             val state = stateEditText.text.toString().trim()
             val userId = auth.currentUser?.uid
 
+            if (userId == null) {
+                if (isAdded && context != null) {
+                    Toast.makeText(context, "Please sign in", Toast.LENGTH_SHORT).show()
+                }
+                return@setOnClickListener
+            }
+
             if (name.isEmpty() || number <= 0 || state.isEmpty()) {
-                Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+                if (isAdded && context != null) {
+                    Toast.makeText(context, "Please fill all required fields", Toast.LENGTH_SHORT).show()
+                }
                 return@setOnClickListener
             }
 
             progressBar.visibility = View.VISIBLE
             submitButton.isEnabled = false
 
-            // Save e-waste item and pickup request
             saveEwasteItem(name, type, number, state, userId, companyId, companyName, progressBar, submitButton)
         }
 
@@ -95,13 +99,12 @@ class AddEwasteDialogFragment : DialogFragment() {
         type: String,
         number: Int,
         state: String,
-        userId: String?,
+        userId: String,
         companyId: String,
         companyName: String,
         progressBar: ProgressBar,
         submitButton: Button
     ) {
-        // Upload image to Firebase Storage if selected
         val uploadTask = imageUri?.let {
             val ref = storage.reference.child("ewaste_images/${UUID.randomUUID()}.jpg")
             ref.putFile(it).continueWithTask { task ->
@@ -114,7 +117,9 @@ class AddEwasteDialogFragment : DialogFragment() {
             val imageUrl = uri.toString()
             saveToFirestore(name, type, number, state, userId, companyId, companyName, imageUrl, progressBar, submitButton)
         }?.addOnFailureListener { e ->
-            Toast.makeText(context, "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            if (isAdded && context != null) {
+                Toast.makeText(context, "Image upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
             progressBar.visibility = View.GONE
             submitButton.isEnabled = true
         } ?: saveToFirestore(name, type, number, state, userId, companyId, companyName, "", progressBar, submitButton)
@@ -125,26 +130,24 @@ class AddEwasteDialogFragment : DialogFragment() {
         type: String,
         number: Int,
         state: String,
-        userId: String?,
+        userId: String,
         companyId: String,
         companyName: String,
         imageUrl: String,
         progressBar: ProgressBar,
         submitButton: Button
     ) {
-        // Save to EwasteItems
         val ewasteItem = hashMapOf(
             "imageUrl" to imageUrl,
             "name" to name,
             "number" to number,
             "state" to state,
             "type" to type,
-            "userId" to userId
+            "userId" to userId,
+            "timestamp" to System.currentTimeMillis()
         )
-
         firestore.collection("EwasteItems").add(ewasteItem)
-            .addOnSuccessListener {
-                // Save to pickupRequests if companyId is provided
+            .addOnSuccessListener { docRef ->
                 if (companyId.isNotEmpty()) {
                     val pickupRequest = hashMapOf(
                         "companyId" to companyId,
@@ -160,22 +163,54 @@ class AddEwasteDialogFragment : DialogFragment() {
                     )
 
                     firestore.collection("pickupRequests").add(pickupRequest)
-                        .addOnSuccessListener {
-                            Toast.makeText(context, "Pickup request submitted for $companyName", Toast.LENGTH_SHORT).show()
-                            findNavController().popBackStack(R.id.recyclerDetailsFragment, false)
+                        .addOnSuccessListener { pickupDocRef ->
+                            if (isAdded && context != null) {
+                                Toast.makeText(context, "Pickup request submitted for $companyName", Toast.LENGTH_SHORT).show()
+                            }
+
+                            val notification = hashMapOf(
+                                "userId" to userId,
+                                "type" to "pickup_request",
+                                "message" to "New pickup request for $name to $companyName",
+                                "timestamp" to System.currentTimeMillis(),
+                                "read" to false
+                            )
+                            firestore.collection("notifications").add(notification)
+                                .addOnSuccessListener { notifDocRef ->
+                                    if (isAdded && context != null) {
+                                        Toast.makeText(context, "Notification created", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                .addOnFailureListener { e ->
+                                    if (isAdded && context != null) {
+                                        Toast.makeText(context, "Error saving notification: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                            if (isAdded) {
+                                findNavController().popBackStack(R.id.recyclerDetailsFragment, false)
+                            }
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(context, "Error saving pickup request: ${e.message}", Toast.LENGTH_SHORT).show()
+                            if (isAdded && context != null) {
+                                Toast.makeText(context, "Error saving pickup request: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
                             progressBar.visibility = View.GONE
                             submitButton.isEnabled = true
                         }
                 } else {
-                    Toast.makeText(context, "E-waste item added", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack(R.id.myEwasteFragment, false)
+                    if (isAdded && context != null) {
+                        Toast.makeText(context, "E-waste item added", Toast.LENGTH_SHORT).show()
+                    }
+                    if (isAdded) {
+                       findNavController().popBackStack(R.id.myEwasteFragment, false)
+                    }
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(context, "Error saving e-waste item: ${e.message}", Toast.LENGTH_SHORT).show()
+                if (isAdded && context != null) {
+                    Toast.makeText(context, "Error saving e-waste item: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
                 progressBar.visibility = View.GONE
                 submitButton.isEnabled = true
             }

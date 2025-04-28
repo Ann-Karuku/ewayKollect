@@ -46,15 +46,15 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="@string/datch"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:padding="8dp"/>
 
                 <TextView
                     android:id="@+id/textViewEwasteType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginStart="8dp" />
+                    android:textColor="@android:color/darker_gray"/>
             </LinearLayout>
 
             <LinearLayout

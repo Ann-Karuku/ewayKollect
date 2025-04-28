@@ -13,4 +13,9 @@
     <string name="recycler_rating">Recycler Rating</string>
     <string name="company_logo">company logo</string>
     <string name="location">Location</string>
+    <string name="stat_title">Stat Title</string>
+    <string name="e_waste_items">E-waste Items</string>
+    <string name="pickup_requests">Pickup Requests</string>
+    <string name="completed_pickups">Completed Pickups</string>
+    <string name="badges_0">Badges: 0</string>
 </resources>

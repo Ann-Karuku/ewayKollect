@@ -99,4 +99,14 @@
     <string name="recycler_rating">Recycler Rating</string>
     <string name="company_logo">company logo</string>
     <string name="location">Location</string>
+    <string name="download_pdf_report">Download PDF Report</string>
+    <string name="submission_history">Submission History</string>
+    <string name="progress_to_next_badge">Progress to next badge</string>
+    <string name="my_activity_report">My Activity Report</string>
+    <string name="_0">0</string>
+    <string name="stat_title">Stat Title</string>
+    <string name="e_waste_items">E-waste Items</string>
+    <string name="pickup_requests">Pickup Requests</string>
+    <string name="completed_pickups">Completed Pickups</string>
+    <string name="badges_0">Badges: 0</string>
 </resources>

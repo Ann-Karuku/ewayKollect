@@ -191,7 +191,7 @@ class EditProfileFragment : Fragment() {
                         val userTown = document.getString("town") ?: ""
                         loadTownsForCounty(userCounty)
                         spinnerTown.post {
-                            val townIndex = (spinnerTown.adapter as ArrayAdapter<String>).getPosition(userTown)
+                            val townIndex = (spinnerTown.adapter as? ArrayAdapter<String>)?.getPosition(userTown)?: -1
                             if (townIndex != -1) {
                                 spinnerTown.setSelection(townIndex)
                             }

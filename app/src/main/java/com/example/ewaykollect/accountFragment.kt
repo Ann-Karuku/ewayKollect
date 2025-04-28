@@ -37,6 +37,12 @@ class AccountFragment : Fragment() {
                 findNavController().navigate(R.id.action_accountFragment_to_notificationsFragment)
             }
         }
+        val myReports = root.findViewById<CardView>(R.id.cdvw_my_reports)
+        myReports.setOnClickListener {
+            if (findNavController().currentDestination?.id == R.id.accountFragment) {
+                findNavController().navigate(R.id.action_accountFragment_to_reportsFragment)
+            }
+        }
         return root
     }
 }

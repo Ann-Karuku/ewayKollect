@@ -43,6 +43,18 @@ class AccountFragment : Fragment() {
                 findNavController().navigate(R.id.action_accountFragment_to_reportsFragment)
             }
         }
+        val myInfoCenter = root.findViewById<CardView>(R.id.cdvw_info_center)
+        myInfoCenter.setOnClickListener {
+            if (findNavController().currentDestination?.id == R.id.accountFragment) {
+                findNavController().navigate(R.id.action_accountFragment_to_infoFragment)
+            }
+        }
+        val mySupport = root.findViewById<CardView>(R.id.cdvw_support)
+        mySupport.setOnClickListener {
+            if (findNavController().currentDestination?.id == R.id.accountFragment) {
+                findNavController().navigate(R.id.action_accountFragment_to_supportFragment)
+            }
+        }
         return root
     }
 }

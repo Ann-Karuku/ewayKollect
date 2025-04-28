@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_accountFragment_to_recyclersFragment"
             app:destination="@id/recyclersFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_reportsFragment"
+            app:destination="@id/reportsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myEwaste"
@@ -146,5 +149,13 @@
         <action
             android:id="@+id/action_selectOrUploadEwasteFragment_to_addEwasteDialogFragment"
             app:destination="@id/addEwasteDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportsFragment"
+        android:name="com.example.ewaykollect.ReportsFragment"
+        android:label="ReportsFragment" >
+        <action
+            android:id="@+id/action_reportsFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 </navigation>

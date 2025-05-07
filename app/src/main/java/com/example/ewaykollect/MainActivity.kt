@@ -82,6 +82,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.editProfileFragment -> supportActionBar?.title = "Edit Profile"
                 R.id.changePasswordFragment -> supportActionBar?.title = "Change Password"
                 R.id.recyclersFragment -> supportActionBar?.title = "Recyclers"
+                R.id.reportsFragment->supportActionBar?.title="Reports"
+                R.id.infoFragment->supportActionBar?.title="Info Center"
+                R.id.supportFragment->supportActionBar?.title="Live Chat"
                 else -> supportActionBar?.title = "EwayKollect"
             }
             // Set navigation icon based on destination

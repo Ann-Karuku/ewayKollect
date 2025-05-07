@@ -109,4 +109,5 @@
     <string name="pickup_requests">Pickup Requests</string>
     <string name="completed_pickups">Completed Pickups</string>
     <string name="badges_0">Badges: 0</string>
+    <string name="no_data_available">No data available</string>
 </resources>

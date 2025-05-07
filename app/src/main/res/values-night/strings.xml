@@ -19,4 +19,6 @@
     <string name="completed_pickups">Completed Pickups</string>
     <string name="badges_0">Badges: 0</string>
     <string name="no_data_available">No data available</string>
+    <string name="message_support">Message support...</string>
+    <string name="send_message">Send message</string>
 </resources>

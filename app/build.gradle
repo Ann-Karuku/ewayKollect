@@ -5,6 +5,15 @@ plugins {
 }
 apply plugin: 'kotlin-android'
 
+// Load local.properties
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
 android {
     compileSdk 34
 
@@ -18,8 +27,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         //GEMINI API Key
-        buildConfigField "String", "GEMINI_API_KEY", "\"${project.properties['GEMINI_API_KEY']}\""
-
+        buildConfigField "String", "GEMINI_API_KEY", "\"${localProperties['GEMINI_API_KEY'] ?: ''}\""
     }
 
     buildTypes {

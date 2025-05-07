@@ -86,9 +86,7 @@ class SupportFragment : Fragment() {
     private fun getMockSupportMessages(): List<ChatMessage> {
         val timestamp = SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date())
         return listOf(
-            ChatMessage("Welcome to support! How can we help with e-waste recycling?", false, timestamp),
-            ChatMessage("Where can I recycle my old phone?", true, timestamp),
-            ChatMessage("Please share your location, and we’ll find a nearby e-waste center.", false, timestamp)
-        )
+            ChatMessage("Welcome to EwayKollect support! How can we help with e-waste recycling?", false, timestamp),
+            )
     }
 }
